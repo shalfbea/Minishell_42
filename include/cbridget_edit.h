@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   cbridget_edit.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/13 18:27:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/04/20 17:49:35 by shalfbea         ###   ########.fr       */
+/*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
+/*   Updated: 2022/04/20 15:58:53 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef CBRIDGET_EDIT_H
+# define CBRIDGET_EDIT_H
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <sys/wait.h>
-# include <signal.h>
-# include <sys/stat.h>
-# include <dirent.h>
-# include <sys/ioctl.h>
-# include <termios.h>
-
-# include "libft.h"
-# include "cbridget_edit.h"
-# include "shalfbea_edit.h"
-
-typedef struct sigaction	t_sigacton;
+//Put your own things here, to protect minishell_h
 
 #endif
