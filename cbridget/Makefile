@@ -30,7 +30,7 @@ $(MINISHELL): $(LIBFT) $(HEADER) $(OBJ_FILES)
 	$(CC) $(OBJ_FILES) $(LIBFT) -o $(MINISHELL) -lreadline $(FLAGS)
 
 $(LIBFT) :
-	make -C ./libft
+	make -C ../libft
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)
 	$(CC) $(FLAGS) -c $< -o $@
