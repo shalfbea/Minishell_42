@@ -12,6 +12,7 @@ LIBFT := ../libft/libft.a
 
 SRC = main_shalfbea.c \
 	  prompt.c \
+	  lexer_wraps_lst.c \
 	  #signals.c \
 	  #builtins/exit.c
 
