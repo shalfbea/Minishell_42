@@ -12,8 +12,6 @@ LIBFT := ../libft/libft.a
 
 SRC = main_shalfbea.c \
 	  prompt.c \
-	  #signals.c \
-	  #builtins/exit.c
 
 OBJ_DIR = ./obj/
 SRC_DIR = ./src/
@@ -23,6 +21,8 @@ SRC_FILES = $(addprefix $(SRC_DIR), $(SRC))
 OBJ_FILES = $(patsubst %.c, %.o, $(addprefix $(OBJ_DIR), $(SRC)))
 
 RM := rm -rf
+
+.PHONY: all clean fclean re norm bonus
 
 all: $(LIBFT) $(OBJ_DIR) $(HEADER) $(MINISHELL)
 
@@ -50,5 +50,3 @@ re: fclean all
 
 norm: $(SRC_FILES)
 	norminette $<
-
-.PHONY: all clean fclean re norm bonus
