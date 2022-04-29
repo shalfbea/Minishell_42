@@ -6,22 +6,37 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:29:33 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/04/27 17:42:35 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/04/29 16:13:35 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
+** Need to be rewritten later
+*/
 void	signal_handler(int sig, siginfo_t *info, void *smth)
 {
+	//static char	first_exit;
+
 	(void) info;
 	(void) smth;
-	(void) sig;
-	//if (sig == SIGTERM && global_struct.process != 0)
+	//(void) sig;
+	if (sig == SIGINT)
+	{
+		printf("\nExitting!\n");
+		exit(0);
+	}
+	//if (sig == )
 }
-*/
+
 /*
+**
+** Signals handler
+** CTRL-C = SIGINT
+** CTRL-\ = SIGQUIT
+** CTRL-Z = SIGTSTP
+*/
 void	set_sig_control(void)
 {
 	t_sigacton	sigs;
@@ -30,10 +45,11 @@ void	set_sig_control(void)
 	ft_memset(&sigs, 0, sizeof(sigs));
 	sigs.sa_sigaction = signal_handler;
 	sigemptyset(&set);
-	sigaddset(&set, SIGUSR1);
-	sigaddset(&set, SIGUSR2);
+	sigaddset(&set, SIGINT);
+	sigaddset(&set, SIGQUIT);
+	sigaddset(&set, SIGTSTP);
 	sigs.sa_mask = set;
-	sigaction(SIGUSR1, &sigs, 0);
-	sigaction(SIGUSR2, &sigs, 0);
+	sigaction(SIGINT, &sigs, 0);
+	sigaction(SIGQUIT, &sigs, 0);
+	sigaction(SIGTSTP, &sigs, 0);
 }
-*/

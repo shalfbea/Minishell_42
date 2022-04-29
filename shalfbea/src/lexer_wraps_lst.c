@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 19:41:36 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/04/27 20:49:09 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/04/29 19:45:23 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ char	type_detector(char	*str)
 		return (IF_AND);
 	if (str[0] == '|' && str[1] == '|' && !str[2])
 		return (IF_OR);
+	if (str[0] == '(' && !str[1])
+		return (P_OPEN);
+	if (str[0] == ')' && !str[1])
+		return (P_CLOSE);
 	return (0);
 }
 
@@ -40,11 +44,12 @@ void	add_to_lexer(t_list **lst, char *str, char type)
 	if (!lex)
 		return ; //RAISE ERROR or exit
 	lex->str = str;
+	//lex->group = NULL;
 	if (type == '\'')
 		type = QUOTES;
 	else if (type == '"')
 		type = DOUBLE_QUOTES;
-	else
+	else if (type == NO_QUOTE)
 		type = type_detector(str);
 	lex->type = type;
 	ft_lstadd_back(lst, ft_lstnew((void *) lex));
