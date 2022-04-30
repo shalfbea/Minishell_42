@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/04/29 20:06:56 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/04/30 17:41:26 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,75 +19,16 @@ char	error_msg(int mode)
 	return (1);
 }
 
-char	quotes_breaker(char *str, size_t *i, t_list	**res)
-{
-	size_t	begin;
-	char	quote;
-
-	quote = str[*i];
-	(*i)++;
-	if (!str[*i])
-		return (error_msg(QUOTES)); //raise error!
-	begin = *i;
-	while (str[*i] && str[*i] != quote)
-		++(*i);
-	if (str[*i] != quote)
-		return (error_msg(QUOTES)); //raise error!
-	add_to_lexer(res, ft_substr(str, begin, *i - begin), quote);
-	//++(*i);
-	return (0);
-}
-
-char	check_specials(t_list	**res, size_t *begin, char *is_word, char *str)
-{
-	else if (str[i] == '(' || str[i] == ')')
-	{
-		if (is_word)
-		{
-			is_word = 0;
-			add_to_lexer(&res, ft_substr(str, begin, i - begin), 0);
-		}
-		add_to_lexer(&res, ft_substr(str, i, 1), 0);
-	}
-}
-
-t_list	*splitter(char *str, size_t i, size_t begin)
-{
-	t_list			*res;
-	//t_list			*cur;
-	char	is_word;
-
-	res = NULL;
-	is_word = 0;
-	while (str[++i])
-	{
-		if (str[i] == '\'' || str[i] == '"')
-		{
-			if (quotes_breaker(str, &i, &res))
-				return (clear_lexer_lst(&res));
-		}
-
-		else if (!ft_isspace(str[i]) && (!is_word) && str[i])
-		{
-			begin = i;
-			is_word = 1;
-		}
-		else if (ft_isspace(str[i]) && is_word)
-		{
-			is_word = 0;
-			add_to_lexer(&res, ft_substr(str, begin, i - begin), 0);
-		}
-	}
-	if (is_word)
-		add_to_lexer(&res, ft_substr(str, begin, i - begin), 0);
-	return (res);
-}
 
 void	iter_printer(void *cur)
 {
 	char	*types[] = {"word", "in quotes", "in double quotes", "redir out >", "redir in <", "redir append >>", "redir insource <<", "pipe |", "if_and &&", "if_or ||", "( parenthese open",") parenthese close" };
 
-	printf("%s;type: %s\n", ((t_lexer *) cur)->str, types[(int) ((t_lexer *) cur)->type]);
+	printf("%s;type: %s; %d flag to be added\n",
+	 		((t_lexer *) cur)->str,
+			 types[(int) ((t_lexer *) cur)->type],
+			((t_lexer *) cur)->to_prev);
+
 }
 
 int	prompt(void)
@@ -100,11 +41,11 @@ int	prompt(void)
 	str = readline("MiniShell: ");
 	if (!str)
 		exit(0); // затычка
-	args = splitter(str, -1, 0);
+	args = lexer(str);
 	ft_lstiter(args, iter_printer);
 	printf("\n");
-	//if (str)
-	//	free(str);
-	//pause();
+	if (str)
+		free(str);
+	clear_lexer_lst(&(args));
 	return (0);
 }
