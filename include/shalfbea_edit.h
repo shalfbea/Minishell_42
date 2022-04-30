@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/04/29 19:47:13 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/04/30 17:38:33 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,23 @@
 # define SHALFBEA_EDIT_H
 
 //I'l put my things here
+
+# define S_DEBUG 1
+
 void	builtin_exit(int num);
 int		prompt(void);
+char	error_msg(int mode);
 
 //lexer_wraps_lst.c
-void	add_to_lexer(t_list **lst, char *str, char type);
+//void	add_to_lexer(t_list **lst, char *str, char type);
+void	add_to_lexer(t_list **lst, char *str, char type, char add_to_prev);
 t_list	*clear_lexer_lst(t_list **lst);
 
 //signals.c
 void	set_sig_control(void);
+
+//lexer.c
+t_list	*lexer(char *str);
 
 # define NO_QUOTE 0
 # define QUOTES 1
@@ -41,6 +49,17 @@ typedef struct s_lexer
 {
 	char			*str;
 	char			type;
+	char			to_prev;
 }	t_lexer;
+
+typedef struct s_splitter_data
+{
+	t_list	*res;
+	char	is_word;
+	size_t	i;
+	size_t	begin;
+	char	*str;
+	char	after_quotes;
+}	t_splitter_data;
 
 #endif
