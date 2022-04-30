@@ -6,22 +6,30 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 17:22:45 by cbridget          #+#    #+#             */
-/*   Updated: 2022/04/28 18:44:28 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/04/30 18:26:18 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	executor(t_executor_environment *commands)
+int	executor(t_minishell_environment *exe_environment)
 {
-	int	*fds;
+	t_exec_env	in_exec;
 
-	fds = 
-	if (open_files())
+	in_exec.first_fd = NULL;
+	if (ft_init(exe_environment, &in_exec))
 		return (1);
-}
 
-int	open_files(t_command_list *commands, )
-{
-	
+	t_fds *test;
+	test = in_exec.first_fd;
+	while (test)
+	{
+		printf("outfile=%d\n", test->outfile);
+		test = test->next_fd;
+	}
+	ft_free(&in_exec);
+
+	return (0);
+//	if (build_in && exe_environment->number_of_commands == 1)
+//		executor_one();
 }
