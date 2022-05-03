@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 14:47:39 by cbridget          #+#    #+#             */
-/*   Updated: 2022/04/30 18:26:35 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/03 13:36:27 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ int	alloc_lsts(t_exec_env *in_exec, int num)
 		if (i == 0)
 		{
 			if (create_lst(tmp_fd))
-				return (ft_free(in_exec));
+				return (1);
 		}
 		else
 		{
 			if (create_lst(&(*tmp_fd)->next_fd))
-				return (ft_free(in_exec));
+				return (1);
 			tmp_fd = &(*tmp_fd)->next_fd;
 		}
 		i++;

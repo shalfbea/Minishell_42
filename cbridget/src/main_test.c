@@ -3,7 +3,7 @@
 
 int	main(void)
 {
-	t_minishell_environment	test;
+/*	t_minishell_environment	test;
 
 	test.envp = NULL;
 	test.number_of_commands = 3;
@@ -30,6 +30,9 @@ int	main(void)
 	test.first_command->next_command->next_command->redirect_flag_outfile = 0;
 	test.first_command->next_command->next_command->argv = NULL;
 	test.first_command->next_command->next_command->next_command = NULL;
-	executor(&test);
+	executor(&test);*/
+
+	int test[3];
+	ft_close_fd(test, 2, 4);
 	return (0);
 }
