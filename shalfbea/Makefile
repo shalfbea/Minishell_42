@@ -12,9 +12,9 @@ LIBFT := ../libft/libft.a
 
 SRC = main_shalfbea.c \
 	  prompt.c \
-	  lexer_wraps_lst.c \
 	  signals.c \
-	  lexer.c \
+	  lexer/lexer.c lexer/lexer_wraps_lst.c lexer/lexer_specials.c\
+	  parser/parser.c
 	  #builtins/exit.c
 
 OBJ_DIR = ./obj/
@@ -39,6 +39,8 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)
 
 $(OBJ_DIR) :
 	mkdir obj
+	mkdir obj/lexer
+	mkdir obj/parser
 
 clean:
 	$(RM) $(OBJ_DIR)

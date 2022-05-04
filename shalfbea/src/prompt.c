@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/04 18:01:23 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/04 21:03:12 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,65 @@ char	parentheses_checker(t_list	*args)
 	return (0);
 }
 
+void	debug_command_list_printer(t_command_list *commands)
+{
+	int		i;
+	char	**argv;
+
+	i = 0;
+	if (!commands)
+		printf("List is empty!\n");
+	while (commands)
+	{
+		printf("COMMAND %d: \n\n", i++);
+		printf("build_in_flag : %d\n", commands->build_in_flag);
+		printf("redirect_flag_infile : %d\n", commands->redirect_flag_infile);
+		printf("infile : %s\n", commands->infile);
+		printf("redirect_flag_outfile : %d\n", commands->redirect_flag_outfile);
+		printf("outfile : %s\n", commands->outfile);
+		printf("argv : ");
+		if (commands->argv)
+		{
+			argv = commands->argv;
+			while (*argv)
+			{
+				printf("%s", *argv);
+				(*argv)++;
+			}
+		}
+		else
+			printf("NO_ARGS");
+		printf("\n\n");
+	}
+}
+
 int	prompt(void)
 {
-	char	*str;
-	t_list	*args;
+	char			*str;
+	t_list			*args;
+	t_command_list	*commands;
 
 	str = NULL;
+	args = NULL;
+	commands = NULL;
 	//str = "(lol)";
 	str = readline("MiniShell: ");
 	if (!str)
 		exit(0); // затычка
 	args = lexer(str);
 	if (S_DEBUG)
+	{
+		printf("\nLexer results:\n\n");
 		ft_lstiter(args, iter_printer);
+		printf("\n===================\n===================\n");
+	}
 	parentheses_checker(args);
+	if (S_DEBUG && commands)
+	{
+		printf("\nParser results:\n");
+		debug_command_list_printer(commands);
+		printf("\n===================\n===================\n");
+	}
 	printf("\n");
 	if (str)
 		free(str);
