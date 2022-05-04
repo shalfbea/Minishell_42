@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 19:41:36 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/04/30 17:38:45 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/04 18:03:01 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 char	type_detector(char	*str)
 {
-	/*{">", "<", ">>", "<<", "|", "&&", "||"}; */
 	if (str[0] == '>' && !str[1])
 		return (REDIR_OUT);
 	if (str[0] == '<' && !str[1])
@@ -45,7 +44,6 @@ void	add_to_lexer(t_list **lst, char *str, char type, char add_to_prev)
 		return ; //RAISE ERROR or exit
 	lex->str = str;
 	lex->to_prev = add_to_prev;
-	//lex->group = NULL;
 	if (type == '\'')
 		type = QUOTES;
 	else if (type == '"')

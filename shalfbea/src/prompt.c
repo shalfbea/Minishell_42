@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/04/30 17:41:26 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/04 18:01:23 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@ char	error_msg(int mode)
 {
 	if (mode == QUOTES)
 		printf("Error while parsing: quotes unmatched.");
+	if (mode == P_OPEN)
+		printf("Error while parsing: \'(\' parentheses unclosed");
+	if (mode == P_CLOSE)
+		printf("Error while parsing: \')\' parentheses unclosed");
 	return (1);
 }
-
 
 void	iter_printer(void *cur)
 {
@@ -29,6 +32,31 @@ void	iter_printer(void *cur)
 			 types[(int) ((t_lexer *) cur)->type],
 			((t_lexer *) cur)->to_prev);
 
+}
+
+char	parentheses_checker(t_list	*args)
+{
+	int		opened;
+	char	cur;
+
+	opened = 0;
+	while (args)
+	{
+		cur = ((t_lexer *) args->content)->type;
+		if (cur == P_OPEN)
+			opened++;
+		else if (cur == P_CLOSE)
+		{
+			if (opened > 0)
+				opened--;
+			else
+				return (error_msg(P_CLOSE));
+		}
+		args = args->next;
+	}
+	if (opened > 0)
+		return (error_msg(P_OPEN));
+	return (0);
 }
 
 int	prompt(void)
@@ -42,7 +70,9 @@ int	prompt(void)
 	if (!str)
 		exit(0); // затычка
 	args = lexer(str);
-	ft_lstiter(args, iter_printer);
+	if (S_DEBUG)
+		ft_lstiter(args, iter_printer);
+	parentheses_checker(args);
 	printf("\n");
 	if (str)
 		free(str);
