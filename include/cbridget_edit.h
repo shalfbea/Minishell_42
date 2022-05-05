@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/05 14:45:14 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/05 16:21:32 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	free_lsts(t_fds *lst);
 int	open_files(t_command_list *commands, t_fds *fds);
 
 int	run_commands(t_minishell_environment *min_environment, t_exec_env *in_exec);
-void	ft_exec(t_minishell_environment *min_environment, t_exec_env *in_exec,/*t_fds *fd,*/ int i);
-void	ft_close_fd(int	**pipes, int i, int length);
+void	ft_exec(t_minishell_environment *min_environment, t_command_list *cmd, t_exec_env *in_exec, int i);
+void	create_pipeline(int	**pipes, int com, int length);
 
 #endif
