@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:42:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/04 20:00:39 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/05 19:44:06 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,109 @@ t_command_list	*new_command(void)
 	return (list);
 }
 
+static void	command_append(t_command_list **lst, t_command_list **cur)
+{
+	if (*lst == NULL)
+	{
+		*cur = new_command();
+		*lst = *cur;
+	}
+	else
+	{
+		(*cur)->next_command = new_command();
+		*cur = (*cur)->next_command;
+	}
+}
+
+void	nodelete(void *element)
+{
+	(void) element;
+	return ;
+}
+
+char	**argv_former(t_list	**argv)
+{
+	char	**res;
+	int		words;
+	t_list	*tmp;
+	int		i;
+
+	words = ft_lstsize(*argv);
+	res = (char **) malloc(sizeof(char *) * (words + 1));
+	tmp = *argv;
+	i = 0;
+	while (i < words)
+	{
+		res[i] = (char *) tmp->content;
+		tmp = tmp->next;
+		++i;
+	}
+	res[i] = NULL;
+	ft_lstclear(argv, &nodelete);
+	return (res);
+}
+
 t_command_list	*parser(t_list	*args)
 {
 	t_command_list	*res;
 	t_command_list	*cur;
+	t_lexer			*arg;
+	t_list			*argv;
+	int				mode;
 
 	if (!args)
 		return (NULL);
 	res = NULL;
 	cur = NULL;
-	return (NULL);
+	argv = NULL;
+	mode = 0;
+	command_append(&res, &cur);
+	while (args)
+	{
+		arg = (t_lexer *) args->content;
+		if (arg->type < 3) //EDIT LATER
+		{
+			if (mode == 0)
+				ft_lstadd_back(&argv, ft_lstnew((void *)arg->str));
+			if (mode == REDIR_OUT)
+			{
+				cur->outfile = arg->str;
+				mode = 0;
+			}
+			if (mode == REDIR_IN)
+			{
+				cur->infile = arg->str;
+				mode = 0;
+			}
+		}
+		else if (arg->type == REDIR_OUT)
+		{
+			cur->redirect_flag_outfile = 0;
+			mode = REDIR_OUT;
+		}
+		else if (arg->type == REDIR_IN)
+		{
+			cur->redirect_flag_infile = 0;
+			mode = REDIR_IN;
+		}
+		else if (arg->type == REDIR_APPEND)
+		{
+			cur->redirect_flag_outfile = 1;
+			mode = REDIR_OUT;
+		}
+		else if (arg->type == REDIR_INSOURCE)
+		{
+			cur->redirect_flag_infile = 1;
+			mode = REDIR_IN;
+		}
+		else if (arg->type == PIPE)
+		{
+			cur->argv = argv_former(&argv);
+			command_append(&res, &cur);
+			mode = 0;
+		}
+		args=args->next;
+	}
+	cur->argv = argv_former(&argv);
+	return (res);
 }

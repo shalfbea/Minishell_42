@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/04 18:20:16 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/04 18:44:41 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,6 @@ char	quotes_breaker(t_splitter_data *data);
 char	special_characters(char	*c);
 char	special_handler(t_splitter_data *data, char specials);
 
+//lexer.c
+t_command_list	*parser(t_list	*args);
 #endif

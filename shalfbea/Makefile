@@ -13,7 +13,8 @@ LIBFT := ../libft/libft.a
 SRC = main_shalfbea.c \
 	  prompt.c \
 	  signals.c \
-	  lexer/lexer.c lexer/lexer_wraps_lst.c lexer/lexer_specials.c\
+	  lexer/lexer.c lexer/lexer_wraps_lst.c lexer/lexer_specials.c \
+	  lexer/env_check.c \
 	  parser/parser.c
 	  #builtins/exit.c
 

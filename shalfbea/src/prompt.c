@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/04 21:03:12 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/05 19:49:40 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char	parentheses_checker(t_list	*args)
 void	debug_command_list_printer(t_command_list *commands)
 {
 	int		i;
+	int		k;
 	char	**argv;
 
 	i = 0;
@@ -79,15 +80,18 @@ void	debug_command_list_printer(t_command_list *commands)
 		if (commands->argv)
 		{
 			argv = commands->argv;
-			while (*argv)
+			k = 0;
+			while (argv[k])
 			{
-				printf("%s", *argv);
-				(*argv)++;
+				printf("%s, ", argv[k]);
+				//(*argv)++;
+				k++;
 			}
 		}
 		else
 			printf("NO_ARGS");
 		printf("\n\n");
+		commands = commands->next_command;
 	}
 }
 
@@ -100,7 +104,7 @@ int	prompt(void)
 	str = NULL;
 	args = NULL;
 	commands = NULL;
-	//str = "(lol)";
+	//str = "echo \"kek\" > lol";
 	str = readline("MiniShell: ");
 	if (!str)
 		exit(0); // затычка
@@ -112,6 +116,11 @@ int	prompt(void)
 		printf("\n===================\n===================\n");
 	}
 	parentheses_checker(args);
+	// ПРОВЕРКА СОДЕРЖИМОГО КОВЫЧЕК
+	// СКЕЙКА ТОКЕНОВ
+	// ПРОВЕРКА ПРАВИЛЬНОГО ПОРЯДКА ТОКЕНОВ
+	commands = parser(args); // 25% working for dumn cases
+	// ПРОВЕРКА ARGV[0] - название программы
 	if (S_DEBUG && commands)
 	{
 		printf("\nParser results:\n");
@@ -119,8 +128,8 @@ int	prompt(void)
 		printf("\n===================\n===================\n");
 	}
 	printf("\n");
-	if (str)
-		free(str);
+	//if (str)
+	//	free(str);
 	clear_lexer_lst(&(args));
 	return (0);
 }
