@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 17:22:45 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/03 13:58:59 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/05 14:08:36 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ int	executor(t_minishell_environment *min_environment)
 
 	if (run_commands(min_environment, &in_exec))
 		return (1);
-	ft_free(min_environment, &in_exec, 1);
+	ft_free(min_environment, &in_exec);
 	return (0);
 }

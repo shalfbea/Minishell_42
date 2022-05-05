@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 15:30:05 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/03 13:37:09 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/05 14:07:32 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,13 @@ int	ft_init(t_minishell_environment *min_environment, t_exec_env *in_exec)
 {
 	if (min_environment->number_of_commands > 1)
 	{
-		in_exec->_pipes = malloc(sizeof(int) * (min_environment->number_of_commands - 1) * 2);
-		if (!in_exec->_pipes)
-			return (ft_free(min_environment, in_exec, 0));
-		if (open_pipes(in_exec->_pipes, (min_environment->number_of_commands - 1) * 2))
-			return (ft_free(min_environment, in_exec, 1));
+		if (open_pipes(min_environment, in_exec))
+			return (1);
 	}
 	if (alloc_lsts(in_exec, min_environment->number_of_commands))
-		return (ft_free(min_environment, in_exec, 1));
+		return (ft_free(min_environment, in_exec));
 	if (open_files(min_environment->first_command, in_exec->first_fd))
-		return (ft_free(min_environment, in_exec, 1));
-	return (0);
-}
-
-int	open_pipes(int *_pipes, int num)
-{
-	int	i;
-
-	i = 0;
-	while (i < num)
-	{
-		if (pipe(&_pipes[i]) < 0)
-			return (1);
-		i += 2;
-	}
+		return (ft_free(min_environment, in_exec));
 	return (0);
 }
 
@@ -64,12 +47,12 @@ int	open_files(t_command_list *commands, t_fds *fds)
 	return (0);
 }
 
-int	ft_free(t_minishell_environment *min_environment, t_exec_env *in_exec, char flag)
+int	ft_free(t_minishell_environment *min_environment, t_exec_env *in_exec)
 {
 	free_min_env(min_environment);
 	free_lsts(in_exec->first_fd);
-	if (flag)
-		free(in_exec->_pipes);
+	free((in_exec->_pipes)[0]);
+	free(in_exec->_pipes);
 	return (1);
 }
 

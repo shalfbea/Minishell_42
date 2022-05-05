@@ -32,7 +32,17 @@ int	main(void)
 	test.first_command->next_command->next_command->next_command = NULL;
 	executor(&test);*/
 
-	int test[3];
-	ft_close_fd(test, 2, 4);
+	int **test;
+	test = malloc(sizeof(int *) * 4);
+	test[0] = malloc(sizeof(int) * 3 * 2);
+	test[1] = test[0] + 1 * 2;
+	test[2] = test[0] + 2 * 2;
+	test[3] = (void *)0;
+	int i = 0;
+	while (i < 4)
+	{
+		ft_close_fd(test, i + 1, 4);
+		i++;
+	}
 	return (0);
 }

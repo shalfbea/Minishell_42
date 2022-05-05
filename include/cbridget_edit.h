@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/03 15:17:25 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/05 14:45:14 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,15 @@ typedef struct s_fds {
 }	t_fds;
 
 typedef struct s_exec_env {
-	int	*_pipes;
+	int	**_pipes;
 	t_fds	*first_fd;
 }	t_exec_env;
 
 int	executor(t_minishell_environment *min_environment);
 int	ft_init(t_minishell_environment *min_environment, t_exec_env *in_exec);
-int	open_pipes(int *_pipes, int num);
-int	ft_free(t_minishell_environment *min_environment, t_exec_env *in_exec, char flag);
+int	open_pipes(t_minishell_environment *min_environment, t_exec_env *in_exec);
+int	alloc_pipes(int ***pipes, int num);
+int	ft_free(t_minishell_environment *min_environment, t_exec_env *in_exec);
 void	free_min_env(t_minishell_environment *min_environment);
 int	alloc_lsts(t_exec_env *in_exec, int num);
 int	create_lst(t_fds **lst);
@@ -56,6 +57,6 @@ int	open_files(t_command_list *commands, t_fds *fds);
 
 int	run_commands(t_minishell_environment *min_environment, t_exec_env *in_exec);
 void	ft_exec(t_minishell_environment *min_environment, t_exec_env *in_exec,/*t_fds *fd,*/ int i);
-void	ft_close_fd(int	*_pipes, int i, int length);
+void	ft_close_fd(int	**pipes, int i, int length);
 
 #endif
