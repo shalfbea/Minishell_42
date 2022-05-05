@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/05 16:21:32 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/05 17:04:30 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,24 @@ typedef struct s_command_list {
 	char	*outfile;//same as *infile but for outfile.
 //	char	*command;//absolut path to the command???
 	char	**argv;//first pointer is the absolut path to the command. command arguments. last pointer must be NULL;
-	struct s_command_list	*next_command;//if there are no more commands, set to NULL.
+	struct s_command_list	*next_command;//if there are no more commands, set to NULL. This is pipeline.
 }	t_command_list;//linked list for commands.
+
+# define LOGICAL_ALWAYS 0
+# define LOGICAL_AND 1
+# define LOGICAL_OR 2
+
+typedef struct s_logical_groups {
+	t_command_list			*first_command;//poiter to the first command to execute
+	int						number_of_commands;//number of commands to execute
+	char					logical_flag;
+	struct s_logical_groups	*next_group;
+}	t_logical_groups;
 
 typedef struct s_minishell_environment {
 	char	**envp;//minishell environment. it could be a list but хз
-	int		number_of_commands;//number of commands to execute
-	t_command_list	*first_command;//poiter to the first command to execute
+	//t_command_list	*first_command;//poiter to the first command to execute
+	t_logical_groups	*first_group;	
 }	t_minishell_environment;
 
 typedef struct s_fds {
