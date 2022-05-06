@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:28:51 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/06 15:27:17 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/06 16:43:42 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,18 @@ int	alloc_pipes(int ***pipes, int num)
 	}
 	(*pipes)[i] = (void *)0;
 	return (0);
+}
+
+void	close_pipes(t_exec_env *in_exec, int num)
+{
+	int	i;
+
+	i = 0;
+	num -= 1;
+	while (i < num)
+	{
+		close((in_exec->_pipes)[i][0]);
+		close((in_exec->_pipes)[i][1]);
+		i++;
+	}
 }

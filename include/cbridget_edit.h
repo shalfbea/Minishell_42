@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/06 15:52:54 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/06 18:07:46 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ typedef struct s_logical_groups {
 
 typedef struct s_minishell_environment {
 	char	**envp;//minishell environment. it could be a list but хз
+	int	ex_code;//this is the exit code of the last command.
 	t_logical_groups	*first_group;
 }	t_minishell_environment;
 
 typedef struct s_fds {
 	int	infile;
 	int	outfile;
+	int	r_code;
 	pid_t	pid_com;
 	struct s_fds	*next_fd;
 }	t_fds;
@@ -69,5 +71,10 @@ int	run_commands(t_logical_groups *group, t_exec_env *in_exec);
 void	ft_exec(t_logical_groups *group, t_command_list *cmd, t_exec_env *in_exec, int i);
 void	create_pipeline(int	**pipes, int com, int length);
 void	swap_filedescriptors(t_exec_env *in_exec, int com);
+
+void	close_pipes(t_exec_env *in_exec, int num);
+int	ft_wait(t_exec_env *in_exec);
+int	ft_kill(t_exec_env *in_exec);
+void	save_ex_code(t_minishell_environment *min_environment, t_exec_env *in_exec);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 13:44:56 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/06 15:49:47 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/06 18:15:58 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,21 @@ int	run_commands(t_logical_groups *group, t_exec_env *in_exec)
 		tmp_in = tmp_in->next_fd;
 		i++;
 	}
+	close_pipes(in_exec, group->number_of_commands);
+	if (ft_wait(in_exec))
+		return (1);
 	return (0);
 }
 
 void	ft_exec(t_logical_groups *group, t_command_list *cmd, t_exec_env *in_exec, int i)
 {
+	int	j;
+
+	j = 1;
 	create_pipeline(in_exec->_pipes, i, group->number_of_commands);
 	swap_filedescriptors(in_exec, i);
 	execve((cmd->argv)[0], cmd->argv, in_exec->envp_in);
-//	kill()//it needs to be done
+	exit(242);
 }
 
 void	swap_filedescriptors(t_exec_env *in_exec, int com)
@@ -87,10 +93,6 @@ void	create_pipeline(int	**pipes, int com, int length)
 			dup2(pipes[j][0], STDIN_FILENO);
 			close(pipes[j][0]);
 		}
-//		else if (i > 1 && i < length && i - 1 == j)
-//			close(pipes[j][0]);
-//		else if (i == length && j == length - 2)
-//			close(pipes[j][1]);
 		else
 		{
 			close(pipes[j][0]);
@@ -98,4 +100,36 @@ void	create_pipeline(int	**pipes, int com, int length)
 		}
 		j++;
 	}
+}
+
+int	ft_wait(t_exec_env *in_exec)
+{
+	t_fds	*tmp_fd;
+
+	tmp_fd = in_exec->first_fd;
+	while (tmp_fd)
+	{
+		waitpid(tmp_fd->pid_com, &(tmp_fd->r_code), 0);
+		if (WIFEXITED(tmp_fd->r_code))
+			tmp_fd->r_code = WEXITSTATUS(tmp_fd->r_code);
+		else
+			tmp_fd->r_code = 242;
+		if (tmp_fd->r_code == 242)
+			return (ft_kill(in_exec));
+		tmp_fd = tmp_fd->next_fd;
+	}
+	return (0);
+}
+
+int	ft_kill(t_exec_env *in_exec)
+{
+	t_fds	*tmp_fd;
+
+	tmp_fd = in_exec->first_fd;
+	while (tmp_fd)
+	{
+		kill(tmp_fd->pid_com, 2);
+		tmp_fd = tmp_fd->next_fd;
+	}
+	return (1);
 }
