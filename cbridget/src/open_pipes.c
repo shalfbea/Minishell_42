@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init2.c                                         :+:      :+:    :+:   */
+/*   open_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:28:51 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/05 14:05:18 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/06 15:27:17 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	open_pipes(t_minishell_environment *min_environment, t_exec_env *in_exec)
+int	open_pipes(t_logical_groups *group, t_exec_env *in_exec)
 {
 	int	i;
 
 	i = 0;
-	if (alloc_pipes(&(in_exec->_pipes), min_environment->number_of_commands - 1))
+	if (alloc_pipes(&(in_exec->_pipes), group->number_of_commands - 1))
 	{
-		free_min_env(min_environment);
+		free_min_env(group);
 		free_lsts(in_exec->first_fd);
 		return (1);
 	}
-	while (i < min_environment->number_of_commands - 1)
+	while (i < group->number_of_commands - 1)
 	{
 		if (pipe((in_exec->_pipes)[i]) < 0)
-			return (ft_free(min_environment, in_exec));
+			return (ft_free(group, in_exec));
 		i++;
 	}
 	return (0);

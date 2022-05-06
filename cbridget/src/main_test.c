@@ -41,7 +41,7 @@ int	main(void)
 	int i = 0;
 	while (i < 4)
 	{
-		ft_close_fd(test, i + 1, 4);
+		create_pipeline(test, i + 1, 4);
 		i++;
 	}
 	return (0);

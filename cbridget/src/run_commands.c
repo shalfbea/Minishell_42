@@ -6,41 +6,42 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 13:44:56 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/05 16:23:58 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/06 15:49:47 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	run_commands(t_minishell_environment *min_environment, t_exec_env *in_exec)
+int	run_commands(t_logical_groups *group, t_exec_env *in_exec)
 {
 	int	i;
-//	t_command_list	*tmp_min;
+	t_command_list	*tmp_cmd;
 	t_fds	*tmp_in;
 //	if (min_environment->number_of_commands == 1 && min_environment->first_command->build_in_flag)
 //		run_build_in();// it needs to be done
 	i = 0;
-//	tmp_min = min_environment->first_command;
+	tmp_cmd = group->first_command;
 	tmp_in = in_exec->first_fd;
-	while (i < min_environment->number_of_commands)
+	while (i < group->number_of_commands)
 	{
 		tmp_in->pid_com = fork();
 		if (tmp_in->pid_com < 0)
-			return (ft_free(min_environment, in_exec));
+			return (ft_free(group, in_exec));
 		if (tmp_in->pid_com == 0)
-			ft_exec(min_environment, in_exec, i + 1);
+			ft_exec(group, tmp_cmd, in_exec, i + 1);
+		tmp_cmd = tmp_cmd->next_command;
 		tmp_in = tmp_in->next_fd;
 		i++;
 	}
 	return (0);
 }
 
-void	ft_exec(t_minishell_environment *min_environment, t_command_list *cmd, t_exec_env *in_exec, int i)
+void	ft_exec(t_logical_groups *group, t_command_list *cmd, t_exec_env *in_exec, int i)
 {
-	create_pipeline(in_exec->_pipes, i, min_environment->number_of_commands);
+	create_pipeline(in_exec->_pipes, i, group->number_of_commands);
 	swap_filedescriptors(in_exec, i);
-	execve((cmd->argv)[0], cmd->argv, min_environment->envp);
-	kill()//it needs to be done
+	execve((cmd->argv)[0], cmd->argv, in_exec->envp_in);
+//	kill()//it needs to be done
 }
 
 void	swap_filedescriptors(t_exec_env *in_exec, int com)
