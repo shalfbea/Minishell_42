@@ -11,7 +11,7 @@ int	main(int argc, char **argv, char **envp)
 	argv = NULL;
 	test.envp = envp;
 	char *t[] = {"/bin/echo", "hello_world", NULL};
-	test.first_group->number_of_commands = 3;
+	test.first_group->number_of_commands = 1;
 	test.first_group->first_command = malloc(sizeof(t_command_list) * 1);
 //	test.first_group->first_command->command = "/bin/echo";
 	test.first_group->first_command->infile = NULL;
@@ -19,7 +19,8 @@ int	main(int argc, char **argv, char **envp)
 	test.first_group->first_command->redirect_flag_infile = 0;
 	test.first_group->first_command->redirect_flag_outfile = 0;
 	test.first_group->first_command->argv = t;
-	char *t2[] = {"/bin/cat", NULL};
+	test.first_group->first_command->next_command = NULL;
+/*	char *t2[] = {"/bin/cat", NULL};
 	test.first_group->first_command->next_command = malloc(sizeof(t_command_list) * 1);
 //	test.first_group->first_command->next_command->command = "/bin/cat";
 	test.first_group->first_command->next_command->infile = NULL;
@@ -36,7 +37,7 @@ int	main(int argc, char **argv, char **envp)
 	test.first_group->first_command->next_command->next_command->redirect_flag_infile = 0;
 	test.first_group->first_command->next_command->next_command->redirect_flag_outfile = 1;
 	test.first_group->first_command->next_command->next_command->argv = t3;
-	test.first_group->first_command->next_command->next_command->next_command = NULL;
+	test.first_group->first_command->next_command->next_command->next_command = NULL;*/
 	executor(&test);
 	printf("ex_code=%d\n", test.ex_code);
 /*	int **test;

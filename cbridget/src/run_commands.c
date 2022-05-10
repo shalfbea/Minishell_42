@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 13:44:56 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/06 18:15:58 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/10 14:19:13 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ft_exec(t_logical_groups *group, t_command_list *cmd, t_exec_env *in_exec, 
 
 	j = 1;
 	create_pipeline(in_exec->_pipes, i, group->number_of_commands);
+	int err = working_with_redirects();
 	swap_filedescriptors(in_exec, i);
 	execve((cmd->argv)[0], cmd->argv, in_exec->envp_in);
 	exit(242);
