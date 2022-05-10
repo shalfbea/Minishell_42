@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/06 18:07:46 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/10 15:14:00 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@
 
 typedef struct s_command_list {
 	char	build_in_flag;//????
-	char	redirect_flag_infile;// 0 means: redirect >, 1 means: redirect >>.
-	char	*infile;//pointer to a string with named infile, NULL means no file.
-	char	redirect_flag_outfile;// same as redirect_flag_infile but for outfile.
-	char	*outfile;//same as *infile but for outfile.
+/*	char	*redirect_flag_infile;// 0 means: redirect >, 1 means: redirect >>.
+	char	**infile;//pointer to a string with named infile, NULL means no file.
+	char	*redirect_flag_outfile;// same as redirect_flag_infile but for outfile.
+	char	**outfile;//same as *infile but for outfile.*///that's not right
+	char	**redirects;//vector for all redirects. last pointer must be NULL;
+	char	*redirect_flags;//flags for each redirect. 0 means: redirect >, 1 means: redirect >>, 2 means: redirect <, 3 means: redirect <<;
 	char	**argv;//first pointer is the absolut path to the command. command arguments. last pointer must be NULL;
 	struct s_command_list	*next_command;//if there are no more commands, set to NULL. This is pipeline.
 }	t_command_list;//linked list for commands.
@@ -45,6 +47,7 @@ typedef struct s_minishell_environment {
 typedef struct s_fds {
 	int	infile;
 	int	outfile;
+	char	re_flag;
 	int	r_code;
 	pid_t	pid_com;
 	struct s_fds	*next_fd;
