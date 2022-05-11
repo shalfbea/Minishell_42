@@ -6,123 +6,13 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:42:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/05 19:44:06 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/11 21:04:50 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	argv_cleaner(char	**argv)
-{
-	char	*cur;
-
-	if (!argv)
-		return ;
-	cur = *argv;
-	while (cur)
-	{
-		free(cur);
-		cur++;
-	}
-	if (argv)
-		free(argv);
-	*argv = NULL;
-}
-
-void	clear_command(t_command_list *elem)
-{
-	if (elem->infile)
-		free(elem->infile);
-	if (elem->outfile)
-		free(elem->outfile);
-	argv_cleaner(elem->argv);
-}
-
-t_command_list	*clear_command_lst(t_command_list **lst)
-{
-	t_command_list	*cur_elem;
-	t_command_list	*next_elem;
-	char	check;
-
-	check = 1;
-	if (*lst == NULL)
-		return (NULL);
-	cur_elem = *lst;
-	next_elem = *lst;
-	while (check)
-	{
-		if (cur_elem->next_command)
-			next_elem = cur_elem->next_command;
-		else
-			check = 0;
-		clear_command(cur_elem);
-		free(cur_elem);
-		cur_elem = next_elem;
-	}
-	*lst = NULL;
-	return (NULL);
-}
-
-t_command_list	*new_command(void)
-{
-	t_command_list	*list;
-
-	list = malloc(sizeof(t_command_list));
-	if (!list)
-		return (NULL);
-	list->build_in_flag = 0;
-	list->redirect_flag_infile = -1; //Check shit
-	list->infile = NULL;
-	list->redirect_flag_outfile = -1; //Check shit
-	list->outfile = NULL;
-	list->argv = NULL;
-	list->next_command = NULL;
-	return (list);
-}
-
-static void	command_append(t_command_list **lst, t_command_list **cur)
-{
-	if (*lst == NULL)
-	{
-		*cur = new_command();
-		*lst = *cur;
-	}
-	else
-	{
-		(*cur)->next_command = new_command();
-		*cur = (*cur)->next_command;
-	}
-}
-
-void	nodelete(void *element)
-{
-	(void) element;
-	return ;
-}
-
-char	**argv_former(t_list	**argv)
-{
-	char	**res;
-	int		words;
-	t_list	*tmp;
-	int		i;
-
-	words = ft_lstsize(*argv);
-	res = (char **) malloc(sizeof(char *) * (words + 1));
-	tmp = *argv;
-	i = 0;
-	while (i < words)
-	{
-		res[i] = (char *) tmp->content;
-		tmp = tmp->next;
-		++i;
-	}
-	res[i] = NULL;
-	ft_lstclear(argv, &nodelete);
-	return (res);
-}
-
-t_command_list	*parser(t_list	*args)
+static t_command_list	*parse_start(t_parser_data *data)
 {
 	t_command_list	*res;
 	t_command_list	*cur;
@@ -177,12 +67,29 @@ t_command_list	*parser(t_list	*args)
 		}
 		else if (arg->type == PIPE)
 		{
-			cur->argv = argv_former(&argv);
+			cur->argv = array_former(&argv);
 			command_append(&res, &cur);
 			mode = 0;
 		}
-		args=args->next;
+		args = args->next;
 	}
 	cur->argv = argv_former(&argv);
+	cur->
+	return (res);
+}
+
+t_logical_groups	*parser(t_list *args)
+{
+	t_parser_data		data;
+	t_logical_groups	*res;
+
+	data.cur = NULL;
+	data.res = NULL;
+	data.arg = args;
+	data.argv = NULL;
+	data.mode = 0;
+	data.redirect_flags = NULL;
+	data.redirects = NULL;
+	res = form_group(parse_start(&data));
 	return (res);
 }

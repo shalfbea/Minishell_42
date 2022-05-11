@@ -1,40 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_check.c                                        :+:      :+:    :+:   */
+/*   logical_groups.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/05 19:58:55 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/11 19:11:43 by shalfbea         ###   ########.fr       */
+/*   Created: 2022/05/11 20:59:40 by shalfbea          #+#    #+#             */
+/*   Updated: 2022/05/11 21:05:08 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	env_checker(char	*str)
+t_logical_groups	*form_group(t_command_list *commands_lst)
 {
-	int	i;
+	t_logical_groups	*res;
 
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == '$')
-			return ;///////We need to go deeper
-		++i;
-	}
+	res = (t_logical_groups *) malloc(sizeof(t_logical_groups));
+	if (!res)
+		return (NULL);
+	res->first_command = commands_lst;
+	res->logical_flag	= 0;
+	res->next_group = NULL;
+	res->number_of_commands = 0;
+	return (res);
 }
-
-/*
-char	lst_env_check(t_list	*args)
-{
-	t_lexer	*cur;
-
-	cur = (t_lexer *) args;
-	while(cur)
-	{
-		if (cur->type == NO_QUOTE || cur->type == DOUBLE_QUOTES)
-			env_checker(....
-	}
-}
-*/

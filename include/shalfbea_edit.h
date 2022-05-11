@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/04 18:44:41 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/11 21:05:27 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,17 @@ typedef struct s_splitter_data
 	char	after_quotes;
 }	t_splitter_data;
 
+typedef struct s_parser_data
+{
+	t_command_list	*res;
+	t_command_list	*cur;
+	t_lexer			*arg;
+	t_list			*argv;
+	t_list			*redirects;
+	t_list			*redirect_flags;
+	int				mode;
+}	t_parser_data;
+
 void	builtin_exit(int num);
 int		prompt(void);
 char	error_msg(int mode);
@@ -68,5 +79,14 @@ char	special_characters(char	*c);
 char	special_handler(t_splitter_data *data, char specials);
 
 //lexer.c
-t_command_list	*parser(t_list	*args);
+//t_command_list	*parser(t_list *args);
+t_logical_groups	*parser(t_list *args);
+
+//arrays.c
+void	string_array_cleaner(char	**array);
+char	**string_array_former(t_list	**array);
+
+//logical_groups.c
+t_logical_groups	*form_group(t_command_list *commands);
+
 #endif

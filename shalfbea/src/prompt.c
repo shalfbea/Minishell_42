@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/05 19:49:40 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/11 21:07:14 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int	prompt(void)
 	char			*str;
 	t_list			*args;
 	t_command_list	*commands;
+	t_logical_groups	*groups;
 
 	str = NULL;
 	args = NULL;
@@ -119,7 +120,8 @@ int	prompt(void)
 	// ПРОВЕРКА СОДЕРЖИМОГО КОВЫЧЕК
 	// СКЕЙКА ТОКЕНОВ
 	// ПРОВЕРКА ПРАВИЛЬНОГО ПОРЯДКА ТОКЕНОВ
-	commands = parser(args); // 25% working for dumn cases
+	groups = parser(args);
+	commands = groups->first_command; // 25% working for dumn cases
 	// ПРОВЕРКА ARGV[0] - название программы
 	if (S_DEBUG && commands)
 	{
