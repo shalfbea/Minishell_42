@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 15:30:05 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/10 14:17:13 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/11 15:52:50 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	ft_init(t_logical_groups *group, t_exec_env *in_exec)
 	}
 	if (alloc_lsts(in_exec, group->number_of_commands))
 		return (ft_free(group, in_exec));
-//	if (open_files(group->first_command, in_exec->first_fd))
-//		return (ft_free(group, in_exec));
+	if (heredoc())//it needs to be done!
+		return (ft_free(group, in_exec));
 	return (0);
 }
 

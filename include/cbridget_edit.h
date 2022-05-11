@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/10 15:14:00 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/11 17:39:18 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ typedef struct s_command_list {
 /*	char	*redirect_flag_infile;// 0 means: redirect >, 1 means: redirect >>.
 	char	**infile;//pointer to a string with named infile, NULL means no file.
 	char	*redirect_flag_outfile;// same as redirect_flag_infile but for outfile.
-	char	**outfile;//same as *infile but for outfile.*///that's not right
+	char	**outfile;//same as *infile but for outfile.*/
+	//that's not right
 	char	**redirects;//vector for all redirects. last pointer must be NULL;
 	char	*redirect_flags;//flags for each redirect. 0 means: redirect >, 1 means: redirect >>, 2 means: redirect <, 3 means: redirect <<;
 	char	**argv;//first pointer is the absolut path to the command. command arguments. last pointer must be NULL;
@@ -30,6 +31,7 @@ typedef struct s_command_list {
 # define LOGICAL_ALWAYS 0
 # define LOGICAL_AND 1
 # define LOGICAL_OR 2
+# define BUFFER_SIZE 10
 
 typedef struct s_logical_groups {
 	t_command_list			*first_command;//poiter to the first command to execute
@@ -47,7 +49,8 @@ typedef struct s_minishell_environment {
 typedef struct s_fds {
 	int	infile;
 	int	outfile;
-	char	re_flag;
+//	char	run_cmd;
+	char	hd_flag;
 	int	r_code;
 	pid_t	pid_com;
 	struct s_fds	*next_fd;
@@ -79,5 +82,18 @@ void	close_pipes(t_exec_env *in_exec, int num);
 int	ft_wait(t_exec_env *in_exec);
 int	ft_kill(t_exec_env *in_exec);
 void	save_ex_code(t_minishell_environment *min_environment, t_exec_env *in_exec);
+
+int	working_with_redirects(t_logical_groups *group, t_command_list *cmd, t_exec_env *in_exec, int num);
+int	check_files(t_command_list *cmd, t_fds *tmp_fd);
+int	put_error(char *name);
+
+char	*get_next_line(int fd);
+char	*create_result(unsigned int *j, int *error, int *tmp_fd, char *letter);
+char	*some_more_functions(unsigned int i, unsigned int size,
+							char *result, int error);
+char	*clear_end(char *result);
+void	end_logic(char **result, int error, int i);
+char	*my_realloc(char *result, unsigned int *size, int mod);
+char	*my_realloc_two(char *result, unsigned int *size);
 
 #endif

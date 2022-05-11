@@ -10,7 +10,8 @@ MINISHELL := minishell
 
 LIBFT := ../libft/libft.a
 
-SRC = executor.c ft_init.c open_pipes.c lib_lst.c main_test.c run_commands.c
+SRC = executor.c ft_init.c open_pipes.c lib_lst.c main_test.c run_commands.c\
+redirects.c
 
 OBJ_DIR = ./obj/
 SRC_DIR = ./src/
