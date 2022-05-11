@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 18:27:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/04/30 19:10:41 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:59:12 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <termios.h>
 # include <sys/types.h>
 # include <fcntl.h>
+# include <errno.h>
 
 # include "libft.h"
 # include "cbridget_edit.h"

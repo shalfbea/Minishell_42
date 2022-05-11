@@ -1,12 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
+/* ************************************************************************** */ /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 14:26:32 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/10 15:47:22 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:47:25 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +16,7 @@ int	working_with_redirects(t_logical_groups *group, t_command_list *cmd, t_exec_
 	t_fds	*tmp_fd;
 	int		j;
 
+	group = NULL;
 	j = 1;
 	tmp_fd = in_exec->first_fd;
 	while (j < num)
@@ -24,62 +24,76 @@ int	working_with_redirects(t_logical_groups *group, t_command_list *cmd, t_exec_
 		tmp_fd = tmp_fd->next_fd;
 		j++;
 	}
+	if (check_files(cmd, tmp_fd))
+		return (1);
+//	else if (check_cmd())
+//		return (1);
+	//enter run flags!
+	return (0);
+}
+
+int	check_files(t_command_list *cmd, t_fds *tmp_fd)
+{
+	int	j;
+	int fd;
+
 	j = 0;
-	int fd = -55;
-	heredoc();
+	fd = -55;
 	while (cmd->redirects[j])
 	{
 		if (cmd->redirect_flags[j] == 0 || cmd->redirect_flags[j] == 1)
 		{
 			if (tmp_fd->outfile != -55)
-			{
 				close(tmp_fd->outfile);
-				tmp_fd->outfile = -55;
-			}
 			if (cmd->redirect_flags[j] == 0)
 				tmp_fd->outfile = open(cmd->redirects[j], O_WRONLY | O_CREAT | O_TRUNC, 0666);
 			else
 				tmp_fd->outfile = open(cmd->redirects[j], O_WRONLY | O_CREAT | O_APPEND, 0666);
 			if (tmp_fd->outfile == -1)
-			{
-				tmp_fd->r_code = 1;
-				return (put_error());
-			}
+				return (put_error(cmd->redirects[j]));
 		}
 		else if (cmd->redirect_flags[j] == 2)
 		{
-			if (tmp_fd->infile != -55 && tmp_fd->re_flag < j)
+			if (tmp_fd->infile != -55 && tmp_fd->hd_flag < j)
 			{
 				close(tmp_fd->infile);
-/*				if (tmp_fd->re_flag)
+/*				if (tmp_fd->re_flag != -1)
 				{
 					unlink();
 					tmp_fd->re_flag = -1;
 				}*/
-				tmp_fd->infile = -55;
 			}
-			else if (fd != -55)
+			if (fd != -55)
 			{
 				close(fd);
 				fd = -55;
 			}
-			if (tmp_fd->re_flag < j)
+			if (tmp_fd->hd_flag < j)
 				tmp_fd->infile = open(cmd->redirects[j], O_RDONLY);
 			else
 				fd = open(cmd->redirects[j], O_RDONLY);
 			if (fd == -1 || tmp_fd->infile == -1)
-			{
-				tmp_fd->r_code = 1;
-				return (put_error());
-			}
+				return (put_error(cmd->redirects[j]));
 		}
+		j++;
 	}
 	if (fd != -55)
 		close(fd);
 	return (0);
 }
 
-int	put_error()
+int	put_error(char *name)
 {
+	char	*str;
+	int		length;
+
+	str = strerror(errno);
+	length = ft_strlen(name);
+	write(2, "minishell: ", 11);
+	write(2, name, length);
+	write(2, ": ", 2);
+	length = ft_strlen(str);
+	write(2, str, length);
+	write(2, "\n", 1);
 	return (1);
 }
