@@ -6,76 +6,73 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:42:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/11 21:04:50 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/12 18:03:15 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	form_current(t_parser_data *data, char end)
+{
+	data->cur->argv = string_array_former(&(data->argv));
+	data->cur->redirects = string_array_former(&(data->redirects));
+	data->cur->redirect_flags = char_array_former(&(data->redirect_flags));
+	if (!end)
+		command_append(&(data->res), &(data->cur));
+	data->mode = 0;
+}
+
+static t_list	*ft_lstnew_from_char(char c)
+{
+	t_list	*res;
+	char	*tmp;
+
+	res = ft_lstnew(NULL);
+	tmp = (void *) malloc(sizeof(char));
+	*tmp = c;
+	res->content = (void *) tmp;
+	return (res);
+}
+
+static t_command_list	*error_and_clean(t_parser_data *data)
+{
+	printf("syntax error near unexpected token `%s'\n", data->arg->str);
+	ft_lstclear(&(data->argv), &no_delete);
+	ft_lstclear(&(data->redirects), &no_delete);
+	ft_lstclear(&(data->redirect_flags), &free);
+	return(clear_command_lst(&(data->res)));
+}
+
 static t_command_list	*parse_start(t_parser_data *data)
 {
-	t_command_list	*res;
-	t_command_list	*cur;
-	t_lexer			*arg;
-	t_list			*argv;
-	int				mode;
-
-	if (!args)
-		return (NULL);
-	res = NULL;
-	cur = NULL;
-	argv = NULL;
-	mode = 0;
-	command_append(&res, &cur);
-	while (args)
+	command_append(&(data->res), &(data->cur));
+	while (data->args)
 	{
-		arg = (t_lexer *) args->content;
-		if (arg->type < 3) //EDIT LATER
+		data->arg = (t_lexer *) data->args->content;
+		if (data->arg->type >= NO_QUOTE && data->arg->type <= DOUBLE_QUOTES)
 		{
-			if (mode == 0)
-				ft_lstadd_back(&argv, ft_lstnew((void *)arg->str));
-			if (mode == REDIR_OUT)
+			if (data->mode == 0)
+				ft_lstadd_back(&(data->argv), ft_lstnew((void *)data->arg->str));
+			else if (data->mode >= REDIR_OUT && data->mode <= REDIR_INSOURCE)
 			{
-				cur->outfile = arg->str;
-				mode = 0;
-			}
-			if (mode == REDIR_IN)
-			{
-				cur->infile = arg->str;
-				mode = 0;
+				//data->cur->outfile = arg->str;
+				ft_lstadd_back(&(data->redirects), ft_lstnew((void *)data->arg->str));
+				data->mode = 0;
 			}
 		}
-		else if (arg->type == REDIR_OUT)
+		else if (data->arg->type >= REDIR_OUT && data->arg->type <= REDIR_INSOURCE)
 		{
-			cur->redirect_flag_outfile = 0;
-			mode = REDIR_OUT;
+			if (data->mode >= REDIR_OUT && data->arg->type <= REDIR_INSOURCE)
+				return(error_and_clean(data));
+			ft_lstadd_back(&(data->redirect_flags), ft_lstnew_from_char(data->arg->type));
+			data->mode = data->arg->type;
 		}
-		else if (arg->type == REDIR_IN)
-		{
-			cur->redirect_flag_infile = 0;
-			mode = REDIR_IN;
-		}
-		else if (arg->type == REDIR_APPEND)
-		{
-			cur->redirect_flag_outfile = 1;
-			mode = REDIR_OUT;
-		}
-		else if (arg->type == REDIR_INSOURCE)
-		{
-			cur->redirect_flag_infile = 1;
-			mode = REDIR_IN;
-		}
-		else if (arg->type == PIPE)
-		{
-			cur->argv = array_former(&argv);
-			command_append(&res, &cur);
-			mode = 0;
-		}
-		args = args->next;
+		else if (data->arg->type == PIPE)
+			form_current(data, 0);
+		data->args = data->args->next;
 	}
-	cur->argv = argv_former(&argv);
-	cur->
-	return (res);
+	form_current(data, 1);
+	return (data->res);
 }
 
 t_logical_groups	*parser(t_list *args)
@@ -83,9 +80,11 @@ t_logical_groups	*parser(t_list *args)
 	t_parser_data		data;
 	t_logical_groups	*res;
 
+	if(!args)
+		return (NULL);
 	data.cur = NULL;
 	data.res = NULL;
-	data.arg = args;
+	data.args = args;
 	data.argv = NULL;
 	data.mode = 0;
 	data.redirect_flags = NULL;

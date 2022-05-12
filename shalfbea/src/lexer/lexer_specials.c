@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:14:23 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/04 18:20:32 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:57:21 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	special_characters(char	*c)
 		return (3);
 	if (*c == '\"')
 		return (3);
-	else if (*c == '>' && c[1] != '<')
+	else if (*c == '>' && c[1] != '>')
 		return (1);
 	else if (*c == '<' && c[1] != '<')
 		return (1);

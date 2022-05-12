@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 20:28:32 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/11 20:30:42 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/12 13:49:33 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	clear_command(t_command_list *elem)
 {
 	if (elem->redirect_flags)
 		free(elem->redirect_flags);
-	array_cleaner(elem->argv);
-	array_cleaner(elem->redirects);
+	string_array_cleaner(elem->argv);
+	string_array_cleaner(elem->redirects);
 }
 
 t_command_list	*clear_command_lst(t_command_list **lst)
@@ -60,7 +60,7 @@ t_command_list	*new_command(void)
 	return (list);
 }
 
-static void	command_append(t_command_list **lst, t_command_list **cur)
+void	command_append(t_command_list **lst, t_command_list **cur)
 {
 	if (*lst == NULL)
 	{

@@ -13,6 +13,8 @@ LIBFT := ../libft/libft.a
 SRC = main_shalfbea.c \
 	  prompt.c \
 	  signals.c \
+	  ms_env.c \
+	  debug/printers.c \
 	  lexer/lexer.c lexer/lexer_wraps_lst.c lexer/lexer_specials.c \
 	  lexer/env_check.c \
 	  parser/parser.c parser/arrays.c parser/command_lst.c \
@@ -43,6 +45,7 @@ $(OBJ_DIR) :
 	mkdir obj
 	mkdir obj/lexer
 	mkdir obj/parser
+	mkdir obj/debug
 
 clean:
 	$(RM) $(OBJ_DIR)

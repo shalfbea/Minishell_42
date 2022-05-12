@@ -6,12 +6,13 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 19:58:55 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/11 19:11:43 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/12 12:51:44 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
 static char	env_checker(char	*str)
 {
 	int	i;
@@ -24,7 +25,7 @@ static char	env_checker(char	*str)
 		++i;
 	}
 }
-
+*/
 /*
 char	lst_env_check(t_list	*args)
 {
