@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cbridget_edit.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/11 17:39:18 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/13 13:15:42 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@
 
 typedef struct s_command_list {
 	char	build_in_flag;//????
-/*	char	*redirect_flag_infile;// 0 means: redirect >, 1 means: redirect >>.
-	char	**infile;//pointer to a string with named infile, NULL means no file.
-	char	*redirect_flag_outfile;// same as redirect_flag_infile but for outfile.
-	char	**outfile;//same as *infile but for outfile.*/
-	//that's not right
 	char	**redirects;//vector for all redirects. last pointer must be NULL;
 	char	*redirect_flags;//flags for each redirect. 0 means: redirect >, 1 means: redirect >>, 2 means: redirect <, 3 means: redirect <<;
 	char	**argv;//first pointer is the absolut path to the command. command arguments. last pointer must be NULL;
@@ -84,8 +79,16 @@ int	ft_kill(t_exec_env *in_exec);
 void	save_ex_code(t_minishell_environment *min_environment, t_exec_env *in_exec);
 
 int	working_with_redirects(t_logical_groups *group, t_command_list *cmd, t_exec_env *in_exec, int num);
-int	check_files(t_command_list *cmd, t_fds *tmp_fd);
+int	check_files(t_command_list *cmd, t_fds *tmp_fd, int num);
 int	put_error(char *name);
+
+int	heredoc(t_logical_groups *group, t_exec_env *in_exec);
+int	write_heredoc(int num, char *delim);
+int	hd_close(char *str, char *file_n, int fd);
+int	create_file(int num, char **file_n);
+char	*create_name(int num);
+void	put_warning(int line, char *delim);
+void	delete_heredoc(t_command_list *cmd);
 
 char	*get_next_line(int fd);
 char	*create_result(unsigned int *j, int *error, int *tmp_fd, char *letter);

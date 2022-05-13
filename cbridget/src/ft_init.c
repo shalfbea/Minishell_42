@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 15:30:05 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/11 15:52:50 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/13 12:37:41 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,37 +21,15 @@ int	ft_init(t_logical_groups *group, t_exec_env *in_exec)
 	}
 	if (alloc_lsts(in_exec, group->number_of_commands))
 		return (ft_free(group, in_exec));
-	if (heredoc())//it needs to be done!
+	if (heredoc(group, in_exec))
 		return (ft_free(group, in_exec));
 	return (0);
 }
 
-/*int	open_files(t_command_list *commands, t_fds *fds)
-{
-	checking_files();
-	heredoc();
-	while (commands)
-	{
-		if (commands->infile && !commands->redirect_flag_infile)
-			fds->infile = open(commands->infile, O_RDONLY);
-//		else if (commands->infile && commands->redirect_flag_infile)
-//			fds->infile = heredoc();//do this
-		if (commands->outfile && !commands->redirect_flag_outfile)
-			fds->outfile = open(commands->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-		else if (commands->outfile && commands->redirect_flag_outfile)
-			fds->outfile = open(commands->outfile,  O_WRONLY | O_CREAT | O_APPEND, 0666);
-		if (fds->infile == -1 || fds->outfile == -1)
-			return (1);
-
-		commands = commands->next_command;
-		fds = fds->next_fd;
-	}
-	return (0);
-}*/
-
 int	ft_free(t_logical_groups *group, t_exec_env *in_exec)
 {
-	free_min_env(group);
+	group = NULL;//fix it!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//	free_min_env(group);
 	free_lsts(in_exec->first_fd);
 	free((in_exec->_pipes)[0]);
 	free(in_exec->_pipes);

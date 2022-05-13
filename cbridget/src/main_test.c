@@ -11,8 +11,8 @@ int	main(int argc, char **argv, char **envp)
 	argv = NULL;
 	test.envp = envp;
 	char *t[] = {"/bin/cat", NULL};
-	char *vector[] = {"file", "file1", NULL};
-	char v_flags[] = {2, 1};
+	char *vector[] = {"file2", "st", "dd", NULL};
+	char v_flags[] = {2, 3, 3};
 	test.first_group->number_of_commands = 2;
 	test.first_group->first_command = malloc(sizeof(t_command_list) * 1);
 	test.first_group->first_command->argv = t;
@@ -20,8 +20,8 @@ int	main(int argc, char **argv, char **envp)
 	test.first_group->first_command->redirect_flags = v_flags;
 	test.first_group->first_command->next_command = NULL;
 	char *t2[] = {"/bin/cat", NULL};
-	char *vector1[] = {NULL};
-	char v_flags1[1];
+	char *vector1[] = {"file4", "file5", "stop", NULL};
+	char v_flags1[] = {0, 0, 3};
 	test.first_group->first_command->next_command = malloc(sizeof(t_command_list) * 1);
 	test.first_group->first_command->next_command->argv = t2;
 	test.first_group->first_command->next_command->redirects = vector1;
@@ -38,6 +38,8 @@ int	main(int argc, char **argv, char **envp)
 	test.first_group->first_command->next_command->next_command->next_command = NULL;*/
 	executor(&test);
 	printf("ex_code=%d\n", test.ex_code);
+	free(test.first_group->first_command->next_command);
+	free(test.first_group->first_command);
 /*	int **test;
 	test = malloc(sizeof(int *) * 4);
 	test[0] = malloc(sizeof(int) * 3 * 2);

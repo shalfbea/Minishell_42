@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:28:51 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/06 16:43:42 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/13 13:41:29 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

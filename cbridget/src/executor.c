@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 17:22:45 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/06 18:23:27 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/13 13:16:02 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	executor(t_minishell_environment *min_environment)
 		return (1);
 	else
 		save_ex_code(min_environment, &in_exec);
-//	ft_free(min_environment->first_group, &in_exec); it's commented out due to tests
+	delete_heredoc(min_environment->first_group->first_command);
+	ft_free(min_environment->first_group, &in_exec);// it's commented out due to tests
 	return (0);
 }
 

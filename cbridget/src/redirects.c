@@ -24,7 +24,7 @@ int	working_with_redirects(t_logical_groups *group, t_command_list *cmd, t_exec_
 		tmp_fd = tmp_fd->next_fd;
 		j++;
 	}
-	if (check_files(cmd, tmp_fd))
+	if (check_files(cmd, tmp_fd, num))
 		return (1);
 //	else if (check_cmd())
 //		return (1);
@@ -32,13 +32,12 @@ int	working_with_redirects(t_logical_groups *group, t_command_list *cmd, t_exec_
 	return (0);
 }
 
-int	check_files(t_command_list *cmd, t_fds *tmp_fd)
+int	check_files(t_command_list *cmd, t_fds *tmp_fd, int num)
 {
 	int	j;
-	int fd;
+	char *name;
 
 	j = 0;
-	fd = -55;
 	while (cmd->redirects[j])
 	{
 		if (cmd->redirect_flags[j] == 0 || cmd->redirect_flags[j] == 1)
@@ -52,33 +51,27 @@ int	check_files(t_command_list *cmd, t_fds *tmp_fd)
 			if (tmp_fd->outfile == -1)
 				return (put_error(cmd->redirects[j]));
 		}
-		else if (cmd->redirect_flags[j] == 2)
+		else if (cmd->redirect_flags[j] == 2 || cmd->redirect_flags[j] == 3)
 		{
-			if (tmp_fd->infile != -55 && tmp_fd->hd_flag < j)
-			{
+			if (tmp_fd->infile != -55)
 				close(tmp_fd->infile);
-/*				if (tmp_fd->re_flag != -1)
-				{
-					unlink();
-					tmp_fd->re_flag = -1;
-				}*/
-			}
-			if (fd != -55)
-			{
-				close(fd);
-				fd = -55;
-			}
-			if (tmp_fd->hd_flag < j)
+			if (tmp_fd->hd_flag != j && cmd->redirect_flags[j] == 2)
 				tmp_fd->infile = open(cmd->redirects[j], O_RDONLY);
+			else if (tmp_fd->hd_flag == j && cmd->redirect_flags[j] == 3)
+			{
+				name = create_name(num);
+				if (!name)
+					return (1);
+				tmp_fd->infile = open(name, O_RDONLY);
+				free(name);
+			}
 			else
-				fd = open(cmd->redirects[j], O_RDONLY);
-			if (fd == -1 || tmp_fd->infile == -1)
+				tmp_fd->infile = -55;
+			if (tmp_fd->infile == -1)
 				return (put_error(cmd->redirects[j]));
 		}
 		j++;
 	}
-	if (fd != -55)
-		close(fd);
 	return (0);
 }
 

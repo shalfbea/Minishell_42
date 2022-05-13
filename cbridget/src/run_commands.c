@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 13:44:56 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/11 15:23:36 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/13 16:06:55 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,17 @@ void	swap_filedescriptors(t_exec_env *in_exec, int com)
 		tmp_fd = tmp_fd->next_fd;
 		j++;
 	}
+	printf("in=%d, out=%d, cmd=%d\n", tmp_fd->infile, tmp_fd->outfile, com);
+	fflush(stdout);
 	if (tmp_fd->infile != -55)
 	{
+//		close(STDIN_FILENO);
 		dup2(tmp_fd->infile, STDIN_FILENO);
 		close(tmp_fd->infile);
 	}
 	if (tmp_fd->outfile != -55)
 	{
+//		close(STDOUT_FILENO);
 		dup2(tmp_fd->outfile, STDOUT_FILENO);
 		close(tmp_fd->outfile);
 	}
@@ -117,7 +121,7 @@ int	ft_wait(t_exec_env *in_exec)
 		if (WIFEXITED(tmp_fd->r_code))
 			tmp_fd->r_code = WEXITSTATUS(tmp_fd->r_code);
 		else
-			tmp_fd->r_code = 242;
+			tmp_fd->r_code = 1;
 		if (tmp_fd->r_code == 242)
 			return (ft_kill(in_exec));
 		tmp_fd = tmp_fd->next_fd;
