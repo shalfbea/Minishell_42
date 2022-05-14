@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 13:44:56 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/13 16:06:55 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/14 19:39:23 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	ft_exec(t_logical_groups *group, t_command_list *cmd, t_exec_env *in_exec, 
 	create_pipeline(in_exec->_pipes, i, group->number_of_commands);
 	if (working_with_redirects(group, cmd, in_exec, i))
 		exit(1);
-//	if (check_cmd())
-//		exit(127);//it needs to be done
+	if (check_cmd(&((cmd->argv)[0]), in_exec->envp_in))
+		exit(127);//it needs to be done
 	swap_filedescriptors(in_exec, i);
 	execve((cmd->argv)[0], cmd->argv, in_exec->envp_in);
 	exit(242);
@@ -66,17 +66,13 @@ void	swap_filedescriptors(t_exec_env *in_exec, int com)
 		tmp_fd = tmp_fd->next_fd;
 		j++;
 	}
-	printf("in=%d, out=%d, cmd=%d\n", tmp_fd->infile, tmp_fd->outfile, com);
-	fflush(stdout);
 	if (tmp_fd->infile != -55)
 	{
-//		close(STDIN_FILENO);
 		dup2(tmp_fd->infile, STDIN_FILENO);
 		close(tmp_fd->infile);
 	}
 	if (tmp_fd->outfile != -55)
 	{
-//		close(STDOUT_FILENO);
 		dup2(tmp_fd->outfile, STDOUT_FILENO);
 		close(tmp_fd->outfile);
 	}

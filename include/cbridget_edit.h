@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/13 13:15:42 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/14 19:24:09 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int	ft_init(t_logical_groups *group, t_exec_env *in_exec);
 int	open_pipes(t_logical_groups *group, t_exec_env *in_exec);
 int	alloc_pipes(int ***pipes, int num);
 int	ft_free(t_logical_groups *group, t_exec_env *in_exec);
-void	free_min_env(t_logical_groups *group);
+void	free_group(t_command_list *cmd);
+void	free_vector(char **vct);
 int	alloc_lsts(t_exec_env *in_exec, int num);
 int	create_lst(t_fds **lst);
 void	free_lsts(t_fds *lst);
@@ -80,7 +81,7 @@ void	save_ex_code(t_minishell_environment *min_environment, t_exec_env *in_exec)
 
 int	working_with_redirects(t_logical_groups *group, t_command_list *cmd, t_exec_env *in_exec, int num);
 int	check_files(t_command_list *cmd, t_fds *tmp_fd, int num);
-int	put_error(char *name);
+int	put_error(char *name, char flag);
 
 int	heredoc(t_logical_groups *group, t_exec_env *in_exec);
 int	write_heredoc(int num, char *delim);
@@ -88,7 +89,7 @@ int	hd_close(char *str, char *file_n, int fd);
 int	create_file(int num, char **file_n);
 char	*create_name(int num);
 void	put_warning(int line, char *delim);
-void	delete_heredoc(t_command_list *cmd);
+int	delete_heredoc(t_command_list *cmd);
 
 char	*get_next_line(int fd);
 char	*create_result(unsigned int *j, int *error, int *tmp_fd, char *letter);
@@ -98,5 +99,10 @@ char	*clear_end(char *result);
 void	end_logic(char **result, int error, int i);
 char	*my_realloc(char *result, unsigned int *size, int mod);
 char	*my_realloc_two(char *result, unsigned int *size);
+
+int	check_cmd(char **cmd, char **envp);
+int	selection_path(char **cmd, char **p_path);
+char	*create_new_path(char *cmd, char **p_path);
+char	*search_path(char **env);
 
 #endif

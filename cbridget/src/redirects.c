@@ -26,9 +26,6 @@ int	working_with_redirects(t_logical_groups *group, t_command_list *cmd, t_exec_
 	}
 	if (check_files(cmd, tmp_fd, num))
 		return (1);
-//	else if (check_cmd())
-//		return (1);
-	//enter run flags!
 	return (0);
 }
 
@@ -49,7 +46,7 @@ int	check_files(t_command_list *cmd, t_fds *tmp_fd, int num)
 			else
 				tmp_fd->outfile = open(cmd->redirects[j], O_WRONLY | O_CREAT | O_APPEND, 0666);
 			if (tmp_fd->outfile == -1)
-				return (put_error(cmd->redirects[j]));
+				return (put_error(cmd->redirects[j], 1));
 		}
 		else if (cmd->redirect_flags[j] == 2 || cmd->redirect_flags[j] == 3)
 		{
@@ -68,19 +65,22 @@ int	check_files(t_command_list *cmd, t_fds *tmp_fd, int num)
 			else
 				tmp_fd->infile = -55;
 			if (tmp_fd->infile == -1)
-				return (put_error(cmd->redirects[j]));
+				return (put_error(cmd->redirects[j], 1));
 		}
 		j++;
 	}
 	return (0);
 }
 
-int	put_error(char *name)
+int	put_error(char *name, char flag)
 {
 	char	*str;
 	int		length;
 
-	str = strerror(errno);
+	if (flag)
+		str = strerror(errno);
+	else
+		str = "command not found";
 	length = ft_strlen(name);
 	write(2, "minishell: ", 11);
 	write(2, name, length);

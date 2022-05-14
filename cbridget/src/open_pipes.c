@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:28:51 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/13 13:41:29 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/13 18:28:30 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	open_pipes(t_logical_groups *group, t_exec_env *in_exec)
 	i = 0;
 	if (alloc_pipes(&(in_exec->_pipes), group->number_of_commands - 1))
 	{
-		free_min_env(group);
+		free_group(group->first_command);
 		free_lsts(in_exec->first_fd);
 		return (1);
 	}
