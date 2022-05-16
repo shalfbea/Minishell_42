@@ -11,12 +11,11 @@
 
 #include "minishell.h"
 
-int	working_with_redirects(t_logical_groups *group, t_command_list *cmd, t_exec_env *in_exec, int num)
+int	working_with_redirects(t_command_list *cmd, t_exec_env *in_exec, int num)
 {
 	t_fds	*tmp_fd;
 	int		j;
 
-	group = NULL;
 	j = 1;
 	tmp_fd = in_exec->first_fd;
 	while (j < num)

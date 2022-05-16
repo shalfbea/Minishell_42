@@ -6,19 +6,19 @@
 /*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 13:44:56 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/14 19:39:23 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/16 22:19:42 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	run_commands(t_logical_groups *group, t_exec_env *in_exec)
+int	run_commands(t_minishell_environment *min_environment, t_logical_groups *group, t_exec_env *in_exec)
 {
 	int	i;
 	t_command_list	*tmp_cmd;
 	t_fds	*tmp_in;
-//	if (min_environment->number_of_commands == 1 && min_environment->first_command->build_in_flag)
-//		run_build_in();// it needs to be done
+	if (group->number_of_commands == 1 && check_builtin(min_environment->builtin_names, group->first_command->argv[0]) < 7)
+		return (run_builtin(min_environment, group->first_command, in_exec));
 	i = 0;
 	tmp_cmd = group->first_command;
 	tmp_in = in_exec->first_fd;
@@ -28,7 +28,7 @@ int	run_commands(t_logical_groups *group, t_exec_env *in_exec)
 		if (tmp_in->pid_com < 0)
 			return (ft_free(group, in_exec));
 		if (tmp_in->pid_com == 0)
-			ft_exec(group, tmp_cmd, in_exec, i + 1);
+			ft_exec(min_environment, tmp_cmd, in_exec, i + 1);
 		tmp_cmd = tmp_cmd->next_command;
 		tmp_in = tmp_in->next_fd;
 		i++;
@@ -39,18 +39,20 @@ int	run_commands(t_logical_groups *group, t_exec_env *in_exec)
 	return (0);
 }
 
-void	ft_exec(t_logical_groups *group, t_command_list *cmd, t_exec_env *in_exec, int i)
+void	ft_exec(t_minishell_environment *min_environment, t_command_list *cmd, t_exec_env *in_exec, int i)
 {
 	int	j;
 
 	j = 1;
-	create_pipeline(in_exec->_pipes, i, group->number_of_commands);
-	if (working_with_redirects(group, cmd, in_exec, i))
+	create_pipeline(in_exec->_pipes, i, in_exec->num_com);
+	if (working_with_redirects(cmd, in_exec, i))
 		exit(1);
-	if (check_cmd(&((cmd->argv)[0]), in_exec->envp_in))
-		exit(127);//it needs to be done
 	swap_filedescriptors(in_exec, i);
-	execve((cmd->argv)[0], cmd->argv, in_exec->envp_in);
+	if (check_builtin(min_environment->builtin_names, cmd->argv[0]) < 7)
+		exit(run_builtin(min_environment, cmd, in_exec));
+	if (check_cmd(&((cmd->argv)[0]), min_environment->envp))
+		exit(127);
+	execve((cmd->argv)[0], cmd->argv, min_environment->envp);
 	exit(242);
 }
 

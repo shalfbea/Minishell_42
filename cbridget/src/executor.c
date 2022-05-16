@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 17:22:45 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/13 18:30:54 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/16 22:03:41 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int	executor(t_minishell_environment *min_environment)
 	t_exec_env	in_exec;
 
 	in_exec.first_fd = NULL;
-	in_exec.envp_in = min_environment->envp;
+	in_exec.num_com = min_environment->first_group->number_of_commands;
 	if (ft_init(min_environment->first_group, &in_exec))
 		return (1);
-	if (run_commands(min_environment->first_group, &in_exec))
+	if (run_commands(min_environment, min_environment->first_group, &in_exec))
 		return (delete_heredoc(min_environment->first_group->first_command));
 	else
 		save_ex_code(min_environment, &in_exec);
