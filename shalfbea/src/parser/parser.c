@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:42:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/12 18:03:15 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/16 20:27:50 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,11 @@ static t_command_list	*parse_start(t_parser_data *data)
 			data->mode = data->arg->type;
 		}
 		else if (data->arg->type == PIPE)
+		{
+			if (!(data->argv))
+				return (error_and_clean(data));
 			form_current(data, 0);
+		}
 		data->args = data->args->next;
 	}
 	form_current(data, 1);
@@ -90,5 +94,6 @@ t_logical_groups	*parser(t_list *args)
 	data.redirect_flags = NULL;
 	data.redirects = NULL;
 	res = form_group(parse_start(&data));
+	builtin_checker(res);
 	return (res);
 }

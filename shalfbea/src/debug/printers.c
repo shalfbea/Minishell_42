@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:46:14 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/12 16:30:59 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/16 16:56:13 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,13 @@ void	iter_printer(void *cur)
 {
 	char	*types[] = {"word", "in quotes", "in double quotes", "redir out >", "redir in <", "redir append >>", "redir insource <<", "pipe |", "if_and &&", "if_or ||", "( parenthese open",") parenthese close" };
 
-	printf("%s;type: %s; %d flag to be added\n",
-	 		((t_lexer *) cur)->str,
-			 types[(int) ((t_lexer *) cur)->type],
-			((t_lexer *) cur)->to_prev);
+	printf("%s; Type: %s",
+	 	  ((t_lexer *) cur)->str,
+			types[(int) ((t_lexer *) cur)->type]
+			);
+	if (((t_lexer *) cur)->to_prev)
+		printf("; This adds to prev.");
+	printf("\n");
 
 }
 

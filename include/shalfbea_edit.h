@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/12 18:05:23 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/16 20:06:25 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,14 @@ t_minishell_environment	*prompt(char	*input, char debug);
 char					error_msg(int mode);
 
 //lexer_wraps_lst.c
-//void	add_to_lexer(t_list **lst, char *str, char type);
 void	add_to_lexer(t_list **lst, char *str, char type, char add_to_prev);
+t_list	*lst_new_lex(char	*str, char type, char add_to_prev);
+
+//lexer_free.c
 t_list	*clear_lexer_lst(t_list **lst, t_command_list *commands);
+
+//token_gluer.c
+void	token_gluer(t_list **args);
 
 //signals.c
 void	set_sig_control(void);
@@ -89,6 +94,9 @@ char	special_handler(t_splitter_data *data, char specials);
 t_logical_groups	*parser(t_list *args);
 void				command_append(t_command_list **lst, t_command_list **cur);
 t_command_list		*clear_command_lst(t_command_list **lst);
+
+//lexer/env_check.c
+char lst_env_check(t_list	*args);
 
 //arrays.c
 void	string_array_cleaner(char	**array);
@@ -108,5 +116,9 @@ t_minishell_environment *ms_env_former(t_logical_groups *groups, char **envp);
 //debug
 void	debug_command_list_printer(t_command_list *commands);
 void	debug_lexer_printer(char *msg, t_list	*args);
+char check_if_glue_needed(t_list *args); // DELETE AFTER PROD FROM HERE AND MAKE IT STATIC
 //void debug_redirects_printer(char *array);
+
+//builtins_checker.c
+void	builtin_checker(t_logical_groups	*groups);
 #endif

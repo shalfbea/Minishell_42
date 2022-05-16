@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/12 18:06:17 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/16 20:29:49 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_minishell_environment	*prompt(char *input, char debug)
 	commands = NULL;
 	groups = NULL;
 	need_free = 0;
-	//input = "123 kek > >";
+	//input = "| | ";
 	if (!input)
 	{
 		input = readline("MiniShell: ");
@@ -78,16 +78,29 @@ t_minishell_environment	*prompt(char *input, char debug)
 	}
 	if (!input[0] || !ft_strncmp(input, "exit", 4))
 		exit(0); // затычка
+	add_history(input);
 	args = lexer(input);
 	if (debug)
-		debug_lexer_printer("Lexer primary results:", args);
+		debug_lexer_printer("Lexer primary results", args);
+	if (lst_env_check(args))
+		return ((t_minishell_environment	*)clear_lexer_lst(&args, NULL));
+	if (debug)
+		debug_lexer_printer("Lexer $ check", args);
+	if (check_if_glue_needed(args))
+	{
+		token_gluer(&args);
+		if (debug)
+			debug_lexer_printer("Lexer gluing results", args);
+	}
 	parentheses_checker(args);
-	// ПРОВЕРКА СОДЕРЖИМОГО КОВЫЧЕК
-	// СКЕЙКА ТОКЕНОВ
+	// ПРОВЕРКА СОДЕРЖИМОГО КОВЫЧЕК :
 	// ПРОВЕРКА ПРАВИЛЬНОГО ПОРЯДКА ТОКЕНОВ
 	groups = parser(args);
-	commands = groups->first_command; // 25% working for dumn cases
-	// ПРОВЕРКА ARGV[0] - название программы
+	if (groups)
+		commands = groups->first_command; // 25% working for dumn cases
+	else
+		commands = NULL;
+	// ПРОВЕРКА ARGV[0] - название программы - судя по всему не нужно
 	//if (S_DEBUG && commands)
 	if (debug && commands)
 		debug_command_list_printer(commands);

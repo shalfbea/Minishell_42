@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 19:41:36 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/12 18:05:07 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/16 16:45:27 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,19 @@ char	type_detector(char	*str)
 	return (0);
 }
 
+t_list	*lst_new_lex(char	*str, char type, char add_to_prev)
+{
+	t_lexer	*lex;
+
+	lex = malloc(sizeof(t_lexer));
+	if (!lex)
+		return (NULL); //RAISE ERROR or exit
+	lex->str = str;
+	lex->type = type;
+	lex->to_prev = add_to_prev;
+	return(ft_lstnew((void *) lex));
+}
+
 void	add_to_lexer(t_list **lst, char *str, char type, char add_to_prev)
 {
 	t_lexer	*lex;
@@ -54,39 +67,3 @@ void	add_to_lexer(t_list **lst, char *str, char type, char add_to_prev)
 	ft_lstadd_back(lst, ft_lstnew((void *) lex));
 }
 
-void	lexer_content_deleter(void *content)
-{
-	t_lexer	*lex;
-
-	lex = (t_lexer *) content;
-	if (!lex)
-		return ;
-	if (lex->str && !(lex->type >= NO_QUOTE && lex->type <= DOUBLE_QUOTES))
-	//if (lex->str)
-		free(lex->str);
-	free(lex);
-	return ;
-}
-
-void	lexer_content_free_all(void *content)
-{
-	t_lexer	*lex;
-
-	lex = (t_lexer *) content;
-	if (!lex)
-		return ;
-	//if (lex->str && !(lex->type >= NO_QUOTE && lex->type <= DOUBLE_QUOTES))
-	if (lex->str)
-		free(lex->str);
-	free(lex);
-	return ;
-}
-
-t_list	*clear_lexer_lst(t_list **lst, t_command_list *commands)
-{
-	if (commands)
-		ft_lstclear(lst, lexer_content_deleter);
-	else
-		ft_lstclear(lst, lexer_content_free_all);
-	return (NULL);
-}

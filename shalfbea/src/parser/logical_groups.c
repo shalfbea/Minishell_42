@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 20:59:40 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/12 16:23:49 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/16 20:25:02 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_logical_groups	*form_group(t_command_list *commands_lst)
 {
 	t_logical_groups	*res;
 
+	if (!commands_lst)
+		return (NULL);
 	res = (t_logical_groups *) malloc(sizeof(t_logical_groups));
 	if (!res)
 		return (NULL);
