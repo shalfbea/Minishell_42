@@ -8,10 +8,11 @@ FLAGS := -Wall -Wextra -Werror -I./../include -I../libft/include -pthread $(Test
 
 MINISHELL := minishell
 
+PROMPTLIB := promptlib.a
+
 LIBFT := ../libft/libft.a
 
-SRC = main_shalfbea.c \
-	  prompt.c \
+SRC = prompt.c \
 	  signals.c \
 	  ms_env.c \
 	  debug/printers.c \
@@ -19,6 +20,7 @@ SRC = main_shalfbea.c \
 	  lexer/lexer_specials.c lexer/env_check.c lexer/token_gluer.c \
 	  parser/parser.c parser/arrays.c parser/command_lst.c \
 	  parser/logical_groups.c parser/builtin_checker.c
+	  #main_shalfbea.c
 	  #builtins/exit.c
 
 OBJ_DIR = ./obj/
@@ -30,13 +32,17 @@ OBJ_FILES = $(patsubst %.c, %.o, $(addprefix $(OBJ_DIR), $(SRC)))
 
 RM := rm -rf
 
-all: $(LIBFT) $(OBJ_DIR) $(HEADER) $(MINISHELL)
+all: $(LIBFT) $(OBJ_DIR) $(HEADER) $(PROMPTLIB) #$(MINISHELL)
 
 $(MINISHELL): $(LIBFT) $(HEADER) $(OBJ_FILES)
-	$(CC) $(OBJ_FILES) $(LIBFT) -o $(MINISHELL) -lreadline $(FLAGS)
+	$(CC) $(FLAGS) -c src/main_shalfbea.c -o obj/main_shalfbea.o
+	$(CC) $(OBJ_FILES) obj/main_shalfbea.o $(LIBFT) -o $(MINISHELL) -lreadline $(FLAGS)
 
 $(LIBFT) :
 	make -C ../libft
+
+$(PROMPTLIB): $(LIBFT) $(HEADER) $(OBJ_FILES)
+	ar rcs $(PROMPTLIB) $?
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)
 	$(CC) $(FLAGS) -c $< -o $@
