@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:19:40 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/15 18:12:02 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/17 21:21:27 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_echo(char ***data)
 	argv = data[0];
 	i = 1;
 	flag = 1;
-	if (!ft_strncmp(argv[i], "-n", 4))
+	if (argv[i] && !ft_strncmp(argv[i], "-n", 3))
 	{
 		flag = 0;
 		i++;
@@ -46,13 +46,41 @@ int	ft_echo(char ***data)
 
 int	ft_cd(char ***data)
 {
-	data = NULL;
+	char	**argv;
+	int		i;
+
+	i = 1;
+	argv = data[0];
+	while (argv[i])
+		i++;
+	if (i == 1)
+		return (put_error("cd", 3));
+	else if (i != 2)
+		return (put_error("cd", 5));
+	if (chdir(argv[1]))
+		return (put_error(argv[1], 7));
 	return (0);
 }
 
 int	ft_pwd(char ***data)
 {
-	data = NULL;
+	char	**argv;
+	char	*path;
+	int		lenght;
+
+	argv = data[0];
+	path = getcwd(NULL, 0);
+	if (!path)
+		return (put_error(argv[0], 1));
+	lenght = ft_strlen(path);
+	if (write(STDOUT_FILENO, path, lenght) != lenght)
+	{
+		free(path);
+		return (put_error(argv[0], 1));
+	}
+	free(path);
+	if (write(STDOUT_FILENO, "\n", 1) != 1)
+		return (put_error(argv[0], 1));
 	return (0);
 }
 
@@ -70,7 +98,18 @@ int	ft_unset(char ***data)
 
 int	ft_env(char ***data)
 {
-	data = NULL;
+	char	**env;
+	int		i;
+	int		length;
+
+	i = 0;
+	env = data[1];
+	while (env[i])
+	{
+		length = ft_strlen(env[i]);
+		if (write(STDOUT_FILENO, env[i], length) != length)
+			return (put_error);//do this!!!!
+	}
 	return (0);
 }
 

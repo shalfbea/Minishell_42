@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 13:44:56 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/16 22:19:42 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/17 21:16:15 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ void	ft_exec(t_minishell_environment *min_environment, t_command_list *cmd, t_ex
 
 	j = 1;
 	create_pipeline(in_exec->_pipes, i, in_exec->num_com);
+	if (check_builtin(min_environment->builtin_names, cmd->argv[0]) < 7)
+		exit(run_builtin(min_environment, cmd, in_exec));
 	if (working_with_redirects(cmd, in_exec, i))
 		exit(1);
 	swap_filedescriptors(in_exec, i);
-	if (check_builtin(min_environment->builtin_names, cmd->argv[0]) < 7)
-		exit(run_builtin(min_environment, cmd, in_exec));
 	if (check_cmd(&((cmd->argv)[0]), min_environment->envp))
 		exit(127);
 	execve((cmd->argv)[0], cmd->argv, min_environment->envp);

@@ -11,14 +11,14 @@ int	main(int argc, char **argv, char **envp)
 	argv = NULL;
 	test.envp = envp;
 	init_builtins(&test);
-	char *t[] = {"echo", "hello", "world", NULL};
-/*	char *t[2];
+//	char *t[] = {"cd", "../shalfbea", NULL};
+	char *t[2];
 	t[0] = malloc(6);
-	t[0][0] = 'c';
-	t[0][1] = 'a';
-	t[0][2] = 't';
+	t[0][0] = 'y';
+	t[0][1] = 'e';
+	t[0][2] = 's';
 	t[0][3] = '\0';
-	t[1] = NULL;*/
+	t[1] = NULL;
 	char *vector[] = {NULL};
 	char v_flags[] = {2, 3, 3};
 	test.first_group->number_of_commands = 2;
@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 	test.first_group->first_command->redirect_flags = v_flags;
 	test.first_group->first_command->next_command = NULL;
 	char *t2[] = {"/bin/cat", NULL};
-	char *vector1[] = {NULL};
+	char *vector1[] = {"outfile", NULL};
 	char v_flags1[] = {0, 0, 3};
 	test.first_group->first_command->next_command = malloc(sizeof(t_command_list) * 1);
 	test.first_group->first_command->next_command->argv = t2;
@@ -44,11 +44,18 @@ int	main(int argc, char **argv, char **envp)
 	test.first_group->first_command->next_command->next_command->redirect_flag_outfile = 1;
 	test.first_group->first_command->next_command->next_command->argv = t3;
 	test.first_group->first_command->next_command->next_command->next_command = NULL;*/
+/*	char *str;
+	str = getcwd(NULL, 0);
+	printf("before=%s\n", str);
+	free(str);*/
 	executor(&test);
+//	str = getcwd(NULL, 0);
+//	printf("after=%s\n", str);
+//	free(str);
 //	check_cmd("cat", envp);
 	printf("ex_code=%d\n", test.ex_code);
 //	free(t[0]);
-	free(test.first_group->first_command->next_command);
+//	free(test.first_group->first_command->next_command);
 	free(test.first_group->first_command);
 /*	int **test;
 	test = malloc(sizeof(int *) * 4);

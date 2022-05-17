@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:35:12 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/14 19:35:40 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/17 21:15:22 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ int	check_cmd(char **cmd, char **envp)
 {
 	char	**p_path;
 
-	if ((*cmd)[0] == '.' || (*cmd)[0] == '/')
+	if (!strncmp(*cmd, "./", 2) || !strncmp(*cmd, "../", 3) || (*cmd)[0] == '/')
 	{
-		if (!access(*cmd, F_OK | X_OK))
+		if (!access(*cmd, X_OK | F_OK))
 			return (0);
+		else
+			return (put_error(*cmd, 1));
 	}
 	p_path = ft_split(search_path(envp), ':');
 	if (selection_path(cmd, p_path))

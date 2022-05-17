@@ -76,12 +76,18 @@ int	put_error(char *name, char flag)
 	char	*str;
 	int		length;
 
-	if (flag)
+	if (flag == 3)
+		str = "too few arguments";
+	else if (flag == 5)
+		str = "too many arguments";
+	else if (flag)
 		str = strerror(errno);
 	else
 		str = "command not found";
 	length = ft_strlen(name);
 	write(2, "minishell: ", 11);
+	if (flag == 7)
+		write(2, "cd: ", 4);
 	write(2, name, length);
 	write(2, ": ", 2);
 	length = ft_strlen(str);
