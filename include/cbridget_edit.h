@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/14 19:24:09 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/16 22:02:15 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //Put your own things here, to protect minishell_h
 
 typedef struct s_command_list {
-	char	build_in_flag;//????
+//	char	build_in_flag;//????
 	char	**redirects;//vector for all redirects. last pointer must be NULL;
 	char	*redirect_flags;//flags for each redirect. 0 means: redirect >, 1 means: redirect >>, 2 means: redirect <, 3 means: redirect <<;
 	char	**argv;//first pointer is the absolut path to the command. command arguments. last pointer must be NULL;
@@ -38,13 +38,14 @@ typedef struct s_logical_groups {
 typedef struct s_minishell_environment {
 	char	**envp;//minishell environment. it could be a list but хз
 	int	ex_code;//this is the exit code of the last command.
+	char	*builtin_names[7];
+	int	(*builtin_functions[7])(char ***);
 	t_logical_groups	*first_group;
 }	t_minishell_environment;
 
 typedef struct s_fds {
 	int	infile;
 	int	outfile;
-//	char	run_cmd;
 	char	hd_flag;
 	int	r_code;
 	pid_t	pid_com;
@@ -52,8 +53,8 @@ typedef struct s_fds {
 }	t_fds;
 
 typedef struct s_exec_env {
+	int	num_com;
 	int	**_pipes;
-	char	**envp_in;
 	t_fds	*first_fd;
 }	t_exec_env;
 
@@ -69,8 +70,8 @@ int	create_lst(t_fds **lst);
 void	free_lsts(t_fds *lst);
 int	open_files(t_command_list *commands, t_fds *fds);
 
-int	run_commands(t_logical_groups *group, t_exec_env *in_exec);
-void	ft_exec(t_logical_groups *group, t_command_list *cmd, t_exec_env *in_exec, int i);
+int	run_commands(t_minishell_environment *min_environment, t_logical_groups *group, t_exec_env *in_exec);
+void	ft_exec(t_minishell_environment *min_environment, t_command_list *cmd, t_exec_env *in_exec, int i);
 void	create_pipeline(int	**pipes, int com, int length);
 void	swap_filedescriptors(t_exec_env *in_exec, int com);
 
@@ -79,7 +80,7 @@ int	ft_wait(t_exec_env *in_exec);
 int	ft_kill(t_exec_env *in_exec);
 void	save_ex_code(t_minishell_environment *min_environment, t_exec_env *in_exec);
 
-int	working_with_redirects(t_logical_groups *group, t_command_list *cmd, t_exec_env *in_exec, int num);
+int	working_with_redirects(t_command_list *cmd, t_exec_env *in_exec, int num);
 int	check_files(t_command_list *cmd, t_fds *tmp_fd, int num);
 int	put_error(char *name, char flag);
 
@@ -104,5 +105,17 @@ int	check_cmd(char **cmd, char **envp);
 int	selection_path(char **cmd, char **p_path);
 char	*create_new_path(char *cmd, char **p_path);
 char	*search_path(char **env);
+
+
+void	init_builtins(t_minishell_environment *env);
+int	check_builtin(char **builtin_names, char *name);
+int	run_builtin(t_minishell_environment *min_environment, t_command_list *cmd, t_exec_env *in_exec);
+int	ft_echo(char ***data);
+int	ft_cd(char ***data);
+int	ft_pwd(char ***data);
+int	ft_export(char ***data);
+int	ft_unset(char ***data);
+int	ft_env(char ***data);
+int	ft_exit(char ***data);
 
 #endif
