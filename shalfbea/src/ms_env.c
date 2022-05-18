@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/12 16:27:51 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/18 19:56:54 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_minishell_environment	*ms_env_cleaner(t_minishell_environment *env)
 {
 	if (!env)
 		return (NULL);
-	string_array_cleaner(env->envp);
+	//string_array_cleaner(env->envp);
 	clear_groups(&(env->first_group));
 	free(env);
 	return (NULL);

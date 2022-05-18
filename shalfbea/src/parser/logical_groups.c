@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 20:59:40 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/16 20:25:02 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/18 19:42:30 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_logical_groups	*form_group(t_command_list *commands_lst)
 	res->first_command = commands_lst;
 	res->logical_flag	= 0;
 	res->next_group = NULL;
-	res->number_of_commands = 0;
+	res->number_of_commands = 1; //CHANGE IT
 	return (res);
 }
 

@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:42:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/16 20:27:50 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/18 19:32:32 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,6 @@ t_logical_groups	*parser(t_list *args)
 	data.redirect_flags = NULL;
 	data.redirects = NULL;
 	res = form_group(parse_start(&data));
-	builtin_checker(res);
+	//builtin_checker(res);
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 20:28:32 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/12 13:49:33 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/18 19:06:07 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ t_command_list	*new_command(void)
 	list = malloc(sizeof(t_command_list));
 	if (!list)
 		return (NULL);
-	list->build_in_flag = 0;
 	list->redirect_flags = NULL;
 	list->redirects = NULL;
 	list->argv = NULL;

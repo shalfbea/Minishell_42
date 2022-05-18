@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:46:14 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/16 16:56:13 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/18 19:06:01 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	debug_command_list_printer(t_command_list *commands)
 	while (commands)
 	{
 		printf("COMMAND %d: \n\n", i++);
-		printf("build_in_flag : %d\n", commands->build_in_flag);
 		debug_array_printer("redirects", commands->redirects);
 		//printf("redirect_flags: %s\n", commands->redirect_flags);
 		debug_redirects_printer(commands->redirect_flags);

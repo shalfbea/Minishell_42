@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/16 20:29:49 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/18 19:45:15 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,8 @@ t_minishell_environment	*prompt(char *input, char debug)
 	//if (S_DEBUG && commands)
 	if (debug && commands)
 		debug_command_list_printer(commands);
-	if (need_free)
-		free(input);
+	//if (need_free)
+	//	free(input);
 	clear_lexer_lst(&(args), commands);
 	//clear_groups(&groups);
 	//pause();
