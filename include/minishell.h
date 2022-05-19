@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 18:27:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/11 14:59:12 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/19 20:02:05 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@
 # include "shalfbea_edit.h"
 
 typedef struct sigaction	t_sigacton;
+
+t_minishell_environment g_ms_env;
 
 #endif
