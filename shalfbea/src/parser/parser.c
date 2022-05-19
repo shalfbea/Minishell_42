@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:42:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/18 19:32:32 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:20:44 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,9 @@ static t_command_list	*parse_start(t_parser_data *data)
 	return (data->res);
 }
 
-t_logical_groups	*parser(t_list *args)
+t_command_list	*parser(t_list *args)
 {
 	t_parser_data		data;
-	t_logical_groups	*res;
 
 	if(!args)
 		return (NULL);
@@ -93,7 +92,6 @@ t_logical_groups	*parser(t_list *args)
 	data.mode = 0;
 	data.redirect_flags = NULL;
 	data.redirects = NULL;
-	res = form_group(parse_start(&data));
+	return (parse_start(&data));
 	//builtin_checker(res);
-	return (res);
 }

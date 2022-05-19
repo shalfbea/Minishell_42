@@ -6,12 +6,13 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/18 19:56:54 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:26:42 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
 t_minishell_environment *ms_env_former(t_logical_groups *groups, char **envp)
 {
 	t_minishell_environment	*env;
@@ -34,3 +35,4 @@ t_minishell_environment	*ms_env_cleaner(t_minishell_environment *env)
 	free(env);
 	return (NULL);
 }
+*/

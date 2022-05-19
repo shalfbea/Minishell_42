@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/16 20:06:25 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:22:43 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_parser_data
 	int				mode;
 }	t_parser_data;
 
-t_minishell_environment	*prompt(char	*input, char debug);
+t_command_list	*prompt(char	*input, char debug);
 
 char					error_msg(int mode);
 
@@ -91,7 +91,7 @@ char	special_characters(char	*c);
 char	special_handler(t_splitter_data *data, char specials);
 
 //lexer.c
-t_logical_groups	*parser(t_list *args);
+t_command_list		*parser(t_list *args);
 void				command_append(t_command_list **lst, t_command_list **cur);
 t_command_list		*clear_command_lst(t_command_list **lst);
 
@@ -106,19 +106,20 @@ char	*char_array_former(t_list **array);
 void	no_delete(void *element);
 
 //logical_groups.c
-t_logical_groups	*form_group(t_command_list *commands);
-t_logical_groups	*clear_groups(t_logical_groups **lst);
+//t_logical_groups	*form_group(t_command_list *commands);
+//t_logical_groups	*clear_groups(t_logical_groups **lst);
 
 //ms_env.c (Minishell enviroment)
-t_minishell_environment	*ms_env_cleaner(t_minishell_environment *env);
-t_minishell_environment *ms_env_former(t_logical_groups *groups, char **envp);
+//t_minishell_environment	*ms_env_cleaner(t_minishell_environment *env);
+//t_minishell_environment	*ms_env_former(t_logical_groups *groups, char **envp);
 
 //debug
 void	debug_command_list_printer(t_command_list *commands);
 void	debug_lexer_printer(char *msg, t_list	*args);
-char check_if_glue_needed(t_list *args); // DELETE AFTER PROD FROM HERE AND MAKE IT STATIC
+char	check_if_glue_needed(t_list *args); // DELETE AFTER PROD FROM HERE AND MAKE IT STATIC
 //void debug_redirects_printer(char *array);
 
 //builtins_checker.c
-void	builtin_checker(t_logical_groups	*groups);
+//
+//void	builtin_checker(t_logical_groups	*groups);
 #endif

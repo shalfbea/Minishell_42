@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/18 19:45:15 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:23:20 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,14 @@ char	parentheses_checker(t_list	*args)
 ** default call:
 ** tmp = prompt(NULL, 1);
 */
-t_minishell_environment	*prompt(char *input, char debug)
+t_command_list	*prompt(char *input, char debug)
 {
 	t_list				*args;
 	t_command_list		*commands;
-	t_logical_groups	*groups;
 	char				need_free;
 
 	args = NULL;
 	commands = NULL;
-	groups = NULL;
 	need_free = 0;
 	//input = "| | ";
 	if (!input)
@@ -83,7 +81,7 @@ t_minishell_environment	*prompt(char *input, char debug)
 	if (debug)
 		debug_lexer_printer("Lexer primary results", args);
 	if (lst_env_check(args))
-		return ((t_minishell_environment	*)clear_lexer_lst(&args, NULL));
+		return ((t_command_list	*)clear_lexer_lst(&args, NULL));
 	if (debug)
 		debug_lexer_printer("Lexer $ check", args);
 	if (check_if_glue_needed(args))
@@ -95,11 +93,7 @@ t_minishell_environment	*prompt(char *input, char debug)
 	parentheses_checker(args);
 	// ПРОВЕРКА СОДЕРЖИМОГО КОВЫЧЕК :
 	// ПРОВЕРКА ПРАВИЛЬНОГО ПОРЯДКА ТОКЕНОВ
-	groups = parser(args);
-	if (groups)
-		commands = groups->first_command; // 25% working for dumn cases
-	else
-		commands = NULL;
+	commands = parser(args);
 	// ПРОВЕРКА ARGV[0] - название программы - судя по всему не нужно
 	//if (S_DEBUG && commands)
 	if (debug && commands)
@@ -109,5 +103,6 @@ t_minishell_environment	*prompt(char *input, char debug)
 	clear_lexer_lst(&(args), commands);
 	//clear_groups(&groups);
 	//pause();
-	return (ms_env_former(groups, NULL));
+	//return (ms_env_former(groups, NULL));
+	return (commands);
 }

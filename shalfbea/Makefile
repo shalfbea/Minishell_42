@@ -19,7 +19,7 @@ SRC = prompt.c \
 	  lexer/lexer.c lexer/lexer_wraps_lst.c lexer/lexer_free.c \
 	  lexer/lexer_specials.c lexer/env_check.c lexer/token_gluer.c \
 	  parser/parser.c parser/arrays.c parser/command_lst.c \
-	  parser/logical_groups.c
+	  #parser/logical_groups.c
 	  #main_shalfbea.c
 	  #builtins/exit.c
 
