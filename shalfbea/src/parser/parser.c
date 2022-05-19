@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:42:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/19 19:20:44 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:42:26 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	form_current(t_parser_data *data, char end)
 {
+	ms_env.number_of_commands++;
 	data->cur->argv = string_array_former(&(data->argv));
 	data->cur->redirects = string_array_former(&(data->redirects));
 	data->cur->redirect_flags = char_array_former(&(data->redirect_flags));
@@ -85,6 +86,7 @@ t_command_list	*parser(t_list *args)
 
 	if(!args)
 		return (NULL);
+	ms_env.number_of_commands = 0;
 	data.cur = NULL;
 	data.res = NULL;
 	data.args = args;

@@ -44,7 +44,7 @@ $(LIBFT) :
 $(PROMPTLIB): $(LIBFT) $(HEADER) $(OBJ_FILES)
 	ar rcs $(PROMPTLIB) $?
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER) $(OBJ_DIR)
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(OBJ_DIR) :

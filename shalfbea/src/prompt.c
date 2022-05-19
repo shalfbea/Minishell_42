@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/19 19:23:20 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:45:58 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ t_command_list	*prompt(char *input, char debug)
 		input = readline("MiniShell: ");
 		need_free = 1;
 	}
-	if (!input[0] || !ft_strncmp(input, "exit", 4))
-		exit(0); // затычка
+	//if (!input[0] || !ft_strncmp(input, "exit", 4))
+	//	exit(0); // затычка
+	if (!input[0])
+		return (NULL);
 	add_history(input);
 	args = lexer(input);
 	if (debug)
