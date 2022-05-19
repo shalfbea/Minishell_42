@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cbridget_edit.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/17 18:30:28 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:59:18 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 typedef struct s_command_list {
 //	char	build_in_flag;//????
 	char	**redirects;//vector for all redirects. last pointer must be NULL;
-	char	*redirect_flags;//flags for each redirect. 0 means: redirect >, 1 means: redirect >>, 2 means: redirect <, 3 means: redirect <<;
+	char	*redirect_flags;//flags for each redirect
 	char	**argv;//first pointer is the absolut path to the command. command arguments. last pointer must be NULL;
 	struct s_command_list	*next_command;//if there are no more commands, set to NULL. This is pipeline.
 }	t_command_list;//linked list for commands.
@@ -28,19 +28,22 @@ typedef struct s_command_list {
 # define LOGICAL_OR 2
 # define BUFFER_SIZE 10
 
+/*
 typedef struct s_logical_groups {
 	t_command_list			*first_command;//poiter to the first command to execute
-	int						number_of_commands;//number of commands to execute
 	char					logical_flag;
 	struct s_logical_groups	*next_group;
 }	t_logical_groups;
+*/
 
 typedef struct s_minishell_environment {
 	char	**envp;//minishell environment. it could be a list but хз
-	int	ex_code;//this is the exit code of the last command.
+	int		ex_code;//this is the exit code of the last command.
+	int		number_of_commands;//number of commands to execute
+	pid_t	*pids; //[num of commands]
 	char	*builtin_names[7];
-	int	(*builtin_functions[7])(char ***);
-	t_logical_groups	*first_group;
+	int		(*builtin_functions[7])(char ***);
+	//t_logical_groups	*first_group;
 }	t_minishell_environment;
 
 typedef struct s_fds {
