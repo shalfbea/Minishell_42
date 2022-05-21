@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:19:40 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/17 21:21:27 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/21 17:59:35 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_echo(char ***data)
+int	ft_echo(char **argv)
 {
-	char	**argv;
 	char	flag;
 	int		length;
 	int		i;
 
-	argv = data[0];
 	i = 1;
 	flag = 1;
 	if (argv[i] && !ft_strncmp(argv[i], "-n", 3))
@@ -44,31 +42,27 @@ int	ft_echo(char ***data)
 	return (0);
 }
 
-int	ft_cd(char ***data)
+int	ft_cd(char **argv)
 {
-	char	**argv;
 	int		i;
 
 	i = 1;
-	argv = data[0];
 	while (argv[i])
 		i++;
 	if (i == 1)
-		return (put_error("cd", 3));
+		return (put_error(argv[0], 3));
 	else if (i != 2)
-		return (put_error("cd", 5));
+		return (put_error(argv[0], 5));
 	if (chdir(argv[1]))
 		return (put_error(argv[1], 7));
 	return (0);
 }
 
-int	ft_pwd(char ***data)
+int	ft_pwd(char **argv)
 {
-	char	**argv;
 	char	*path;
 	int		lenght;
 
-	argv = data[0];
 	path = getcwd(NULL, 0);
 	if (!path)
 		return (put_error(argv[0], 1));
@@ -84,37 +78,55 @@ int	ft_pwd(char ***data)
 	return (0);
 }
 
-int	ft_export(char ***data)
+int	ft_export(char **argv)
 {
-	data = NULL;
-	return (0);
-}
+	int	i;
 
-int	ft_unset(char ***data)
-{
-	data = NULL;
-	return (0);
-}
-
-int	ft_env(char ***data)
-{
-	char	**env;
-	int		i;
-	int		length;
-
-	i = 0;
-	env = data[1];
-	while (env[i])
+	i = 1;
+	if (!argv[i])
+		return (print_sort_env(argv));
+	while (argv[i])
 	{
-		length = ft_strlen(env[i]);
-		if (write(STDOUT_FILENO, env[i], length) != length)
-			return (put_error);//do this!!!!
+		if (check_name(argv[i]))
+			add_var_evp(argv[i]);
+		else
+			put_error(argv[i], 13);
+		i++;
 	}
 	return (0);
 }
 
-int	ft_exit(char ***data)
+int	ft_unset(char **argv)
 {
-	data = NULL;
+	argv = NULL;
+	return (0);
+}
+
+int	ft_env(char **argv)
+{
+	int		i;
+	int		length;
+
+	i = 0;
+	while (argv[i])
+		i++;
+	if (i > 1)
+		return (put_error(argv[0], 5));
+	i = 0;
+	while (g_ms_env.envp[i])
+	{
+		length = ft_strlen(g_ms_env.envp[i]);
+		if (write(STDOUT_FILENO, g_ms_env.envp[i], length) != length)
+			return (put_error(argv[0], 1));
+		if (write(STDOUT_FILENO, "\n", 1) != 1)
+			return (put_error(argv[0], 1));
+		i++;
+	}
+	return (0);
+}
+
+int	ft_exit(char **argv)
+{
+	argv = NULL;
 	return (0);
 }

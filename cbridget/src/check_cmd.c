@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:35:12 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/17 21:15:22 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/20 14:57:44 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_cmd(char **cmd, char **envp)
+int	check_cmd(char **cmd)
 {
 	char	**p_path;
 
@@ -23,7 +23,7 @@ int	check_cmd(char **cmd, char **envp)
 		else
 			return (put_error(*cmd, 1));
 	}
-	p_path = ft_split(search_path(envp), ':');
+	p_path = ft_split(search_path(), ':');
 	if (selection_path(cmd, p_path))
 	{
 		free_vector(p_path);
@@ -73,23 +73,25 @@ char	*create_new_path(char *cmd, char **p_path)
 	return (tmp);
 }
 
-char	*search_path(char **envp)
+char	*search_path(void)
 {
 	int		i;
 	char	*src;
+	char	**tmp_envp;
 
 	i = 0;
-	src = "PATH";
-	while (envp)
+	src = "PATH=";
+	tmp_envp = g_ms_env.envp;
+	while (tmp_envp)
 	{
-		while ((*envp)[i] == src[i])
+		while ((*tmp_envp)[i] == src[i])
 		{
-			if (i == 3)
-				return (&(*envp)[i + 2]);
+			if (i == 4)
+				return (&(*tmp_envp)[i + 2]);
 			i++;
 		}
 		i = 0;
-		envp++;
+		tmp_envp++;
 	}
 	return ((void *)0);
 }

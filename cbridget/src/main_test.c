@@ -1,73 +1,78 @@
 
 #include "minishell.h"
 
+char **init_env(char **env);
+
 int	main(int argc, char **argv, char **envp)
 {
-	t_minishell_environment	test;
-	t_logical_groups	test_g;
-	test.first_group = &test_g;
-
+	t_command_list *commands;
 	argc = 0;
 	argv = NULL;
-	test.envp = envp;
-	init_builtins(&test);
-//	char *t[] = {"cd", "../shalfbea", NULL};
-	char *t[2];
-	t[0] = malloc(6);
-	t[0][0] = 'y';
-	t[0][1] = 'e';
-	t[0][2] = 's';
+	g_ms_env.envp = init_env(envp);
+	g_ms_env.ex_code = 0;
+	g_ms_env.pids = NULL;
+	init_builtins();
+/*	char *t[2];
+	t[0] = malloc(8);
+	t[0][0] = 'e';
+	t[0][1] = 'n';
+	t[0][2] = 'v';
 	t[0][3] = '\0';
-	t[1] = NULL;
+	t[0][4] = 'r';
+	t[0][5] = 't';
+	t[0][6] = '\0';
+	t[1] = NULL;*/
+	char *t[] = {"env", NULL};
+	ft_env(t);
+	printf("\n");
+	char *t2[] = {"export", "8dlfj=5", "a1234=888", NULL};
 	char *vector[] = {NULL};
 	char v_flags[] = {2, 3, 3};
-	test.first_group->number_of_commands = 2;
-	test.first_group->first_command = malloc(sizeof(t_command_list) * 1);
-	test.first_group->first_command->argv = t;
-	test.first_group->first_command->redirects = vector;
-	test.first_group->first_command->redirect_flags = v_flags;
-	test.first_group->first_command->next_command = NULL;
-	char *t2[] = {"/bin/cat", NULL};
-	char *vector1[] = {"outfile", NULL};
+	g_ms_env.number_of_commands = 1;
+	commands = malloc(sizeof(t_command_list) * 1);
+	commands->argv = t2;
+	commands->redirects = vector;
+	commands->redirect_flags = v_flags;
+	commands->next_command = NULL;
+/*	char *t2[] = {"export", "8dlfj=5", "1234=888", NULL};
+	char *vector1[] = {NULL};
 	char v_flags1[] = {0, 0, 3};
-	test.first_group->first_command->next_command = malloc(sizeof(t_command_list) * 1);
-	test.first_group->first_command->next_command->argv = t2;
-	test.first_group->first_command->next_command->redirects = vector1;
-	test.first_group->first_command->next_command->redirect_flags = v_flags1;
-	test.first_group->first_command->next_command->next_command = NULL;
-/*	char *t3[] = {"/bin/cat", "slfi", NULL};
-	test.first_group->first_command->next_command->next_command = malloc(sizeof(t_command_list) * 1);
-//	test.first_group->first_command->next_command->next_command->command = "/bin/cat";
-	test.first_group->first_command->next_command->next_command->infile = NULL;
-	test.first_group->first_command->next_command->next_command->outfile = "outfile";
-	test.first_group->first_command->next_command->next_command->redirect_flag_infile = 0;
-	test.first_group->first_command->next_command->next_command->redirect_flag_outfile = 1;
-	test.first_group->first_command->next_command->next_command->argv = t3;
-	test.first_group->first_command->next_command->next_command->next_command = NULL;*/
-/*	char *str;
-	str = getcwd(NULL, 0);
-	printf("before=%s\n", str);
-	free(str);*/
-	executor(&test);
-//	str = getcwd(NULL, 0);
-//	printf("after=%s\n", str);
-//	free(str);
-//	check_cmd("cat", envp);
-	printf("ex_code=%d\n", test.ex_code);
+	commands->next_command = malloc(sizeof(t_command_list) * 1);
+	commands->next_command->argv = t2;
+	commands->next_command->redirects = vector1;
+	commands->next_command->redirect_flags = v_flags1;
+	commands->next_command->next_command = NULL;
+	char *t3[] = {"env", NULL};
+	char *vector2[] = {NULL};
+	char v_flags2[] = {0, 0, 3};
+	commands->next_command->next_command = malloc(sizeof(t_command_list) * 1);
+	commands->next_command->next_command->argv = t3;
+	commands->next_command->next_command->redirects = vector2;
+	commands->next_command->next_command->redirect_flags = v_flags2;
+	commands->next_command->next_command->next_command = NULL;*/
+	executor(commands);
+	ft_env(t);
+	printf("ex_code=%d\n", g_ms_env.ex_code);
 //	free(t[0]);
-//	free(test.first_group->first_command->next_command);
-	free(test.first_group->first_command);
-/*	int **test;
-	test = malloc(sizeof(int *) * 4);
-	test[0] = malloc(sizeof(int) * 3 * 2);
-	test[1] = test[0] + 1 * 2;
-	test[2] = test[0] + 2 * 2;
-	test[3] = (void *)0;
-	int i = 0;
-	while (i < 4)
-	{
-		create_pipeline(test, i + 1, 4);
-		i++;
-	}*/
+//	free(commands->next_command);
+	free(commands);
+	free_vector(g_ms_env.envp);
 	return (0);
+}
+
+char **init_env(char **env)
+{
+	char **tmp_env;
+	int	length = 0;
+	while (env[length])
+		length++;
+	tmp_env = malloc(sizeof(char *) * (length + 1));
+	int i = 0;
+	while (env[i])
+	{
+		tmp_env[i] = ft_strdup(env[i]);
+		i++;
+	}
+	tmp_env[length] = NULL;
+	return (tmp_env);
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:44:04 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/13 12:29:25 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/20 14:05:32 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	heredoc(t_logical_groups *group, t_exec_env *in_exec)
+int	heredoc(t_command_list *commands, t_exec_env *in_exec)
 {
 	int	fd;
 	int	j;
@@ -21,7 +21,7 @@ int	heredoc(t_logical_groups *group, t_exec_env *in_exec)
 	t_fds	*tmp_fd;
 
 	num = 1;
-	tmp_cmd = group->first_command;
+	tmp_cmd = commands;
 	tmp_fd = in_exec->first_fd;
 	while (tmp_cmd)
 	{

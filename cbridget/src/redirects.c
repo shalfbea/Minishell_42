@@ -80,18 +80,24 @@ int	put_error(char *name, char flag)
 		str = "too few arguments";
 	else if (flag == 5)
 		str = "too many arguments";
+	else if (flag == 13)
+		str = "not a valid identifier";
 	else if (flag)
 		str = strerror(errno);
 	else
 		str = "command not found";
 	length = ft_strlen(name);
-	write(2, "minishell: ", 11);
+	write(STDERR_FILENO, "minishell: ", 11);
 	if (flag == 7)
-		write(2, "cd: ", 4);
-	write(2, name, length);
-	write(2, ": ", 2);
+		write(STDERR_FILENO, "cd: ", 4);
+	else if (flag == 13)
+		write(STDERR_FILENO, "export: `", 8);
+	write(STDERR_FILENO, name, length);
+	if (flag == 13)
+		write(STDERR_FILENO, "'", 1);
+	write(STDERR_FILENO, ": ", 2);
 	length = ft_strlen(str);
-	write(2, str, length);
-	write(2, "\n", 1);
+	write(STDERR_FILENO, str, length);
+	write(STDERR_FILENO, "\n", 1);
 	return (1);
 }

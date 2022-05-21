@@ -3,56 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   run_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 13:44:56 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/17 21:16:15 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/20 14:38:38by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	run_commands(t_minishell_environment *min_environment, t_logical_groups *group, t_exec_env *in_exec)
+int	run_commands(t_command_list *commands, t_exec_env *in_exec)
 {
 	int	i;
 	t_command_list	*tmp_cmd;
 	t_fds	*tmp_in;
-	if (group->number_of_commands == 1 && check_builtin(min_environment->builtin_names, group->first_command->argv[0]) < 7)
-		return (run_builtin(min_environment, group->first_command, in_exec));
+	if (g_ms_env.number_of_commands == 1 && check_builtin(commands->argv[0]) < 7)
+		return (run_builtin(commands, in_exec));
 	i = 0;
-	tmp_cmd = group->first_command;
+	tmp_cmd = commands;
 	tmp_in = in_exec->first_fd;
-	while (i < group->number_of_commands)
+	if (alloc_pids())
+		return (ft_free(commands, in_exec));
+	while (i < g_ms_env.number_of_commands)
 	{
-		tmp_in->pid_com = fork();
-		if (tmp_in->pid_com < 0)
-			return (ft_free(group, in_exec));
-		if (tmp_in->pid_com == 0)
-			ft_exec(min_environment, tmp_cmd, in_exec, i + 1);
+		g_ms_env.pids[i] = fork();
+		if (g_ms_env.pids[i] < 0)
+			return (ft_free(commands, in_exec));
+		if (g_ms_env.pids[i] == 0)
+			ft_exec(tmp_cmd, in_exec, i + 1);
 		tmp_cmd = tmp_cmd->next_command;
 		tmp_in = tmp_in->next_fd;
 		i++;
 	}
-	close_pipes(in_exec, group->number_of_commands);
+	close_pipes(in_exec, g_ms_env.number_of_commands);
 	if (ft_wait(in_exec))
 		return (1);
 	return (0);
 }
 
-void	ft_exec(t_minishell_environment *min_environment, t_command_list *cmd, t_exec_env *in_exec, int i)
+void	ft_exec(t_command_list *cmd, t_exec_env *in_exec, int i)
 {
 	int	j;
 
 	j = 1;
-	create_pipeline(in_exec->_pipes, i, in_exec->num_com);
-	if (check_builtin(min_environment->builtin_names, cmd->argv[0]) < 7)
-		exit(run_builtin(min_environment, cmd, in_exec));
+	create_pipeline(in_exec->_pipes, i, g_ms_env.number_of_commands);
+	if (check_builtin(cmd->argv[0]) < 7)
+		exit(run_builtin(cmd, in_exec));
 	if (working_with_redirects(cmd, in_exec, i))
 		exit(1);
 	swap_filedescriptors(in_exec, i);
-	if (check_cmd(&((cmd->argv)[0]), min_environment->envp))
+	if (check_cmd(&cmd->argv[0]))
 		exit(127);
-	execve((cmd->argv)[0], cmd->argv, min_environment->envp);
+	execve((cmd->argv)[0], cmd->argv, g_ms_env.envp);
 	exit(242);
 }
 
@@ -111,11 +113,13 @@ void	create_pipeline(int	**pipes, int com, int length)
 int	ft_wait(t_exec_env *in_exec)
 {
 	t_fds	*tmp_fd;
+	int		i;
 
+	i = 0;
 	tmp_fd = in_exec->first_fd;
 	while (tmp_fd)
 	{
-		waitpid(tmp_fd->pid_com, &(tmp_fd->r_code), 0);
+		waitpid(g_ms_env.pids[i], &(tmp_fd->r_code), 0);
 		if (WIFEXITED(tmp_fd->r_code))
 			tmp_fd->r_code = WEXITSTATUS(tmp_fd->r_code);
 		else
@@ -123,6 +127,7 @@ int	ft_wait(t_exec_env *in_exec)
 		if (tmp_fd->r_code == 242)
 			return (ft_kill(in_exec));
 		tmp_fd = tmp_fd->next_fd;
+		i++;
 	}
 	return (0);
 }
@@ -130,12 +135,15 @@ int	ft_wait(t_exec_env *in_exec)
 int	ft_kill(t_exec_env *in_exec)
 {
 	t_fds	*tmp_fd;
+	int		i;
 
+	i = 0;
 	tmp_fd = in_exec->first_fd;
 	while (tmp_fd)
 	{
-		kill(tmp_fd->pid_com, 2);
+		kill(g_ms_env.pids[i], 2);
 		tmp_fd = tmp_fd->next_fd;
+		i++;
 	}
 	return (1);
 }

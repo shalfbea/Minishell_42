@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 14:47:39 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/11 15:04:58 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/20 15:11:44 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	create_lst(t_fds **lst)
 	(*lst)->infile = -55;
 	(*lst)->outfile = -55;
 	(*lst)->hd_flag = -1;
+	(*lst)->r_code = 0;
 	(*lst)->next_fd = NULL;
 	return (0);
 }

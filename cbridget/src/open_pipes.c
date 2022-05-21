@@ -3,30 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   open_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:28:51 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/13 18:28:30 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/20 14:20:06 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	open_pipes(t_logical_groups *group, t_exec_env *in_exec)
+int	open_pipes(t_command_list *commands, t_exec_env *in_exec)
 {
 	int	i;
 
 	i = 0;
-	if (alloc_pipes(&(in_exec->_pipes), group->number_of_commands - 1))
-	{
-		free_group(group->first_command);
-		free_lsts(in_exec->first_fd);
-		return (1);
-	}
-	while (i < group->number_of_commands - 1)
+	if (alloc_pipes(&(in_exec->_pipes), g_ms_env.number_of_commands - 1))
+		return (ft_free(commands, in_exec));
+	while (i < g_ms_env.number_of_commands - 1)
 	{
 		if (pipe((in_exec->_pipes)[i]) < 0)
-			return (ft_free(group, in_exec));
+			return (ft_free(commands, in_exec));
 		i++;
 	}
 	return (0);
@@ -44,6 +40,7 @@ int	alloc_pipes(int ***pipes, int num)
 	if (!(*pipes)[0])
 	{
 		free(*pipes);
+		*pipes = NULL;
 		return (1);
 	}
 	while (i < num)
