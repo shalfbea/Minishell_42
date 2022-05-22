@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arrays.c                                           :+:      :+:    :+:   */
+/*   string_arrays.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/11 19:13:16 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/12 17:57:40 by shalfbea         ###   ########.fr       */
+/*   Created: 2022/05/22 16:18:58 by shalfbea          #+#    #+#             */
+/*   Updated: 2022/05/22 16:33:02 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 void	no_delete(void *element)
 {
 	(void ) element;
-	//if (element)
-	//	free(element);
 }
 
 char	**string_array_former(t_list	**array)
@@ -41,39 +39,41 @@ char	**string_array_former(t_list	**array)
 	return (res);
 }
 
-char	*char_array_former(t_list **array)
-{
-	int		size;
-	int		i;
-	char	*res;
-	t_list	*tmp;
-
-	tmp = *array;
-	size = ft_lstsize(tmp);
-	res = (char *) malloc(sizeof(char) * (size + 1));
-	if (!res)
-		return (NULL);
-	i = -1;
-	while (++i < size)
-	{
-		res[i] = ((char *)tmp->content)[0];
-		tmp = tmp->next;
-	}
-	res[i] = '\0';
-	ft_lstclear(array, &free);
-	return (res);
-}
-
-void	string_array_cleaner(char	**argv)
+void	string_array_cleaner(char	***array)
 {
 	int		i;
 
-	if (!argv)
+	if (!(*array))
 		return ;
 	i = 0;
-	while (argv[i])
-		free(argv[i++]);
-	if (argv)
-		free(argv);
-	argv = NULL;
+	while ((*array)[i])
+		free((*array)[i++]);
+	if (*array)
+		free(*array);
+	*array = NULL;
+}
+
+/*
+** Makes copy (throw ft_strdup) of string array
+** and returns pointer to this copy.
+** Can allocate more memory for pointers, if new_size
+** param is bigger than actual size.
+** Doesn't free input.
+*/
+char	**string_array_copy(char **array, uint more_size_option)
+{
+	char	**copy_of_array;
+	int	len;
+
+	len = 0;
+	while (array[len++]);
+	len += more_size_option;
+	copy_of_array = (char **) (malloc(sizeof(char *) * (len + 1)));
+	if (!copy_of_array)
+		return (NULL);
+	len = 0;
+	while (array[++len])
+		copy_of_array[len] = ft_strdup(array[len]);
+	copy_of_array[len] = NULL;
+	return (copy_of_array);
 }

@@ -1,36 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_shalfbea.c                                    :+:      :+:    :+:   */
+/*   char_arrays.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/19 19:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/22 15:58:27 by shalfbea         ###   ########.fr       */
+/*   Created: 2022/05/11 19:13:16 by shalfbea          #+#    #+#             */
+/*   Updated: 2022/05/22 16:20:36 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*char_array_former(t_list **array)
 {
-	t_command_list	*commands;
+	int		size;
+	int		i;
+	char	*res;
+	t_list	*tmp;
 
-	(void ) argc;
-	(void ) argv;
-	(void ) envp;
-	commands = NULL;
-	int debug = 1;
-	ms_env_initter(envp);
-	while (1)
+	tmp = *array;
+	size = ft_lstsize(tmp);
+	res = (char *) malloc(sizeof(char) * (size + 1));
+	if (!res)
+		return (NULL);
+	i = -1;
+	while (++i < size)
 	{
-		if (debug)
-			debug_ms_env_printer();
-		commands = prompt(NULL, debug);
-		if (debug)
-			printf("Number of commands: %d\n", g_ms_env.number_of_commands);
-		if (!commands)
-			return (0);
+		res[i] = ((char *)tmp->content)[0];
+		tmp = tmp->next;
 	}
-	return (0);
+	res[i] = '\0';
+	ft_lstclear(array, &free);
+	return (res);
 }
+

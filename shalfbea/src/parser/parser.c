@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:42:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/19 20:41:22 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/22 16:49:33 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static t_command_list	*parse_start(t_parser_data *data)
 		else if (data->arg->type >= REDIR_OUT && data->arg->type <= REDIR_INSOURCE)
 		{
 			if (data->mode >= REDIR_OUT && data->arg->type <= REDIR_INSOURCE)
-				return(error_and_clean(data));
+				return (error_and_clean(data));
 			ft_lstadd_back(&(data->redirect_flags), ft_lstnew_from_char(data->arg->type));
 			data->mode = data->arg->type;
 		}
@@ -84,7 +84,7 @@ t_command_list	*parser(t_list *args)
 {
 	t_parser_data		data;
 
-	if(!args)
+	if (!args)
 		return (NULL);
 	g_ms_env.number_of_commands = 0;
 	data.cur = NULL;
