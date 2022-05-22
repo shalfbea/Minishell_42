@@ -1,26 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_checker.c                                  :+:      :+:    :+:   */
+/*   unneeded_builtin_checker.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 19:49:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/16 20:22:46 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/22 18:12:49 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int ft_strcmp(const char *s1, const char *s2)
-{
-	size_t	i;
-
-	i = 0;
-	while ((s1[i] == s2[i]) && s1[i] && s2[i])
-		++i;
-	return ((unsigned char)s1[i] - s2[i]);
-}
 
 static char	builtin_definer(char *str)
 {

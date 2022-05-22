@@ -17,9 +17,10 @@ SRC = prompt.c \
 	  ms_env.c \
 	  debug/printers.c \
 	  lexer/lexer.c lexer/lexer_wraps_lst.c lexer/lexer_free.c \
-	  lexer/lexer_specials.c lexer/env_check.c lexer/token_gluer.c \
+	  lexer/lexer_specials.c lexer/token_gluer.c \
 	  parser/parser.c parser/command_lst.c \
-	  parser/char_arrays.c parser/string_arrays.c
+	  parser/char_arrays.c parser/string_arrays.c \
+	  env/env_check.c env/env_finder.c
 	  #parser/logical_groups.c
 	  #main_shalfbea.c
 	  #builtins/exit.c
@@ -53,6 +54,7 @@ $(OBJ_DIR) :
 	mkdir obj/lexer
 	mkdir obj/parser
 	mkdir obj/debug
+	mkdir obj/env
 
 clean:
 	$(RM) $(OBJ_DIR)

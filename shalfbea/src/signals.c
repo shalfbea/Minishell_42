@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:29:33 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/04/29 16:13:35 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/22 19:56:56 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@ void	signal_handler(int sig, siginfo_t *info, void *smth)
 	(void) info;
 	(void) smth;
 	//(void) sig;
-	if (sig == SIGINT)
+	if (sig == SIGINT && !g_ms_env.pids)
 	{
-		printf("\nExitting!\n");
-		exit(0);
+		printf("\n"); // Move to a new line
+		rl_on_new_line(); // Regenerate the prompt on a newline
+		printf("Minishell :");
+		//rl_replace_line("", 0);
+		rl_redisplay();
 	}
-	//if (sig == )
 }
 
 /*
