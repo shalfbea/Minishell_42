@@ -6,29 +6,34 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:29:33 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/22 19:56:56 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/23 18:27:06 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-** Need to be rewritten later
-*/
-void	signal_handler(int sig, siginfo_t *info, void *smth)
+static void sigint_handler(int sig)
 {
-	//static char	first_exit;
+	int	i;
 
-	(void) info;
-	(void) smth;
-	//(void) sig;
-	if (sig == SIGINT && !g_ms_env.pids)
+	if (sig != SIGINT)
+		return ;
+	if (!g_ms_env.pids)
 	{
-		printf("\n"); // Move to a new line
-		rl_on_new_line(); // Regenerate the prompt on a newline
-		printf("Minishell :");
-		//rl_replace_line("", 0);
-		rl_redisplay();
+    	rl_on_new_line();
+    	rl_redisplay();
+    	ft_putstr_fd("  \n", STDERR_FILENO);
+    	rl_replace_line("", 0);
+    	rl_on_new_line();
+    	rl_redisplay();
+	}
+	else //Kill pids here
+	{
+		return ;
+		// Not tested code.
+		i = -1;
+		while (g_ms_env.pids[++i])
+			kill(g_ms_env.pids[i], SIGTERM);
 	}
 }
 
@@ -41,9 +46,7 @@ void	signal_handler(int sig, siginfo_t *info, void *smth)
 */
 void	set_sig_control(void)
 {
-	t_sigacton	sigs;
-	sigset_t	set;
-
+	/*
 	ft_memset(&sigs, 0, sizeof(sigs));
 	sigs.sa_sigaction = signal_handler;
 	sigemptyset(&set);
@@ -54,4 +57,6 @@ void	set_sig_control(void)
 	sigaction(SIGINT, &sigs, 0);
 	sigaction(SIGQUIT, &sigs, 0);
 	sigaction(SIGTSTP, &sigs, 0);
+	*/
+	signal(SIGINT, sigint_handler);
 }

@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:18:58 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/22 16:33:02 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/23 17:47:20 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,16 @@ char	**string_array_copy(char **array, uint more_size_option)
 	len = 0;
 	while (array[len++]);
 	len += more_size_option;
-	copy_of_array = (char **) (malloc(sizeof(char *) * (len + 1)));
+	copy_of_array = (char **) malloc(sizeof(char *) * (len + 1));
 	if (!copy_of_array)
 		return (NULL);
-	len = 0;
+	len = -1;
+	char 	*tmp;
 	while (array[++len])
-		copy_of_array[len] = ft_strdup(array[len]);
+	{
+		tmp = ft_strdup(array[len]);
+		copy_of_array[len] = tmp;
+	}
 	copy_of_array[len] = NULL;
 	return (copy_of_array);
 }

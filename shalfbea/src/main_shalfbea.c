@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/22 18:47:00 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/23 18:18:20 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	main(int argc, char **argv, char **envp)
 	(void ) envp;
 	commands = NULL;
 	int debug = 1;
-	ms_env_initter(envp);
+	if (ms_env_initter(envp))
+		exit(1);
 	set_sig_control();
 	while (1)
 	{
