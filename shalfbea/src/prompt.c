@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/19 19:45:58 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/23 18:58:31 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,20 @@ t_command_list	*prompt(char *input, char debug)
 {
 	t_list				*args;
 	t_command_list		*commands;
-	char				need_free;
 
 	args = NULL;
 	commands = NULL;
-	need_free = 0;
-	//input = "| | ";
 	if (!input)
-	{
 		input = readline("MiniShell: ");
-		need_free = 1;
+	else
+		input = ft_strdup(input);
+	if (!input) //HANDLING CTRL-D HERE
+	{
+		ft_putstr_fd("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMiniShell: exit\n", STDERR_FILENO);
+		input = ft_strdup("exit");
 	}
-	//if (!input[0] || !ft_strncmp(input, "exit", 4))
-	//	exit(0); // затычка
-	if (!input[0])
-		return (NULL);
+	if (!ft_strncmp(input, "exit", 4)) //DELETE IT LATER
+		exit(0); // затычка
 	add_history(input);
 	args = lexer(input);
 	if (debug)
@@ -93,18 +92,11 @@ t_command_list	*prompt(char *input, char debug)
 			debug_lexer_printer("Lexer gluing results", args);
 	}
 	parentheses_checker(args);
-	// ПРОВЕРКА СОДЕРЖИМОГО КОВЫЧЕК :
 	// ПРОВЕРКА ПРАВИЛЬНОГО ПОРЯДКА ТОКЕНОВ
 	commands = parser(args);
-	// ПРОВЕРКА ARGV[0] - название программы - судя по всему не нужно
-	//if (S_DEBUG && commands)
 	if (debug && commands)
 		debug_command_list_printer(commands);
-	//if (need_free)
-	//	free(input);
+	free(input);
 	clear_lexer_lst(&(args), commands);
-	//clear_groups(&groups);
-	//pause();
-	//return (ms_env_former(groups, NULL));
 	return (commands);
 }

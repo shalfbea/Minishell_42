@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 20:28:32 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/18 19:06:07 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/22 15:11:31 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	clear_command(t_command_list *elem)
 {
 	if (elem->redirect_flags)
 		free(elem->redirect_flags);
-	string_array_cleaner(elem->argv);
-	string_array_cleaner(elem->redirects);
+	string_array_cleaner(&(elem->argv));
+	string_array_cleaner(&(elem->redirects));
 }
 
 t_command_list	*clear_command_lst(t_command_list **lst)

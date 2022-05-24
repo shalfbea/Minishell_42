@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/19 20:41:08 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/23 18:18:20 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,13 @@ int	main(int argc, char **argv, char **envp)
 	(void ) envp;
 	commands = NULL;
 	int debug = 1;
+	if (ms_env_initter(envp))
+		exit(1);
+	set_sig_control();
 	while (1)
 	{
+		if (debug)
+			debug_ms_env_printer();
 		commands = prompt(NULL, debug);
 		if (debug)
 			printf("Number of commands: %d\n", g_ms_env.number_of_commands);

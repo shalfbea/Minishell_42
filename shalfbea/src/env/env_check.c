@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 19:58:55 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/16 19:14:08 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/22 18:02:09 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ static void	str_replace_with_env(char	**str, int start_pos, int end_pos)
 	if (!(*str))
 		return ;
 	env = find_in_env(*str, start_pos, end_pos);
-	res = (char *) malloc(sizeof(char) *
-		(ft_strlen(*str) + ft_strlen(env) + start_pos - end_pos + 1));
+	res = (char *) malloc((sizeof(char)
+				* ((ft_strlen(*str) + ft_strlen(env)
+						+ start_pos - end_pos + 1))));
 	i = 0;
 	k = 0;
 	while ((*str)[i] && i < start_pos)
@@ -71,7 +72,7 @@ static char	env_checker(char	**str)
 			k = i + 1;
 			if (!(*str)[k])
 				return (1);
-			while((*str)[k] && ft_isalnum((*str)[k]))
+			while ((*str)[k] && ft_isalnum((*str)[k]))
 				++k;
 			str_replace_with_env(str, i, k - 1);
 			i = 0;
@@ -84,12 +85,12 @@ char	lst_env_check(t_list	*args)
 {
 	t_lexer	*cur;
 
-	while(args)
+	while (args)
 	{
 		cur = (t_lexer *) args ->content;
 		if (cur->type == NO_QUOTE || cur->type == DOUBLE_QUOTES)
 		{
-			if(env_checker(&(cur->str)))
+			if (env_checker(&(cur->str)))
 				return (1);
 		}
 		args = args->next;

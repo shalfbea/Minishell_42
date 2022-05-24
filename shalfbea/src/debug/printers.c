@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:46:14 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/18 19:06:01 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/22 16:01:48 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,3 +90,32 @@ void	debug_lexer_printer(char *msg, t_list	*args)
 	ft_lstiter(args, iter_printer);
 	printf("\n===================\n===================\n");
 }
+
+void	debug_ms_env_printer(void)
+{
+	int	i;
+
+	i = -1;
+	printf("envp: \n");
+	if (!g_ms_env.envp)
+		printf("NULL\n");
+	while(g_ms_env.envp[++i])
+		printf("%s\n", g_ms_env.envp[i]);
+	printf("\nExit code: %d\n", g_ms_env.ex_code);
+	printf("Number of commands: %d\n", g_ms_env.number_of_commands);
+	i = -1;
+	if (g_ms_env.pids)
+	{
+		printf("pids: \n");
+		while (g_ms_env.pids[++i])
+		{
+			printf("%d", g_ms_env.pids[i]);
+			if (g_ms_env.pids[i+1])
+				printf(", ");
+		}
+		printf("\n");
+	}
+	else
+		printf("Pids not presented.\n");
+}
+
