@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:46:13 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/21 19:00:56 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/24 18:21:07 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,30 @@ int	find_value(int i)
 	return (++j);
 }
 
-int	check_name(char *name)
+int	check_name(char *name, char flag)
 {
 	int	i;
 
 	i = 1;
 	if (!ft_isalpha(name[0]) && name[0] != '_')
 		return (0);
-	while (name[i] && name[i] != '=')
+	if (flag)
 	{
-		if (!ft_isalpha(name[i]) && !ft_isdigit(name[i]) && name[i] != '_')
-			return (0);
-		i++;
+		while (name[i] && name[i] != '=')
+		{
+			if (!ft_isalpha(name[i]) && !ft_isdigit(name[i]) && name[i] != '_')
+				return (0);
+			i++;
+		}
+	}
+	else
+	{
+		while (name[i])
+		{
+			if (!ft_isalpha(name[i]) && !ft_isdigit(name[i]) && name[i] != '_')
+				return (0);
+			i++;
+		}
 	}
 	return (1);
 }
@@ -109,8 +121,16 @@ void	add_var_evp(char *name)
 	}
 	else
 	{
-		free(g_ms_env.envp[i]);
-		g_ms_env.envp[i] = name;
+		i = 0;
+		while (name[i] != '=' && name[i])
+			i++;
+		if (!name[i] || !name[i + 1])
+			free(tmp_name);
+		else
+		{
+			free(g_ms_env.envp[i]);
+			g_ms_env.envp[i] = tmp_name;
+		}
 	}
 }
 
@@ -168,8 +188,8 @@ int	find_name(char *name)
 		while (name[j] && name[j] != '=' && name[j] == g_ms_env.envp[i][j])
 			j++;
 		if (!name[j] || name[j] == '=')
-			return (i + 1);
+			return (i);
 		i++;
 	}
-	return (0);
+	return (i);
 }

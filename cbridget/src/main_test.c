@@ -8,6 +8,19 @@ int	main(int argc, char **argv, char **envp)
 	t_command_list *commands;
 	argc = 0;
 	argv = NULL;
+/*	char *envp[] = {"Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.k9YvMHCGX1/Render",
+			"COLORFGBG=15;0",
+			"ITERM_PROFILE=Default",
+			"XPC_FLAGS=0x0",
+			"LANG=en_US.UTF-8",
+			"PWD=/Users/cbridget/minishell2/cbridgetf",
+			"SHELL=/bin/zsh",
+			"PAGER=less",
+			"SECURITYSESSIONID=186d0",
+			"TERM_PROGRAM_VERSION=3.4.15",
+			"TERM_PROGRAM=iTerm.app",
+			"PATH=/Users/cbridget/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:/usr/local/munki:/opt/X11/bin:~/.dotnet/tools",
+			"DISPLAY=/private/tmp/com.apple.launchd.ShEeMlc4qc/org.xquartz:0", NULL};*/
 	g_ms_env.envp = init_env(envp);
 	g_ms_env.ex_code = 0;
 	g_ms_env.pids = NULL;
@@ -24,8 +37,11 @@ int	main(int argc, char **argv, char **envp)
 	t[1] = NULL;*/
 	char *t[] = {"env", NULL};
 	ft_env(t);
-	printf("\n");
-	char *t2[] = {"export", "8dlfj=5", "a1234=888", NULL};
+	int len = 0;
+	while (g_ms_env.envp[len])
+		len++;
+	printf("\nlen=%d\n", len);
+	char *t2[] = {"unset", "8dlfj=5", "PAGER=", "hello", "PAGER", "world=33", NULL};
 	char *vector[] = {NULL};
 	char v_flags[] = {2, 3, 3};
 	g_ms_env.number_of_commands = 1;
@@ -52,6 +68,10 @@ int	main(int argc, char **argv, char **envp)
 	commands->next_command->next_command->next_command = NULL;*/
 	executor(commands);
 	ft_env(t);
+	len = 0;
+	while (g_ms_env.envp[len])
+		len++;
+	printf("\nlen=%d\n", len);
 	printf("ex_code=%d\n", g_ms_env.ex_code);
 //	free(t[0]);
 //	free(commands->next_command);

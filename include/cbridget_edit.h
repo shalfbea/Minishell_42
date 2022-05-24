@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/21 18:04:31 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/24 18:03:00 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 typedef struct s_command_list {
 	char	**redirects;//vector for all redirects. last pointer must be NULL;
-	char	*redirect_flags;//flags for each redirect
+	char	*redirect_flags;//flags for each redirect ???flags for each redirect. 0 means: redirect >, 1 means: redirect >>, 2 means: redirect <, 3 means: redirect <<
 	char	**argv;//first pointer is the absolut path to the command. command arguments. last pointer must be NULL;
 	struct s_command_list	*next_command;//if there are no more commands, set to NULL. This is pipeline.
 }	t_command_list;//linked list for commands.
@@ -102,13 +102,16 @@ char	*search_path(void);
 void	init_builtins(void);
 int	check_builtin(char *name);
 int	run_builtin(t_command_list *cmd, t_exec_env *in_exec);
+
 int	print_sort_env(char **argv);
 int	find_value(int i);
 int	find_name(char *name);
-int	check_name(char *name);
+int	check_name(char *name, char flag);
 void	add_var_evp(char *name);
 int	add_new_name(char *name, int length);
 char	*get_name(int i);
+void	del_var_evp(char *variable);
+
 int	ft_echo(char **argv);
 int	ft_cd(char **argv);
 int	ft_pwd(char **argv);

@@ -36,7 +36,7 @@ int	check_files(t_command_list *cmd, t_fds *tmp_fd, int num)
 	j = 0;
 	while (cmd->redirects[j])
 	{
-		if (cmd->redirect_flags[j] == 0 || cmd->redirect_flags[j] == 1)
+		if (cmd->redirect_flags[j] == /*0*/REDIR_OUT || cmd->redirect_flags[j] == /*1*/REDIR_APPEND)
 		{
 			if (tmp_fd->outfile != -55)
 				close(tmp_fd->outfile);
@@ -47,13 +47,13 @@ int	check_files(t_command_list *cmd, t_fds *tmp_fd, int num)
 			if (tmp_fd->outfile == -1)
 				return (put_error(cmd->redirects[j], 1));
 		}
-		else if (cmd->redirect_flags[j] == 2 || cmd->redirect_flags[j] == 3)
+		else if (cmd->redirect_flags[j] == /*2*/REDIR_IN || cmd->redirect_flags[j] == /*3*/REDIR_INSOURCE)
 		{
 			if (tmp_fd->infile != -55)
 				close(tmp_fd->infile);
-			if (tmp_fd->hd_flag != j && cmd->redirect_flags[j] == 2)
+			if (tmp_fd->hd_flag != j && cmd->redirect_flags[j] == /*2*/REDIR_IN)
 				tmp_fd->infile = open(cmd->redirects[j], O_RDONLY);
-			else if (tmp_fd->hd_flag == j && cmd->redirect_flags[j] == 3)
+			else if (tmp_fd->hd_flag == j && cmd->redirect_flags[j] == /*3*/REDIR_INSOURCE)
 			{
 				name = create_name(num);
 				if (!name)
@@ -80,7 +80,7 @@ int	put_error(char *name, char flag)
 		str = "too few arguments";
 	else if (flag == 5)
 		str = "too many arguments";
-	else if (flag == 13)
+	else if (flag == 13 || flag == 15)
 		str = "not a valid identifier";
 	else if (flag)
 		str = strerror(errno);
@@ -92,8 +92,10 @@ int	put_error(char *name, char flag)
 		write(STDERR_FILENO, "cd: ", 4);
 	else if (flag == 13)
 		write(STDERR_FILENO, "export: `", 8);
+	else if (flag == 15)
+		write(STDERR_FILENO, "unset: `", 8);
 	write(STDERR_FILENO, name, length);
-	if (flag == 13)
+	if (flag == 13 || flag == 15)
 		write(STDERR_FILENO, "'", 1);
 	write(STDERR_FILENO, ": ", 2);
 	length = ft_strlen(str);

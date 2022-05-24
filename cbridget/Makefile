@@ -13,7 +13,7 @@ LIBFT := ../libft/libft.a
 SRC = executor.c ft_init.c open_pipes.c lib_lst.c main_test.c run_commands.c\
 redirects.c check_cmd.c get_next_line_utils.c get_next_line.c heredoc.c heredoc02.c\
 run_commands_utils.c builtins/builtins_utils.c builtins/builtins.c\
-builtins/ft_export.c
+builtins/ft_export.c builtins/export_unset.c
 
 OBJ_DIR = ./obj/
 SRC_DIR = ./src/

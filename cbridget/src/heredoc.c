@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:44:04 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/20 14:05:32 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/24 17:12:55 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	heredoc(t_command_list *commands, t_exec_env *in_exec)
 		fd = -55;
 		while ((tmp_cmd->redirects)[j])
 		{
-			if ((tmp_cmd->redirect_flags)[j] == 3)
+			if ((tmp_cmd->redirect_flags)[j] == /*3*/REDIR_INSOURCE)
 			{
 				if (fd != -55)
 					close(fd);
