@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/23 18:58:31 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/24 19:26:01 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,16 @@ char	parentheses_checker(t_list	*args)
 
 /*
 ** Gives user prompt to input command and returns
-** t_minishell_environment structure with a result of parsing
+** t_list* structure with a result of lexer
 ** Also can be called with input string, avoiding input from user,
 ** just to for testing purposes.
 ** debug defaults to 0, if called with '1' will show debug info
 ** in standart output.
 ** Exits the whole program, if nothing or 'exit' has been inputted.
 ** default call:
-** tmp = prompt(NULL, 1);
+** raw_lexer_data = prompt(NULL, 1);
 */
-t_command_list	*prompt(char *input, char debug)
+t_list	*prompt(char *input, char debug)
 {
 	t_list				*args;
 	t_command_list		*commands;
@@ -81,6 +81,14 @@ t_command_list	*prompt(char *input, char debug)
 	args = lexer(input);
 	if (debug)
 		debug_lexer_printer("Lexer primary results", args);
+	free(input);
+	return (args);
+}
+
+t_command_list	*get_command(t_list	*args, char debug)
+{
+	t_command_list	*commands;
+
 	if (lst_env_check(args))
 		return ((t_command_list	*)clear_lexer_lst(&args, NULL));
 	if (debug)
@@ -96,7 +104,6 @@ t_command_list	*prompt(char *input, char debug)
 	commands = parser(args);
 	if (debug && commands)
 		debug_command_list_printer(commands);
-	free(input);
 	clear_lexer_lst(&(args), commands);
 	return (commands);
 }

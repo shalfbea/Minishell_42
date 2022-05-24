@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/22 16:44:59 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/24 19:33:49 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	ms_env_initter(char **envp)
 	g_ms_env.envp = string_array_copy(envp, 0);
 	//g_ms_env.builtin_functions
 	//g_ms_env.builtin_names
+	init_builtins();
 	if (!g_ms_env.envp)
 		return (1);
 	return (0);

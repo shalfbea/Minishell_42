@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/22 18:38:40 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/24 19:14:58 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ typedef struct s_parser_data
 	int				mode;
 }	t_parser_data;
 
-t_command_list	*prompt(char	*input, char debug);
-
+t_list	*prompt(char	*input, char debug);
+t_command_list	*get_command(t_list	*args, char debug);
 char					error_msg(int mode);
 
 //lexer_wraps_lst.c
