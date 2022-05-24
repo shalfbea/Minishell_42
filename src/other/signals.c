@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:29:33 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/23 18:27:06 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/24 20:13:26 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,15 @@ static void sigint_handler(int sig)
 
 	if (sig != SIGINT)
 		return ;
-	if (!g_ms_env.pids)
+	if (g_ms_env.pids) //Kill pids here
+	{
+		i = -1;
+		while (g_ms_env.pids[++i])
+			kill(g_ms_env.pids[i], SIGTERM);
+		printf("\n");
+
+	}
+	else if (g_ms_env.prompt_mode)
 	{
     	rl_on_new_line();
     	rl_redisplay();
@@ -26,14 +34,6 @@ static void sigint_handler(int sig)
     	rl_replace_line("", 0);
     	rl_on_new_line();
     	rl_redisplay();
-	}
-	else //Kill pids here
-	{
-		return ;
-		// Not tested code.
-		i = -1;
-		while (g_ms_env.pids[++i])
-			kill(g_ms_env.pids[i], SIGTERM);
 	}
 }
 

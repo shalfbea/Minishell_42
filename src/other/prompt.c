@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/24 19:26:01 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/24 20:28:27 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 char	error_msg(int mode)
 {
 	if (mode == QUOTES)
-		printf("Error while parsing: quotes unmatched.");
+		printf("minishell: syntax error - quotes unmatched.");
 	if (mode == P_OPEN)
-		printf("Error while parsing: \'(\' parentheses unclosed");
+		printf("minishell: syntax error near unexpected token `(\'\n");
 	if (mode == P_CLOSE)
-		printf("Error while parsing: \')\' parentheses unclosed");
+		printf("minishell: syntax error near unexpected token `)\'\n");
 	return (1);
 }
 
@@ -99,11 +99,11 @@ t_command_list	*get_command(t_list	*args, char debug)
 		if (debug)
 			debug_lexer_printer("Lexer gluing results", args);
 	}
-	parentheses_checker(args);
+	if (parentheses_checker(args))
+		return (NULL);
 	// ПРОВЕРКА ПРАВИЛЬНОГО ПОРЯДКА ТОКЕНОВ
 	commands = parser(args);
 	if (debug && commands)
 		debug_command_list_printer(commands);
-	clear_lexer_lst(&(args), commands);
 	return (commands);
 }

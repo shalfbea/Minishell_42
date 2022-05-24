@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cbridget_edit.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/24 18:03:00 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/24 20:12:13 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_minishell_environment {
 	char	**envp;//minishell environment. it could be a list but хз
 	int		ex_code;//this is the exit code of the last command.
 	int		number_of_commands;//number of commands to execute
+	char	prompt_mode;
 	pid_t	*pids; //[num of commands]
 	char	*builtin_names[7];
 	int		(*builtin_functions[7])(char **);
