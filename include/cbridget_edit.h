@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cbridget_edit.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/24 20:12:13 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:36:31 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_command_list {
 # define LOGICAL_ALWAYS 0
 # define LOGICAL_AND 1
 # define LOGICAL_OR 2
-# define BUFFER_SIZE 10
+# define BUFFER_SIZE 1
 
 typedef struct s_minishell_environment {
 	char	**envp;//minishell environment. it could be a list but хз
@@ -65,7 +65,7 @@ int	open_files(t_command_list *commands, t_fds *fds);
 int	run_commands(t_command_list *commands, t_exec_env *in_exec);
 void	ft_exec(t_command_list *cmd, t_exec_env *in_exec, int i);
 void	create_pipeline(int	**pipes, int com, int length);
-void	swap_filedescriptors(t_exec_env *in_exec, int com);
+void	swap_filedescriptors(t_exec_env *in_exec, int com, int *save);
 int		alloc_pids(void);
 
 void	close_pipes(t_exec_env *in_exec, int num);
@@ -83,6 +83,7 @@ int	hd_close(char *str, char *file_n, int fd);
 int	create_file(int num, char **file_n);
 char	*create_name(int num);
 void	put_warning(int line, char *delim);
+void	put_newline(char *str);
 int	delete_heredoc(t_command_list *cmd);
 
 char	*get_next_line(int fd);
@@ -102,7 +103,8 @@ char	*search_path(void);
 
 void	init_builtins(void);
 int	check_builtin(char *name);
-int	run_builtin(t_command_list *cmd, t_exec_env *in_exec);
+int	run_builtin(t_command_list *cmd, t_exec_env *in_exec, int num);
+void	retrieve_filedescriptors(t_exec_env *in_exec, int num, int *save);
 
 int	print_sort_env(char **argv);
 int	find_value(int i);

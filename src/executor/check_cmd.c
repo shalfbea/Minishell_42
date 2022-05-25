@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:35:12 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/20 14:57:44 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:12:08 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ int	selection_path(char **cmd, char **p_path)
 	char	*tmp;
 
 	if (!p_path)
+	{
+		put_error(*cmd, 0);
 		return (1);
+	}
 	while (*p_path)
 	{
 		tmp = create_new_path(*cmd, p_path);
@@ -76,22 +79,22 @@ char	*create_new_path(char *cmd, char **p_path)
 char	*search_path(void)
 {
 	int		i;
+	int		j;
 	char	*src;
-	char	**tmp_envp;
 
 	i = 0;
+	j = 0;
 	src = "PATH=";
-	tmp_envp = g_ms_env.envp;
-	while (tmp_envp)
+	while (g_ms_env.envp[j])
 	{
-		while ((*tmp_envp)[i] == src[i])
+		while (g_ms_env.envp[j][i] == src[i])
 		{
 			if (i == 4)
-				return (&(*tmp_envp)[i + 2]);
+				return (&g_ms_env.envp[j][i + 2]);
 			i++;
 		}
 		i = 0;
-		tmp_envp++;
+		j++;
 	}
 	return ((void *)0);
 }

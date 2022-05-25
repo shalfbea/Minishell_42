@@ -36,24 +36,24 @@ int	check_files(t_command_list *cmd, t_fds *tmp_fd, int num)
 	j = 0;
 	while (cmd->redirects[j])
 	{
-		if (cmd->redirect_flags[j] == /*0*/REDIR_OUT || cmd->redirect_flags[j] == /*1*/REDIR_APPEND)
+		if (cmd->redirect_flags[j] == REDIR_OUT || cmd->redirect_flags[j] == REDIR_APPEND)
 		{
 			if (tmp_fd->outfile != -55)
 				close(tmp_fd->outfile);
-			if (cmd->redirect_flags[j] == 0)
+			if (cmd->redirect_flags[j] == REDIR_OUT)
 				tmp_fd->outfile = open(cmd->redirects[j], O_WRONLY | O_CREAT | O_TRUNC, 0666);
 			else
 				tmp_fd->outfile = open(cmd->redirects[j], O_WRONLY | O_CREAT | O_APPEND, 0666);
 			if (tmp_fd->outfile == -1)
 				return (put_error(cmd->redirects[j], 1));
 		}
-		else if (cmd->redirect_flags[j] == /*2*/REDIR_IN || cmd->redirect_flags[j] == /*3*/REDIR_INSOURCE)
+		else if (cmd->redirect_flags[j] == REDIR_IN || cmd->redirect_flags[j] == REDIR_INSOURCE)
 		{
 			if (tmp_fd->infile != -55)
 				close(tmp_fd->infile);
-			if (tmp_fd->hd_flag != j && cmd->redirect_flags[j] == /*2*/REDIR_IN)
+			if (tmp_fd->hd_flag != j && cmd->redirect_flags[j] == REDIR_IN)
 				tmp_fd->infile = open(cmd->redirects[j], O_RDONLY);
-			else if (tmp_fd->hd_flag == j && cmd->redirect_flags[j] == /*3*/REDIR_INSOURCE)
+			else if (tmp_fd->hd_flag == j && cmd->redirect_flags[j] == REDIR_INSOURCE)
 			{
 				name = create_name(num);
 				if (!name)

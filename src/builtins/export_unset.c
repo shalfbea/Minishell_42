@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:45:21 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/24 18:15:15 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:59:25 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	del_var_evp(char *variable)
 	i = 0;
 	while (g_ms_env.envp[i])
 		i++;
+	if (i == find_name(variable))
+		return ;
 	tmp_env = (char **)malloc(sizeof(char *) * i);
 	if (!tmp_env)
 		return ;

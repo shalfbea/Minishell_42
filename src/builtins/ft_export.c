@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:46:13 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/24 18:21:07 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:55:56 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ int	find_name(char *name)
 		j = 0;
 		while (name[j] && name[j] != '=' && name[j] == g_ms_env.envp[i][j])
 			j++;
-		if (!name[j] || name[j] == '=')
+		if ((!name[j] || name[j] == '=') && g_ms_env.envp[i][j] == '=')
 			return (i);
 		i++;
 	}

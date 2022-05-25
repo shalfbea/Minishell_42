@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:44:04 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/24 17:12:55 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:52:21 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	heredoc(t_command_list *commands, t_exec_env *in_exec)
 		fd = -55;
 		while ((tmp_cmd->redirects)[j])
 		{
-			if ((tmp_cmd->redirect_flags)[j] == /*3*/REDIR_INSOURCE)
+			if ((tmp_cmd->redirect_flags)[j] == REDIR_INSOURCE)
 			{
 				if (fd != -55)
 					close(fd);
@@ -56,12 +56,14 @@ int	write_heredoc(int num, char *delim)
 	int	line;
 	char *str;
 	char *file_n;
+	char tmp;
 
 	fd = create_file(num, &file_n);
 	if (fd == -1)
 		return (-1);
 	len = ft_strlen(delim);
 	line = 1;
+	tmp = 0;
 	while (1)
 	{
 		write(1, "> ", 2);
@@ -74,13 +76,22 @@ int	write_heredoc(int num, char *delim)
 			free(str);
 			break ;
 		}
-		str[ft_strlen(str) - 1] = '\0';
+		put_newline(str);
+		if (str[ft_strlen(str) - 1] == '\n')
+		{
+			str[ft_strlen(str) - 1] = '\0';
+			tmp = 1;
+		}
 		if (!ft_strncmp(str, delim, len + 1))
 		{
 			free(str);
 			break ;
 		}
-		str[ft_strlen(str)] = '\n';
+		if (tmp)
+		{
+			str[ft_strlen(str)] = '\n';
+			tmp = 0;
+		}
 		if ((size_t)write(fd, str, ft_strlen(str)) != ft_strlen(str))
 			return (hd_close(str, file_n, fd));
 		free(str);
@@ -90,6 +101,17 @@ int	write_heredoc(int num, char *delim)
 	return (fd);
 }
 
+void	put_newline(char *str)
+{
+	int	len;
+
+	if (!str)
+		return ;
+	len = ft_strlen(str);
+	if (str[len - 1] != '\n')
+		write(STDOUT_FILENO, "\n", 1);
+}
+
 void	put_warning(int line, char *delim)
 {
 	char *str;
@@ -97,7 +119,7 @@ void	put_warning(int line, char *delim)
 	str = ft_itoa(line);
 	if (!str)
 		return ;
-	write(2, "minishell: warning: here-document at line ", 42);
+	write(2, "\nminishell: warning: here-document at line ", 43);
 	write(2, str, ft_strlen(str));
 	write(2, " delimited by end-of-file (wanted `", 35);
 	write(2, delim, ft_strlen(delim));

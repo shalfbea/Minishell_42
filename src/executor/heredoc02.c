@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc02.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 12:47:41 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/13 18:26:41 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:26:43 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	delete_heredoc(t_command_list *cmd)
 		i = 0;
 		while ((cmd->redirects)[i])
 		{
-			if ((cmd->redirect_flags)[i] == 3)
+			if ((cmd->redirect_flags)[i] == REDIR_INSOURCE)
 			{
 				name = create_name(num);
 				if (!name)

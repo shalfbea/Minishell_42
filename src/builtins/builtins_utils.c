@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:11:05 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/20 15:35:14 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:21:41 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,40 @@ int	check_builtin(char *name)
 	return (i);
 }
 
-int	run_builtin(t_command_list *cmd, t_exec_env *in_exec)
+int	run_builtin(t_command_list *cmd, t_exec_env *in_exec, int num)
 {
-	int		num;
+	int		n_cmd;
+	int		save[2];
 
-	in_exec = NULL;//fix it !!!!!!!!!!!!!!!!!!!!!
-	num = check_builtin(cmd->argv[0]);
-	g_ms_env.ex_code = g_ms_env.builtin_functions[num](cmd->argv);
+	n_cmd = check_builtin(cmd->argv[0]);
+	if (working_with_redirects(cmd, in_exec, num))
+		return (1);
+	swap_filedescriptors(in_exec, num, save);
+	g_ms_env.ex_code = g_ms_env.builtin_functions[n_cmd](cmd->argv);
+	retrieve_filedescriptors(in_exec, num, save);
 	return (g_ms_env.ex_code);
+}
+
+void	retrieve_filedescriptors(t_exec_env *in_exec, int num, int *save)
+{
+	t_fds	*tmp_fd;
+	int		j;
+
+	j = 1;
+	tmp_fd = in_exec->first_fd;
+	while (j < num)
+	{
+		tmp_fd = tmp_fd->next_fd;
+		j++;
+	}
+	if (tmp_fd->infile != -55)
+	{
+		dup2(save[0], STDIN_FILENO);
+		close(save[0]);
+	}
+	if (tmp_fd->outfile != -55)
+	{
+		dup2(save[1], STDOUT_FILENO);
+		close(save[1]);
+	}
 }

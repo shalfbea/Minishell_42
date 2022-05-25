@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 17:22:45 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/24 18:56:33 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:27:18 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	executor(t_command_list *commands)
 		return (1);
 	if (run_commands(commands, &in_exec))
 	{
-		ft_free(commands, &in_exec);
-		return (delete_heredoc(commands));
+		delete_heredoc(commands);
+		return (ft_free(commands, &in_exec));
 	}
 	else
 		save_ex_code(&in_exec);
 	delete_heredoc(commands);
-	ft_free(commands, &in_exec);// it's commented out due to tests
+	ft_free(commands, &in_exec);
 	return (0);
 }
 

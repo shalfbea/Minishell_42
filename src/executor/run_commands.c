@@ -18,7 +18,7 @@ int	run_commands(t_command_list *commands, t_exec_env *in_exec)
 	t_command_list	*tmp_cmd;
 	t_fds	*tmp_in;
 	if (g_ms_env.number_of_commands == 1 && check_builtin(commands->argv[0]) < 7)
-		return (run_builtin(commands, in_exec));
+		return (run_builtin(commands, in_exec, 1));
 	i = 0;
 	tmp_cmd = commands;
 	tmp_in = in_exec->first_fd;
@@ -48,17 +48,17 @@ void	ft_exec(t_command_list *cmd, t_exec_env *in_exec, int i)
 	j = 1;
 	create_pipeline(in_exec->_pipes, i, g_ms_env.number_of_commands);
 	if (check_builtin(cmd->argv[0]) < 7)
-		exit(run_builtin(cmd, in_exec));
+		exit(run_builtin(cmd, in_exec, i));
 	if (working_with_redirects(cmd, in_exec, i))
 		exit(1);
-	swap_filedescriptors(in_exec, i);
+	swap_filedescriptors(in_exec, i, NULL);
 	if (check_cmd(&cmd->argv[0]))
 		exit(127);
 	execve((cmd->argv)[0], cmd->argv, g_ms_env.envp);
 	exit(242);
 }
 
-void	swap_filedescriptors(t_exec_env *in_exec, int com)
+void	swap_filedescriptors(t_exec_env *in_exec, int com, int *save)
 {
 	t_fds	*tmp_fd;
 	int		j;
@@ -72,11 +72,15 @@ void	swap_filedescriptors(t_exec_env *in_exec, int com)
 	}
 	if (tmp_fd->infile != -55)
 	{
+		if (save)
+			save[0] = dup(STDIN_FILENO);
 		dup2(tmp_fd->infile, STDIN_FILENO);
 		close(tmp_fd->infile);
 	}
 	if (tmp_fd->outfile != -55)
 	{
+		if (save)
+			save[1] = dup(STDOUT_FILENO);
 		dup2(tmp_fd->outfile, STDOUT_FILENO);
 		close(tmp_fd->outfile);
 	}
@@ -87,7 +91,7 @@ void	create_pipeline(int	**pipes, int com, int length)
 	int	j;
 
 	j = 0;
-	while (j < length - 1)//stdin:0, stdout:1
+	while (j < length - 1)
 	{
 		if ((com == 1 && j == 0) || (com > 1 && com < length && com - 1 == j))
 		{
