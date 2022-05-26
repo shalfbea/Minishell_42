@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:46:13 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/25 17:55:56 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:26:17 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int	check_name(char *name, char flag)
 				return (0);
 			i++;
 		}
+		if (name[i] != '=')
+			return (5);
 	}
 	else
 	{
@@ -121,10 +123,10 @@ void	add_var_evp(char *name)
 	}
 	else
 	{
-		i = 0;
-		while (name[i] != '=' && name[i])
-			i++;
-		if (!name[i] || !name[i + 1])
+		length = 0;
+		while (name[length] != '=' && name[length])
+			length++;
+		if (!name[length] || !name[length + 1])
 			free(tmp_name);
 		else
 		{

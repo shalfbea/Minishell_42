@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/25 16:36:31 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/26 12:42:38 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void	add_var_evp(char *name);
 int	add_new_name(char *name, int length);
 char	*get_name(int i);
 void	del_var_evp(char *variable);
+int	arg_is_number(char *str);
 
 int	ft_echo(char **argv);
 int	ft_cd(char **argv);

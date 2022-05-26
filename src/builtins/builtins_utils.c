@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:11:05 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/25 17:21:41 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/26 12:18:26 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,40 @@ int	run_builtin(t_command_list *cmd, t_exec_env *in_exec, int num)
 
 	n_cmd = check_builtin(cmd->argv[0]);
 	if (working_with_redirects(cmd, in_exec, num))
+	{
+		if (g_ms_env.number_of_commands == 1)
+		{
+			in_exec->first_fd->r_code = g_ms_env.ex_code;
+				return (0);
+		}
 		return (1);
+	}
 	swap_filedescriptors(in_exec, num, save);
-	g_ms_env.ex_code = g_ms_env.builtin_functions[n_cmd](cmd->argv);
-	retrieve_filedescriptors(in_exec, num, save);
-	return (g_ms_env.ex_code);
+	if (n_cmd == 6)
+	{
+		n_cmd = g_ms_env.builtin_functions[n_cmd](cmd->argv);
+		retrieve_filedescriptors(in_exec, num, save);
+		if (g_ms_env.number_of_commands == 1)
+		{
+			if (n_cmd == -55)
+				return (n_cmd);
+			in_exec->first_fd->r_code = 1;
+			return (0);
+		}
+		else
+			return (g_ms_env.ex_code);
+	}
+	else
+	{
+		g_ms_env.ex_code = g_ms_env.builtin_functions[n_cmd](cmd->argv);
+		retrieve_filedescriptors(in_exec, num, save);
+		if (g_ms_env.number_of_commands == 1)
+		{
+			in_exec->first_fd->r_code = g_ms_env.ex_code;
+			return (0);
+		}
+		return (g_ms_env.ex_code);
+	}
 }
 
 void	retrieve_filedescriptors(t_exec_env *in_exec, int num, int *save)

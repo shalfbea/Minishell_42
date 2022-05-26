@@ -41,9 +41,9 @@ int	check_files(t_command_list *cmd, t_fds *tmp_fd, int num)
 			if (tmp_fd->outfile != -55)
 				close(tmp_fd->outfile);
 			if (cmd->redirect_flags[j] == REDIR_OUT)
-				tmp_fd->outfile = open(cmd->redirects[j], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+				tmp_fd->outfile = open(cmd->redirects[j], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			else
-				tmp_fd->outfile = open(cmd->redirects[j], O_WRONLY | O_CREAT | O_APPEND, 0666);
+				tmp_fd->outfile = open(cmd->redirects[j], O_WRONLY | O_CREAT | O_APPEND, 0644);
 			if (tmp_fd->outfile == -1)
 				return (put_error(cmd->redirects[j], 1));
 		}
@@ -82,6 +82,8 @@ int	put_error(char *name, char flag)
 		str = "too many arguments";
 	else if (flag == 13 || flag == 15)
 		str = "not a valid identifier";
+	else if (flag == 17)
+		str = "numeric argument required";
 	else if (flag)
 		str = strerror(errno);
 	else
@@ -94,6 +96,8 @@ int	put_error(char *name, char flag)
 		write(STDERR_FILENO, "export: `", 8);
 	else if (flag == 15)
 		write(STDERR_FILENO, "unset: `", 8);
+	else if (flag == 17)
+		write(STDERR_FILENO, "exit: ", 6);
 	write(STDERR_FILENO, name, length);
 	if (flag == 13 || flag == 15)
 		write(STDERR_FILENO, "'", 1);

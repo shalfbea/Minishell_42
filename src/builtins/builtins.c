@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:19:40 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/24 18:08:59 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:04:55 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	ft_pwd(char **argv)
 int	ft_export(char **argv)
 {
 	int	i;
+	int	j;
 	int	err;
 
 	i = 1;
@@ -89,9 +90,10 @@ int	ft_export(char **argv)
 		return (print_sort_env(argv));
 	while (argv[i])
 	{
-		if (check_name(argv[i], 1))
+		j = check_name(argv[i], 1);
+		if (j == 1)
 			add_var_evp(argv[i]);
-		else
+		else if (!j)
 		{
 			put_error(argv[i], 13);
 			err = 1;
@@ -147,6 +149,45 @@ int	ft_env(char **argv)
 
 int	ft_exit(char **argv)
 {
-	argv = NULL;
-	return (0);
+	int	err;
+
+	if (!argv[1])
+	{
+		g_ms_env.ex_code = 0;
+		return (-55);
+	}
+	if (arg_is_number(argv[1]))
+	{
+		if (argv[2])
+		{
+			put_error(argv[0], 5);
+			g_ms_env.ex_code = 1;
+			return (1);
+		}
+		err = ft_atoi(argv[1]);
+		g_ms_env.ex_code = err % 256;
+		return (-55);
+	}
+	put_error(argv[1], 17);
+	g_ms_env.ex_code = 255;
+	return (-55);
+}
+
+int	arg_is_number(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
+		|| str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:44:04 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/25 16:52:21 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:13:16 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,77 @@
 
 int	heredoc(t_command_list *commands, t_exec_env *in_exec)
 {
-	int	fd;
+//	int	fd;
 	int	j;
 	int	num;
+	int	err;
 	t_command_list	*tmp_cmd;
 	t_fds	*tmp_fd;
 
 	num = 1;
 	tmp_cmd = commands;
 	tmp_fd = in_exec->first_fd;
+	g_ms_env.pids = (pid_t *)malloc(sizeof(pid_t) * 1);
+	if (!g_ms_env.pids)
+		return (1);
+//	g_ms_env.pids[0] = fork();
+//	if (g_ms_env.pids[0] < 0)
+//		return (1);
+//	if (g_ms_env.pids[0] == 0)
 	while (tmp_cmd)
 	{
 		j = 0;
-		fd = -55;
+//		fd = -55;
 		while ((tmp_cmd->redirects)[j])
 		{
 			if ((tmp_cmd->redirect_flags)[j] == REDIR_INSOURCE)
 			{
-				if (fd != -55)
-					close(fd);
-				fd = write_heredoc(num, (tmp_cmd->redirects)[j]);
-				tmp_fd->hd_flag = j;
-				if (fd == -1)
+//				if (fd != -55)
+//					close(fd);
+				g_ms_env.pids[0] = fork();
+				if (g_ms_env.pids[0] < 0)
 					return (1);
+				if (g_ms_env.pids[0] == 0)
+				{
+					err = write_heredoc(num, (tmp_cmd->redirects)[j]);
+//					printf("err1=%d", err);
+					if (err == -1)
+						exit(1);
+					else
+						exit(0);
+				}
+				waitpid(g_ms_env.pids[0], &err, 0);
+//				printf("WFX=%d\n", WIFEXITED(err));
+				if (WIFEXITED(err))
+					err = WEXITSTATUS(err);
+				else
+				{
+					g_ms_env.ex_code = 1;
+					return (1);
+				}
+//				printf("err2=%d", err);
+				tmp_fd->hd_flag = j;
+				if (err)
+					return (1);
+//				if (fd == -1)
+//					exit(1);
 			}
 			j++;
 		}
-		if (fd != -55)
-			close(fd);
+//		if (fd != -55)
+//			close(fd);
 		tmp_cmd = tmp_cmd->next_command;
 		tmp_fd = tmp_fd->next_fd;
 		num++;
 	}
+//	exit(0);
+//	waitpid(g_ms_env.pids[0], &num, 0);
+//	if (WIFEXITED(num))
+//		num = WEXITSTATUS(num);
+//	else
+//		num = 1;
+	free(g_ms_env.pids);
+	g_ms_env.pids = NULL;
 	return (0);
 }
 
@@ -145,7 +184,7 @@ int	create_file(int num, char **file_n)
 	if (!name)
 		return (-1);
 	*file_n = name;
-	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (fd == -1)
 		free(name);
 	return (fd);
