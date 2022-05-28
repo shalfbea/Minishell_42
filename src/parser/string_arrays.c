@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:18:58 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/23 17:47:20 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/28 20:13:20 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,14 @@ char	**string_array_former(t_list	**array)
 	i = 0;
 	while (i < words)
 	{
-		res[i] = (char *) tmp->content;
+		//res[i] = (char *) tmp->content;
+		res[i] = ft_strdup((char *) tmp->content);
 		tmp = tmp->next;
 		++i;
 	}
 	res[i] = NULL;
-	ft_lstclear(array, &no_delete);
+	//ft_lstclear(array, &no_delete);
+	ft_lstclear(array, &free);
 	return (res);
 }
 

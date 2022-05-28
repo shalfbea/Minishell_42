@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/24 20:28:27 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/28 21:03:56 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 char	error_msg(int mode)
 {
 	if (mode == QUOTES)
-		printf("minishell: syntax error - quotes unmatched.");
+		//printf("minishell: syntax error - quotes unmatched.");
+		ft_putendl_fd("minishell: syntax error - quotes unmatched.", STDERR_FILENO);
 	if (mode == P_OPEN)
-		printf("minishell: syntax error near unexpected token `(\'\n");
+		//printf("minishell: syntax error near unexpected token `(\'\n");
+		ft_putendl_fd("minishell: syntax error near unexpected token `(\'", STDERR_FILENO);
 	if (mode == P_CLOSE)
-		printf("minishell: syntax error near unexpected token `)\'\n");
+		//printf("minishell: syntax error near unexpected token `)\'\n");
+		ft_putendl_fd("minishell: syntax error near unexpected token `)\'", STDERR_FILENO);
 	return (1);
 }
 
@@ -85,10 +88,23 @@ t_list	*prompt(char *input, char debug)
 	return (args);
 }
 
-t_command_list	*get_command(t_list	*args, char debug)
+void *lex_dup(void *original)
+{
+	t_lexer	*copy;
+
+	copy = (t_lexer *) malloc(sizeof(t_lexer *));
+	copy->str = ft_strdup(((t_lexer*) original)->str);
+	copy->to_prev = ((t_lexer*) original)->to_prev;
+	copy->type = ((t_lexer*) original)->type;
+	return ((void *) copy);
+}
+
+t_command_list	*get_command(t_list	*args_raw, char debug)
 {
 	t_command_list	*commands;
+	t_list			*args;
 
+	args = ft_lstmap(args_raw, lex_dup, &no_delete);
 	if (lst_env_check(args))
 		return ((t_command_list	*)clear_lexer_lst(&args, NULL));
 	if (debug)
@@ -100,10 +116,14 @@ t_command_list	*get_command(t_list	*args, char debug)
 			debug_lexer_printer("Lexer gluing results", args);
 	}
 	if (parentheses_checker(args))
+	{
+		clear_lexer_lst(&args, NULL);
 		return (NULL);
+	}
 	// ПРОВЕРКА ПРАВИЛЬНОГО ПОРЯДКА ТОКЕНОВ
 	commands = parser(args);
 	if (debug && commands)
 		debug_command_list_printer(commands);
+	clear_lexer_lst(&args, NULL);
 	return (commands);
 }

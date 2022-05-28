@@ -50,3 +50,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+minishell
+.gitignore
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+shalfbea_bonus/minishell_bonus
