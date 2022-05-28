@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:29:33 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/24 20:13:26 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/28 20:00:05 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,15 @@ static void sigint_handler(int sig)
 	}
 	else if (g_ms_env.prompt_mode)
 	{
+		return ;
+		/*
     	rl_on_new_line();
     	rl_redisplay();
     	ft_putstr_fd("  \n", STDERR_FILENO);
     	rl_replace_line("", 0);
     	rl_on_new_line();
     	rl_redisplay();
+		*/
 	}
 }
 

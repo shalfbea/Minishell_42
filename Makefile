@@ -4,7 +4,8 @@ CC := clang
 
 TestingFlags := -g3 #-fsanitize=address
 
-READLINE_LIB := -I/Users/$(USER)/goinfre/.brew/Cellar/readline/8.1.2/include/ -L/Users/$(USER)/goinfre/.brew/Cellar/readline/8.1.2/lib/ -lreadline
+#READLINE_LIB := -I/Users/$(USER)/goinfre/.brew/Cellar/readline/8.1.2/include/ -L/Users/$(USER)/goinfre/.brew/Cellar/readline/8.1.2/lib/ -lreadline
+READLINE_LIB := -lreadline
 FLAGS := -Wall -Wextra -Werror -I././include -I./libft/include -pthread  $(TestingFlags)
 
 MINISHELL := minishell
