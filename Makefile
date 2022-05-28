@@ -50,6 +50,8 @@ $(LIBFT) :
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER) $(OBJ_DIR)
 	$(CC) $(FLAGS) -c $< -o $@
 
+obj: $(OBJ_DIR)
+
 $(OBJ_DIR) :
 	mkdir obj
 	mkdir obj/lexer
