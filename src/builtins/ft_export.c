@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	print_sort_env(char **argv)
+int	print_sort_env(void)
 {
 	int		i;
 	int		j;
@@ -32,13 +32,7 @@ int	print_sort_env(char **argv)
 				if (g_ms_env.envp[j][find_value(j) - 1] != '=')
 					printf("declare -x %s\n", name);
 				else
-				{
-					if (printf("declare -x %s\"%s\"\n", name, &g_ms_env.envp[j][find_value(j)]) < 0)
-					{
-						free(name);
-						return (put_error(argv[0], 1));
-					}
-				}
+					printf("declare -x %s\"%s\"\n", name, &g_ms_env.envp[j][find_value(j)]);
 				free(name);
 			}
 			j++;

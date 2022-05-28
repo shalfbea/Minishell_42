@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/28 22:20:17 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/28 22:58:36 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ typedef struct s_command_list {
 # define NO_FILE -55
 # define NO_VALUE 5
 # define EXEC_ERROR 242
+
+# define ERR_FEW_ARG 3
+# define ERR_MANY_ARG 5
+# define ERR_EXPORT 13
+# define ERR_UNSET 15
+# define ERR_EXIT 17
+# define ERR_CD 7
 
 typedef struct s_minishell_environment {
 	char	**envp;//minishell environment. it could be a list but хз
@@ -112,7 +119,7 @@ int	check_builtin(char *name);
 int	run_builtin(t_command_list *cmd, t_exec_env *in_exec, int num);
 void	retrieve_filedescriptors(t_exec_env *in_exec, int num, int *save);
 
-int	print_sort_env(char **argv);
+int	print_sort_env(void);
 int	find_value(int i);
 int	find_name(char *name);
 int	check_name(char *name, char flag);
