@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:46:13 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/26 13:26:17 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/28 18:21:48y cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,15 @@ int	print_sort_env(char **argv)
 				name = get_name(j);
 				if (!name)
 					return (1);
-				if (printf("declare -x %s\"%s\"\n", name, &g_ms_env.envp[j][find_value(j)]) < 0)
+				if (g_ms_env.envp[j][find_value(j) - 1] != '=')
+					printf("declare -x %s\n", name);
+				else
 				{
-					free(name);
-					return (put_error(argv[0], 1));
+					if (printf("declare -x %s\"%s\"\n", name, &g_ms_env.envp[j][find_value(j)]) < 0)
+					{
+						free(name);
+						return (put_error(argv[0], 1));
+					}
 				}
 				free(name);
 			}
@@ -68,9 +73,12 @@ int	find_value(int i)
 	int	j;
 
 	j = 0;
-	while (g_ms_env.envp[i][j] != '=')
+	while (g_ms_env.envp[i][j] != '=' && g_ms_env.envp[i][j])
 		j++;
-	return (++j);
+	if (g_ms_env.envp[i][j] == '=')
+		return (++j);
+	else
+		return (j);
 }
 
 int	check_name(char *name, char flag)
@@ -89,7 +97,7 @@ int	check_name(char *name, char flag)
 			i++;
 		}
 		if (name[i] != '=')
-			return (5);
+			return (NO_VALUE);
 	}
 	else
 	{
@@ -126,7 +134,7 @@ void	add_var_evp(char *name)
 		length = 0;
 		while (name[length] != '=' && name[length])
 			length++;
-		if (!name[length] || !name[length + 1])
+		if (!name[length])
 			free(tmp_name);
 		else
 		{
@@ -189,7 +197,7 @@ int	find_name(char *name)
 		j = 0;
 		while (name[j] && name[j] != '=' && name[j] == g_ms_env.envp[i][j])
 			j++;
-		if ((!name[j] || name[j] == '=') && g_ms_env.envp[i][j] == '=')
+		if ((!name[j] || name[j] == '=') && (g_ms_env.envp[i][j] == '=' || !g_ms_env.envp[i][j]))
 			return (i);
 		i++;
 	}

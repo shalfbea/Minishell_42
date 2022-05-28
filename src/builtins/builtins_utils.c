@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:11:05 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/26 12:18:26 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/28 22:23:37 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	check_builtin(char *name)
 	int	i;
 
 	i = 0;
-	while (i < 7)
+	while (i < NUM_BULTINS)
 	{
 		if (!ft_strncmp(g_ms_env.builtin_names[i], name, ft_strlen(g_ms_env.builtin_names[i]) + 1))
 			return (i);
@@ -66,7 +66,7 @@ int	run_builtin(t_command_list *cmd, t_exec_env *in_exec, int num)
 		retrieve_filedescriptors(in_exec, num, save);
 		if (g_ms_env.number_of_commands == 1)
 		{
-			if (n_cmd == -55)
+			if (n_cmd == SHELL_CLOSE)
 				return (n_cmd);
 			in_exec->first_fd->r_code = 1;
 			return (0);
@@ -99,12 +99,12 @@ void	retrieve_filedescriptors(t_exec_env *in_exec, int num, int *save)
 		tmp_fd = tmp_fd->next_fd;
 		j++;
 	}
-	if (tmp_fd->infile != -55)
+	if (tmp_fd->infile != NO_FILE)
 	{
 		dup2(save[0], STDIN_FILENO);
 		close(save[0]);
 	}
-	if (tmp_fd->outfile != -55)
+	if (tmp_fd->outfile != NO_FILE)
 	{
 		dup2(save[1], STDOUT_FILENO);
 		close(save[1]);

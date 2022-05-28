@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:19:40 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/26 13:04:55 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/28 22:11:31 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	ft_echo(char **argv)
 int	ft_cd(char **argv)
 {
 	int		i;
+	char	*path;
+	char	*str;
 
 	i = 1;
 	while (argv[i])
@@ -55,6 +57,15 @@ int	ft_cd(char **argv)
 		return (put_error(argv[0], 5));
 	if (chdir(argv[1]))
 		return (put_error(argv[1], 7));
+	path = getcwd(NULL, 0);
+	if (!path)
+		return (put_error(argv[0], 1));
+	str = ft_strjoin("PWD=", path);
+	free(path);
+	if (!str)
+		return (1);
+	add_var_evp(str);
+	free(str);
 	return (0);
 }
 
@@ -81,7 +92,6 @@ int	ft_pwd(char **argv)
 int	ft_export(char **argv)
 {
 	int	i;
-	int	j;
 	int	err;
 
 	i = 1;
@@ -90,10 +100,9 @@ int	ft_export(char **argv)
 		return (print_sort_env(argv));
 	while (argv[i])
 	{
-		j = check_name(argv[i], 1);
-		if (j == 1)
+		if (check_name(argv[i], 1))
 			add_var_evp(argv[i]);
-		else if (!j)
+		else
 		{
 			put_error(argv[i], 13);
 			err = 1;
@@ -138,6 +147,11 @@ int	ft_env(char **argv)
 	while (g_ms_env.envp[i])
 	{
 		length = ft_strlen(g_ms_env.envp[i]);
+		if (check_name(g_ms_env.envp[i], 1) == NO_VALUE)
+		{
+			i ++;
+			continue ;
+		}
 		if (write(STDOUT_FILENO, g_ms_env.envp[i], length) != length)
 			return (put_error(argv[0], 1));
 		if (write(STDOUT_FILENO, "\n", 1) != 1)
@@ -154,7 +168,7 @@ int	ft_exit(char **argv)
 	if (!argv[1])
 	{
 		g_ms_env.ex_code = 0;
-		return (-55);
+		return (SHELL_CLOSE);
 	}
 	if (arg_is_number(argv[1]))
 	{
@@ -166,11 +180,11 @@ int	ft_exit(char **argv)
 		}
 		err = ft_atoi(argv[1]);
 		g_ms_env.ex_code = err % 256;
-		return (-55);
+		return (SHELL_CLOSE);
 	}
 	put_error(argv[1], 17);
 	g_ms_env.ex_code = 255;
-	return (-55);
+	return (SHELL_CLOSE);
 }
 
 int	arg_is_number(char *str)

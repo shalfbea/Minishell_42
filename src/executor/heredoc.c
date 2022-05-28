@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:44:04 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/26 15:13:16 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/28 22:14:15 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	heredoc(t_command_list *commands, t_exec_env *in_exec)
 {
-//	int	fd;
 	int	j;
 	int	num;
 	int	err;
@@ -27,34 +26,25 @@ int	heredoc(t_command_list *commands, t_exec_env *in_exec)
 	g_ms_env.pids = (pid_t *)malloc(sizeof(pid_t) * 1);
 	if (!g_ms_env.pids)
 		return (1);
-//	g_ms_env.pids[0] = fork();
-//	if (g_ms_env.pids[0] < 0)
-//		return (1);
-//	if (g_ms_env.pids[0] == 0)
 	while (tmp_cmd)
 	{
 		j = 0;
-//		fd = -55;
 		while ((tmp_cmd->redirects)[j])
 		{
 			if ((tmp_cmd->redirect_flags)[j] == REDIR_INSOURCE)
 			{
-//				if (fd != -55)
-//					close(fd);
 				g_ms_env.pids[0] = fork();
 				if (g_ms_env.pids[0] < 0)
 					return (1);
 				if (g_ms_env.pids[0] == 0)
 				{
 					err = write_heredoc(num, (tmp_cmd->redirects)[j]);
-//					printf("err1=%d", err);
 					if (err == -1)
 						exit(1);
 					else
 						exit(0);
 				}
 				waitpid(g_ms_env.pids[0], &err, 0);
-//				printf("WFX=%d\n", WIFEXITED(err));
 				if (WIFEXITED(err))
 					err = WEXITSTATUS(err);
 				else
@@ -62,27 +52,16 @@ int	heredoc(t_command_list *commands, t_exec_env *in_exec)
 					g_ms_env.ex_code = 1;
 					return (1);
 				}
-//				printf("err2=%d", err);
 				tmp_fd->hd_flag = j;
 				if (err)
 					return (1);
-//				if (fd == -1)
-//					exit(1);
 			}
 			j++;
 		}
-//		if (fd != -55)
-//			close(fd);
 		tmp_cmd = tmp_cmd->next_command;
 		tmp_fd = tmp_fd->next_fd;
 		num++;
 	}
-//	exit(0);
-//	waitpid(g_ms_env.pids[0], &num, 0);
-//	if (WIFEXITED(num))
-//		num = WEXITSTATUS(num);
-//	else
-//		num = 1;
 	free(g_ms_env.pids);
 	g_ms_env.pids = NULL;
 	return (0);
@@ -109,7 +88,7 @@ int	write_heredoc(int num, char *delim)
 		str = get_next_line(0);
 		if (!str)
 			return (hd_close(str, file_n, fd));
-		if (str[0] == -55)
+		if (str[0] == NO_FILE)
 		{
 			put_warning(line, delim);
 			free(str);

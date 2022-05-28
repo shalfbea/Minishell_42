@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 15:30:05 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/24 18:30:54 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/28 21:29:04 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int	ft_init(t_command_list *commands, t_exec_env *in_exec)
 	if (alloc_lsts(in_exec, g_ms_env.number_of_commands))
 		return (ft_free(commands, in_exec));
 	if (heredoc(commands, in_exec))
+	{
+		delete_heredoc(commands);
 		return (ft_free(commands, in_exec));
+	}
 	return (0);
 }
 

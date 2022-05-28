@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 14:40:24 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/12 17:18:51 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/28 22:14:23 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	end_logic(char **result, int error, int i)
 	if ((*result)[0] == -1 || error == -1)
 	{
 		if ((*result)[0] == -1)
-			(*result)[0] = -55;
+			(*result)[0] = NO_FILE;
 		else
 		{
 			free(*result);

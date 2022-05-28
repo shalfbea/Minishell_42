@@ -17,7 +17,7 @@ int	run_commands(t_command_list *commands, t_exec_env *in_exec)
 	int	i;
 	t_command_list	*tmp_cmd;
 	t_fds	*tmp_in;
-	if (g_ms_env.number_of_commands == 1 && check_builtin(commands->argv[0]) < 7)
+	if (g_ms_env.number_of_commands == 1 && check_builtin(commands->argv[0]) < NUM_BULTINS)
 		return (run_builtin(commands, in_exec, 1));
 	i = 0;
 	tmp_cmd = commands;
@@ -47,7 +47,7 @@ void	ft_exec(t_command_list *cmd, t_exec_env *in_exec, int i)
 
 	j = 1;
 	create_pipeline(in_exec->_pipes, i, g_ms_env.number_of_commands);
-	if (check_builtin(cmd->argv[0]) < 7)
+	if (check_builtin(cmd->argv[0]) < NUM_BULTINS)
 		exit(run_builtin(cmd, in_exec, i));
 	if (working_with_redirects(cmd, in_exec, i))
 		exit(1);
@@ -55,7 +55,7 @@ void	ft_exec(t_command_list *cmd, t_exec_env *in_exec, int i)
 	if (check_cmd(&cmd->argv[0]))
 		exit(127);
 	execve((cmd->argv)[0], cmd->argv, g_ms_env.envp);
-	exit(242);
+	exit(EXEC_ERROR);
 }
 
 void	swap_filedescriptors(t_exec_env *in_exec, int com, int *save)
@@ -70,14 +70,14 @@ void	swap_filedescriptors(t_exec_env *in_exec, int com, int *save)
 		tmp_fd = tmp_fd->next_fd;
 		j++;
 	}
-	if (tmp_fd->infile != -55)
+	if (tmp_fd->infile != NO_FILE)
 	{
 		if (save)
 			save[0] = dup(STDIN_FILENO);
 		dup2(tmp_fd->infile, STDIN_FILENO);
 		close(tmp_fd->infile);
 	}
-	if (tmp_fd->outfile != -55)
+	if (tmp_fd->outfile != NO_FILE)
 	{
 		if (save)
 			save[1] = dup(STDOUT_FILENO);
@@ -128,7 +128,7 @@ int	ft_wait(t_exec_env *in_exec)
 			tmp_fd->r_code = WEXITSTATUS(tmp_fd->r_code);
 		else
 			tmp_fd->r_code = 1;
-		if (tmp_fd->r_code == 242)
+		if (tmp_fd->r_code == EXEC_ERROR)
 			return (ft_kill(in_exec));
 		tmp_fd = tmp_fd->next_fd;
 		i++;

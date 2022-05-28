@@ -1,11 +1,12 @@
-/* ************************************************************************** */ /*                                                                            */
+/* ************************************************************************** */
+/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 14:26:32 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/11 14:47:25 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/28 22:16:19by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +39,7 @@ int	check_files(t_command_list *cmd, t_fds *tmp_fd, int num)
 	{
 		if (cmd->redirect_flags[j] == REDIR_OUT || cmd->redirect_flags[j] == REDIR_APPEND)
 		{
-			if (tmp_fd->outfile != -55)
+			if (tmp_fd->outfile != NO_FILE)
 				close(tmp_fd->outfile);
 			if (cmd->redirect_flags[j] == REDIR_OUT)
 				tmp_fd->outfile = open(cmd->redirects[j], O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -49,7 +50,7 @@ int	check_files(t_command_list *cmd, t_fds *tmp_fd, int num)
 		}
 		else if (cmd->redirect_flags[j] == REDIR_IN || cmd->redirect_flags[j] == REDIR_INSOURCE)
 		{
-			if (tmp_fd->infile != -55)
+			if (tmp_fd->infile != NO_FILE)
 				close(tmp_fd->infile);
 			if (tmp_fd->hd_flag != j && cmd->redirect_flags[j] == REDIR_IN)
 				tmp_fd->infile = open(cmd->redirects[j], O_RDONLY);
@@ -62,7 +63,7 @@ int	check_files(t_command_list *cmd, t_fds *tmp_fd, int num)
 				free(name);
 			}
 			else
-				tmp_fd->infile = -55;
+				tmp_fd->infile = NO_FILE;
 			if (tmp_fd->infile == -1)
 				return (put_error(cmd->redirects[j], 1));
 		}

@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 14:47:39 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/20 15:11:44 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/28 22:15:41 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	create_lst(t_fds **lst)
 	*lst = malloc(sizeof(t_fds) * 1);
 	if (!(*lst))
 		return (1);
-	(*lst)->infile = -55;
-	(*lst)->outfile = -55;
+	(*lst)->infile = NO_FILE;
+	(*lst)->outfile = NO_FILE;
 	(*lst)->hd_flag = -1;
 	(*lst)->r_code = 0;
 	(*lst)->next_fd = NULL;
