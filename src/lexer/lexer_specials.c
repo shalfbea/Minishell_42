@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:14:23 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/16 15:58:20 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/28 16:52:32 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ char	quotes_breaker(t_splitter_data *data)
 		add_to_lexer(&(data->res), ft_substr(data->str, data->begin,
 				data->i - data->begin), 0, data->after_quotes);
 	(data->i)++;
+	if (data->str[data->i] == quote)
+	{
+		data->is_word = 0;
+		data->after_quotes = 1;
+		return (0); //Think about it
+	}
 	data->begin = data->i;
 	if (!((data->str)[data->i]))
 		return (error_msg(QUOTES)); //raise error!
