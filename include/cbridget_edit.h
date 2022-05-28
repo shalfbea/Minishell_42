@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cbridget_edit.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/26 12:42:38 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/28 16:59:48 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct s_command_list {
 # define LOGICAL_AND 1
 # define LOGICAL_OR 2
 # define BUFFER_SIZE 1
+
+# define SHELL_CLOSE -55
 
 typedef struct s_minishell_environment {
 	char	**envp;//minishell environment. it could be a list but хз
