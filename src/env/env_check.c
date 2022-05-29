@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 19:58:55 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/22 18:02:09 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 14:08:12 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*find_in_env(char *str, int start_pos, int end_pos)
 	char	*env;
 
 	request = ft_substr(str, start_pos + 1, end_pos - start_pos);
-	env = getenv(request);
+	env = ft_getenv(request);
 	if (request)
 		free(request);
 	if (env)
@@ -55,7 +55,7 @@ static void	str_replace_with_env(char	**str, int start_pos, int end_pos)
 		res[k++] = (*str)[i];
 	res[k] = '\0';
 	free(*str);
-	//free(env);
+	free(env);
 	*str = res;
 }
 
