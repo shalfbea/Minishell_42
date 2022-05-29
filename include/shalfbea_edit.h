@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 18:05:27 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 18:42:38 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,4 +138,5 @@ void					debug_ms_env_printer(void);
 //void	builtin_checker(t_logical_groups	*groups);
 
 char	wildcard_handler(t_splitter_data *data);
+char	wildcards_inserter(t_list	**args);
 #endif

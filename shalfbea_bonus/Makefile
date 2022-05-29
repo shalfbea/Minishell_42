@@ -23,7 +23,8 @@ SRC_MAIN = other/prompt.c other/signals.c other/ms_env.c \
       executor/get_next_line_utils.c executor/get_next_line.c executor/heredoc.c executor/heredoc02.c\
       executor/run_commands_utils.c \
 	  builtins/builtins_utils.c builtins/builtins.c builtins/ft_export.c \
-	  builtins/export_unset.c
+	  builtins/export_unset.c \
+	  lexer/wildcards.c
 	  #builtins/exit.c
 
 SRC_BONUS = main_shalfbea.c

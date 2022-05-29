@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 16:07:37 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 18:58:48 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,9 @@ t_command_list	*get_command(t_list	*args_raw, char debug)
 		clear_lexer_lst(&args, NULL);
 		return (NULL);
 	}
+	wildcards_inserter(&args);
+	if (debug)
+		debug_lexer_printer("Lexer wildcards results", args);
 	// ПРОВЕРКА ПРАВИЛЬНОГО ПОРЯДКА ТОКЕНОВ
 	commands = parser(args);
 	if (debug && commands)

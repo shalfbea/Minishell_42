@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 18:08:26 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 19:31:19 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int argc, char **argv, char **envp)
 		exit(1);
 	set_sig_control();
 	int	i = 1;
+	(void) i;
 	//FOR DEBUGGING ONLY
 	//string_array_cleaner(&g_ms_env.envp);
 	//debug_set_envp();
@@ -40,7 +41,7 @@ int	main(int argc, char **argv, char **envp)
 		g_ms_env.prompt_mode = 1;
 		//raw_lexer_data = prompt("e\"\"c", debug);
 		raw_lexer_data = prompt(NULL, debug);
-		//raw_lexer_data = prompt("echo **", debug);
+		//raw_lexer_data = prompt("echo .* lol", debug);
 		g_ms_env.prompt_mode = 0;
 		commands = get_command(raw_lexer_data, debug);
 		if (!commands)

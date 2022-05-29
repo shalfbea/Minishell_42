@@ -28,6 +28,7 @@ SRC = main.c \
       executor/run_commands_utils.c \
 	  builtins/builtins_utils.c builtins/builtins.c builtins/ft_export.c \
 	  builtins/export_unset.c \
+	  lexer/wildcards.c
 	  #builtins/exit.c
 
 OBJ_DIR = ./obj/
