@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:46:14 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/22 16:01:48 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 16:24:16 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	debug_command_list_printer(t_command_list *commands)
 
 void	iter_printer(void *cur)
 {
-	char	*types[] = {"word", "in quotes", "in double quotes", "redir out >", "redir in <", "redir append >>", "redir insource <<", "pipe |", "if_and &&", "if_or ||", "( parenthese open",") parenthese close" };
+	char	*types[] = {"word", "in quotes", "in double quotes", "redir out >", "redir in <", "redir append >>", "redir insource <<", "pipe |", "if_and &&", "if_or ||", "( parenthese open",") parenthese close", "wildcard"};
 
 	printf("%s; Type: %s",
 	 	  ((t_lexer *) cur)->str,

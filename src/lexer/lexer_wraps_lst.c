@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 19:41:36 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 16:04:30 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 16:23:09 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ char	type_detector(char	*str)
 		return (P_OPEN);
 	if (str[0] == ')' && !str[1])
 		return (P_CLOSE);
+	if (str[0] == '*' && !str[1])
+		return (WILDCARD);
 	return (0);
 }
 

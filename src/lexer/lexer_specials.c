@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:14:23 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/28 16:52:32 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 18:10:14 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,31 @@ char	special_characters(char	*c)
 		return (1);
 	else if (*c == ')')
 		return (1);
+	//else if (*c == '*')// && !special_characters(c+1) && special_characters(c+1) != 3) ///wildcards twice fix
+	//	return (1); // && c[1] != '*'
 	return (0);
+}
+
+char	wildcard_handler(t_splitter_data *data)
+{
+	int		k;
+
+	k = data->i;
+	if ((data->str)[data->i] != '*')
+		return (0);
+	while ((data->str)[k] == '*')
+			k++;
+	if (!(data->str)[k] || special_characters(&(data->str)[k]) || ft_isspace((data->str)[k]))
+	{
+		//add_to_lexer(&(data->res), ft_strdup("*"), WILDCARD, 0);
+		data->after_quotes = 0;
+		data->begin = k;
+		data->is_word = 0;
+		data->i = k - 1;
+		return (1);
+	}
+	else
+		return (0);
 }
 
 char	special_handler(t_splitter_data *data, char specials)
@@ -78,6 +102,8 @@ char	special_handler(t_splitter_data *data, char specials)
 		clear_lexer_lst(&(data->res), NULL);
 		return (1);
 	}
+	//if (wildcard_handler(data))
+	//	return (0);
 	if (specials < 3)
 	{
 		if (data->is_word)

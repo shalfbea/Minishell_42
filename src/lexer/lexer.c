@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 15:16:38 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/04 18:21:04 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 18:06:32 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static t_list	*splitter(t_splitter_data *data)
 			if (special_handler(data, specials))
 				return (NULL);
 		}
+		else if (wildcard_handler(data))
+			add_to_lexer(&(data->res), ft_strdup("*"), WILDCARD, 0);
 		else if (!ft_isspace(data->str[data->i])
 			&& (!(data->is_word)) && data->str[data->i])
 			start_word(data);
