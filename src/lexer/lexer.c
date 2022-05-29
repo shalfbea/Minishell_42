@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 15:16:38 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 18:06:32 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 19:29:05 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static t_list	*splitter(t_splitter_data *data)
 			if (special_handler(data, specials))
 				return (NULL);
 		}
-		else if (wildcard_handler(data))
+		else if (wildcard_handler(data) == 1)
 			add_to_lexer(&(data->res), ft_strdup("*"), WILDCARD, 0);
 		else if (!ft_isspace(data->str[data->i])
 			&& (!(data->is_word)) && data->str[data->i])
@@ -48,6 +48,7 @@ static t_list	*splitter(t_splitter_data *data)
 		else if (ft_isspace(data->str[data->i]) && data->is_word)
 			end_word(data);
 	}
+	//debug_lexer_printer()
 	if (data->is_word)
 		add_to_lexer(&(data->res), ft_substr(data->str, data->begin,
 				data->i - data->begin), 0, data->after_quotes);
