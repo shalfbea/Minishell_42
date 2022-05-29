@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:14:23 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 18:10:14 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 19:17:03 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,9 @@ char	wildcard_handler(t_splitter_data *data)
 	if (!(data->str)[k] || special_characters(&(data->str)[k]) || ft_isspace((data->str)[k]))
 	{
 		//add_to_lexer(&(data->res), ft_strdup("*"), WILDCARD, 0);
+		if (data->is_word)
+			add_to_lexer(&(data->res), ft_substr(data->str, data->begin,
+					data->i - data->begin), 0, data->after_quotes);
 		data->after_quotes = 0;
 		data->begin = k;
 		data->is_word = 0;
