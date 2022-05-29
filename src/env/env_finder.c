@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:06:00 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 15:42:52 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 19:53:02 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ char	*ft_getenv(char	*to_find)
 	if (!to_find || !g_ms_env.envp)
 		return (NULL);
 	i = 0;
+	if (!ft_strcmp(to_find, "?"))
+		return (ft_itoa(g_ms_env.ex_code));
 	while (g_ms_env.envp[i])
 	{
 		env_name = get_env_name(i);

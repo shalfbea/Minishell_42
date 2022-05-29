@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 19:58:55 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 15:33:45 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 20:05:17 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	env_checker(char	**str)
 				return (1);
 			while ((*str)[k] && ft_isalnum((*str)[k]))
 				++k;
-			str_replace_with_env(str, i, k - 1);
+			str_replace_with_env(str, i, k );
 			i = 0;
 		}
 	}
