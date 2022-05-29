@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:42:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/28 21:02:32 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 16:08:48 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static t_command_list	*error_and_clean(t_parser_data *data, char *error_msg)
 	ft_lstclear(&(data->argv), &no_delete);
 	ft_lstclear(&(data->redirects), &no_delete);
 	ft_lstclear(&(data->redirect_flags), &free);
-	return(clear_command_lst(&(data->res)));
+	return (clear_command_lst(&(data->res)));
 }
 
 static t_command_list	*parse_start(t_parser_data *data)
@@ -91,7 +91,8 @@ static t_command_list	*parse_start(t_parser_data *data)
 		data->args = data->args->next;
 	}
 	if (data->mode != NO_QUOTE)
-		return (error_and_clean(data, "syntax error near unexpected token `newline'"));
+		return (error_and_clean(data,
+				"syntax error near unexpected token `newline'"));
 	form_current(data, 1);
 	return (data->res);
 }

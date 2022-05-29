@@ -6,13 +6,13 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:29:33 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/28 20:00:05 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 16:08:02 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void sigint_handler(int sig)
+static void	sigint_handler(int sig)
 {
 	int	i;
 
@@ -24,7 +24,6 @@ static void sigint_handler(int sig)
 		while (g_ms_env.pids[++i])
 			kill(g_ms_env.pids[i], SIGTERM);
 		printf("\n");
-
 	}
 	else if (g_ms_env.prompt_mode)
 	{

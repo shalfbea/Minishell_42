@@ -56,3 +56,4 @@ minishell
 .vscode/tasks.json
 .vscode/launch.json
 shalfbea_bonus/minishell_bonus
+.vscode/c_cpp_properties.json

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 15:30:05 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/28 21:29:04 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/29 15:43:15 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_free(t_command_list *commands, t_exec_env *in_exec)
 void	free_commands(t_command_list *cmd)
 {
 	t_command_list	*tmp_cmd;
-	int	i;
+	int				i;
 
 	while (cmd)
 	{

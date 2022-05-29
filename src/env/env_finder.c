@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 18:06:00 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 14:33:55 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 15:42:52 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	ft_strcmp(const char *s1, const char *s2)
 */
 char	*get_env_name(uint pos)
 {
-	char	*str;
+	char		*str;
 	uint		i;
 
 	str = g_ms_env.envp[pos];
@@ -52,7 +52,7 @@ char	*get_env_name(uint pos)
 */
 char	*get_env_content(uint pos)
 {
-	char	*str;
+	char		*str;
 	uint		i;
 
 	str = g_ms_env.envp[pos];
@@ -72,7 +72,7 @@ char	*ft_getenv(char	*to_find)
 	if (!to_find || !g_ms_env.envp)
 		return (NULL);
 	i = 0;
-	while(g_ms_env.envp[i])
+	while (g_ms_env.envp[i])
 	{
 		env_name = get_env_name(i);
 		if (!ft_strcmp(to_find, env_name))

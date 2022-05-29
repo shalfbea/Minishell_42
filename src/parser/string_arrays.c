@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:18:58 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/28 20:13:20 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 16:10:41 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,20 +65,22 @@ void	string_array_cleaner(char	***array)
 char	**string_array_copy(char **array, uint more_size_option)
 {
 	char	**copy_of_array;
-	int	len;
+	int		len;
+//	char 	*tmp;
 
 	len = 0;
-	while (array[len++]);
+	while (array[len])
+		len++;
 	len += more_size_option;
 	copy_of_array = (char **) malloc(sizeof(char *) * (len + 1));
 	if (!copy_of_array)
 		return (NULL);
 	len = -1;
-	char 	*tmp;
 	while (array[++len])
 	{
-		tmp = ft_strdup(array[len]);
-		copy_of_array[len] = tmp;
+//		tmp = ft_strdup(array[len]);
+//		copy_of_array[len] = tmp;
+		copy_of_array[len] = ft_strdup(array[len]);
 	}
 	copy_of_array[len] = NULL;
 	return (copy_of_array);

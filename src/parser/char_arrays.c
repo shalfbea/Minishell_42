@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:13:16 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/22 16:20:36 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 16:08:11 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,3 @@ char	*char_array_former(t_list **array)
 	ft_lstclear(array, &free);
 	return (res);
 }
-

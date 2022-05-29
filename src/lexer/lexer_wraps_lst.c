@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 19:41:36 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/16 16:45:27 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 16:04:30 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_list	*lst_new_lex(char	*str, char type, char add_to_prev)
 	lex->str = str;
 	lex->type = type;
 	lex->to_prev = add_to_prev;
-	return(ft_lstnew((void *) lex));
+	return (ft_lstnew((void *) lex));
 }
 
 void	add_to_lexer(t_list **lst, char *str, char type, char add_to_prev)
@@ -54,7 +54,7 @@ void	add_to_lexer(t_list **lst, char *str, char type, char add_to_prev)
 
 	lex = malloc(sizeof(t_lexer));
 	if (!lex)
-		return ; //RAISE ERROR or exit
+		return ;
 	lex->str = str;
 	lex->to_prev = add_to_prev;
 	if (type == '\'')
@@ -66,4 +66,3 @@ void	add_to_lexer(t_list **lst, char *str, char type, char add_to_prev)
 	lex->type = type;
 	ft_lstadd_back(lst, ft_lstnew((void *) lex));
 }
-

@@ -6,12 +6,13 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 19:49:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/22 18:12:49 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 16:11:08 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
 static char	builtin_definer(char *str)
 {
 	if (!ft_strcmp(str, "echo"))
@@ -46,5 +47,5 @@ void	builtin_checker(t_logical_groups	*groups)
 		}
 		groups = groups->next_group;
 	}
-
 }
+*/

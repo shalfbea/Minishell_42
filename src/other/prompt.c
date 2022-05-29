@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/28 21:03:56 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 16:07:37 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@ char	error_msg(int mode)
 {
 	if (mode == QUOTES)
 		//printf("minishell: syntax error - quotes unmatched.");
-		ft_putendl_fd("minishell: syntax error - quotes unmatched.", STDERR_FILENO);
+		ft_putendl_fd("minishell: syntax error - quotes unmatched.",
+			STDERR_FILENO);
 	if (mode == P_OPEN)
 		//printf("minishell: syntax error near unexpected token `(\'\n");
-		ft_putendl_fd("minishell: syntax error near unexpected token `(\'", STDERR_FILENO);
+		ft_putendl_fd("minishell: syntax error near unexpected token `(\'",
+			STDERR_FILENO);
 	if (mode == P_CLOSE)
 		//printf("minishell: syntax error near unexpected token `)\'\n");
-		ft_putendl_fd("minishell: syntax error near unexpected token `)\'", STDERR_FILENO);
+		ft_putendl_fd("minishell: syntax error near unexpected token `)\'",
+			STDERR_FILENO);
 	return (1);
 }
 
@@ -88,14 +91,14 @@ t_list	*prompt(char *input, char debug)
 	return (args);
 }
 
-void *lex_dup(void *original)
+void	*lex_dup(void *original)
 {
 	t_lexer	*copy;
 
 	copy = (t_lexer *) malloc(sizeof(t_lexer *));
-	copy->str = ft_strdup(((t_lexer*) original)->str);
-	copy->to_prev = ((t_lexer*) original)->to_prev;
-	copy->type = ((t_lexer*) original)->type;
+	copy->str = ft_strdup(((t_lexer *) original)->str);
+	copy->to_prev = ((t_lexer *) original)->to_prev;
+	copy->type = ((t_lexer *) original)->type;
 	return ((void *) copy);
 }
 
@@ -106,7 +109,7 @@ t_command_list	*get_command(t_list	*args_raw, char debug)
 
 	args = ft_lstmap(args_raw, lex_dup, &no_delete);
 	if (lst_env_check(args))
-		return ((t_command_list	*)clear_lexer_lst(&args, NULL));
+		return ((t_command_list *)clear_lexer_lst(&args, NULL));
 	if (debug)
 		debug_lexer_printer("Lexer $ check", args);
 	if (check_if_glue_needed(args))

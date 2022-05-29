@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 15:56:58 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/16 19:47:28 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/05/29 16:03:33 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,21 @@ static void	lst_sticky_append(t_list **res, t_list **cur, t_lexer *lexical)
 	{
 		if (lexical->to_prev)
 		{
-			tmp = ((t_lexer *) (*cur)->content)->str;
-			((t_lexer *) (*cur)->content)->str = ft_strjoin(tmp, lexical->str);
+			tmp = ((t_lexer *)(*cur)->content)->str;
+			((t_lexer *)(*cur)->content)->str = ft_strjoin(tmp, lexical->str);
 			if (tmp)
 				free(tmp);
 		}
 		else
 		{
-			(*cur)->next = lst_new_lex(ft_strdup(lexical->str), lexical->type, 0);
+			(*cur)->next = lst_new_lex(ft_strdup(lexical->str),
+					lexical->type, 0);
 			*cur = (*cur)->next;
 		}
 	}
 }
 
-char check_if_glue_needed(t_list *args)
+char	check_if_glue_needed(t_list *args)
 {
 	while (args)
 	{
