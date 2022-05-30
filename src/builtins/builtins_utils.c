@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:11:05 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/28 22:23:37 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/30 20:08:12 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int	check_builtin(char *name)
 	i = 0;
 	while (i < NUM_BULTINS)
 	{
-		if (!ft_strncmp(g_ms_env.builtin_names[i], name, ft_strlen(g_ms_env.builtin_names[i]) + 1))
+		if (!ft_strncmp(g_ms_env.builtin_names[i], name, \
+			ft_strlen(g_ms_env.builtin_names[i]) + 1))
 			return (i);
 		i++;
 	}
@@ -55,58 +56,44 @@ int	run_builtin(t_command_list *cmd, t_exec_env *in_exec, int num)
 		if (g_ms_env.number_of_commands == 1)
 		{
 			in_exec->first_fd->r_code = g_ms_env.ex_code;
-				return (0);
+			return (0);
 		}
 		return (1);
 	}
 	swap_filedescriptors(in_exec, num, save);
 	if (n_cmd == 6)
-	{
-		n_cmd = g_ms_env.builtin_functions[n_cmd](cmd->argv);
-		retrieve_filedescriptors(in_exec, num, save);
-		if (g_ms_env.number_of_commands == 1)
-		{
-			if (n_cmd == SHELL_CLOSE)
-				return (n_cmd);
-			in_exec->first_fd->r_code = 1;
-			return (0);
-		}
-		else
-			return (g_ms_env.ex_code);
-	}
+		return (run_builtin_02(cmd, in_exec, num, save));
 	else
-	{
-		g_ms_env.ex_code = g_ms_env.builtin_functions[n_cmd](cmd->argv);
-		retrieve_filedescriptors(in_exec, num, save);
-		if (g_ms_env.number_of_commands == 1)
-		{
-			in_exec->first_fd->r_code = g_ms_env.ex_code;
-			return (0);
-		}
-		return (g_ms_env.ex_code);
-	}
+		return (run_builtin_03(cmd, in_exec, num, save));
 }
 
-void	retrieve_filedescriptors(t_exec_env *in_exec, int num, int *save)
+int	run_builtin_03(t_command_list *cmd, t_exec_env *in_exec, int num, int *save)
 {
-	t_fds	*tmp_fd;
-	int		j;
+	g_ms_env.ex_code = \
+	g_ms_env.builtin_functions[check_builtin(cmd->argv[0])](cmd->argv);
+	retrieve_filedescriptors(in_exec, num, save);
+	if (g_ms_env.number_of_commands == 1)
+	{
+		in_exec->first_fd->r_code = g_ms_env.ex_code;
+		return (0);
+	}
+	return (g_ms_env.ex_code);
+}
 
-	j = 1;
-	tmp_fd = in_exec->first_fd;
-	while (j < num)
+int	run_builtin_02(t_command_list *cmd, t_exec_env *in_exec, int num, int *save)
+{
+	int	n_cmd;
+
+	n_cmd = check_builtin(cmd->argv[0]);
+	n_cmd = g_ms_env.builtin_functions[n_cmd](cmd->argv);
+	retrieve_filedescriptors(in_exec, num, save);
+	if (g_ms_env.number_of_commands == 1)
 	{
-		tmp_fd = tmp_fd->next_fd;
-		j++;
+		if (n_cmd == SHELL_CLOSE)
+			return (n_cmd);
+		in_exec->first_fd->r_code = 1;
+		return (0);
 	}
-	if (tmp_fd->infile != NO_FILE)
-	{
-		dup2(save[0], STDIN_FILENO);
-		close(save[0]);
-	}
-	if (tmp_fd->outfile != NO_FILE)
-	{
-		dup2(save[1], STDOUT_FILENO);
-		close(save[1]);
-	}
+	else
+		return (g_ms_env.ex_code);
 }

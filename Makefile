@@ -24,12 +24,12 @@ SRC = main.c \
 	  env/env_check.c env/env_finder.c \
 	  executor/executor.c executor/ft_init.c executor/open_pipes.c executor/lib_lst.c \
 	  executor/run_commands.c executor/redirects.c executor/check_cmd.c \
-      executor/get_next_line_utils.c executor/get_next_line.c executor/heredoc.c executor/heredoc02.c\
+      executor/get_next_line_utils.c executor/get_next_line.c executor/heredoc.c executor/heredoc02.c \
       executor/run_commands_utils.c \
 	  builtins/builtins_utils.c builtins/builtins.c builtins/ft_export.c \
-	  builtins/export_unset.c \
+	  builtins/ft_unset.c builtins/builtins_02.c builtins/retrieve_fd.c \
+	  builtins/export_add_functions.c builtins/export_working_with_names.c\
 	  lexer/wildcards.c
-	  #builtins/exit.c
 
 OBJ_DIR = ./obj/
 SRC_DIR = ./src/

@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/30 19:14:32 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:43:48 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,19 +120,29 @@ char	*search_path(void);
 void	init_builtins(void);
 int	check_builtin(char *name);
 int	run_builtin(t_command_list *cmd, t_exec_env *in_exec, int num);
+int	run_builtin_02(t_command_list *cmd, t_exec_env *in_exec, int num, int *save);
+int	run_builtin_03(t_command_list *cmd, t_exec_env *in_exec, int num, int *save);
 void	retrieve_filedescriptors(t_exec_env *in_exec, int num, int *save);
 
 int	print_sort_env(void);
+int	print_sort_env_02(int j);
 int	find_value(int i);
 int	find_name(char *name);
 int	check_name(char *name, char flag);
+int	check_name_02(char *name, char flag, int i);
 void	add_var_evp(char *name, int flag);
+char	*add_var_evp_02(char *name, int flag, int length);
 int	add_new_name(char *name, int length);
+void	add_new_name_02(char *name, char **tmp_env, int i, int j);
+void	change_name(char *name, char *tmp_name, int i);
 char	*get_name(int i);
 void	del_var_evp(char *variable);
+int	del_var_evp_02(char **tmp_env, char *variable);
 int	arg_is_number(char *str);
 char	*delete_pluse(char *name);
 void	add_value(char *name, int i);
+void	add_value_02(char *name, int i, char *res);
+int	echo_n(char flag);
 
 int	ft_echo(char **argv);
 int	ft_cd(char **argv);
