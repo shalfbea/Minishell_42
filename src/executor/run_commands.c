@@ -53,7 +53,7 @@ void	ft_exec(t_command_list *cmd, t_exec_env *in_exec, int i)
 		exit(1);
 	swap_filedescriptors(in_exec, i, NULL);
 	if (check_cmd(&cmd->argv[0]))
-		exit(127);
+		exit(ERR_NOCMD);
 	execve((cmd->argv)[0], cmd->argv, g_ms_env.envp);
 	exit(EXEC_ERROR);
 }
@@ -126,6 +126,8 @@ int	ft_wait(t_exec_env *in_exec)
 		waitpid(g_ms_env.pids[i], &(tmp_fd->r_code), 0);
 		if (WIFEXITED(tmp_fd->r_code))
 			tmp_fd->r_code = WEXITSTATUS(tmp_fd->r_code);
+		else if (WIFSIGNALED(tmp_fd->r_code))
+			tmp_fd->r_code = ERR_SIG;
 		else
 			tmp_fd->r_code = 1;
 		if (tmp_fd->r_code == EXEC_ERROR)

@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/28 22:58:36 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/30 19:14:32 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ typedef struct s_command_list {
 # define ERR_UNSET 15
 # define ERR_EXIT 17
 # define ERR_CD 7
+
+# define ERR_NOCMD 127
+# define ERR_SIG 130
 
 typedef struct s_minishell_environment {
 	char	**envp;//minishell environment. it could be a list but хз
@@ -123,11 +126,13 @@ int	print_sort_env(void);
 int	find_value(int i);
 int	find_name(char *name);
 int	check_name(char *name, char flag);
-void	add_var_evp(char *name);
+void	add_var_evp(char *name, int flag);
 int	add_new_name(char *name, int length);
 char	*get_name(int i);
 void	del_var_evp(char *variable);
 int	arg_is_number(char *str);
+char	*delete_pluse(char *name);
+void	add_value(char *name, int i);
 
 int	ft_echo(char **argv);
 int	ft_cd(char **argv);

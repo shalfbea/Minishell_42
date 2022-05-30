@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:19:40 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/28 22:59:08 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/30 19:13:17 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_cd(char **argv)
 	free(path);
 	if (!str)
 		return (1);
-	add_var_evp(str);
+	add_var_evp(str, 0);
 	free(str);
 	return (0);
 }
@@ -93,6 +93,7 @@ int	ft_export(char **argv)
 {
 	int	i;
 	int	err;
+	int	flag;
 
 	i = 1;
 	err = 0;
@@ -100,8 +101,9 @@ int	ft_export(char **argv)
 		return (print_sort_env());
 	while (argv[i])
 	{
-		if (check_name(argv[i], 1))
-			add_var_evp(argv[i]);
+		flag = check_name(argv[i], 3);
+		if (flag)
+			add_var_evp(argv[i], flag);
 		else
 		{
 			put_error(argv[i], ERR_EXPORT);

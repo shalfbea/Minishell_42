@@ -94,7 +94,7 @@ int	put_error(char *name, char flag)
 	if (flag == ERR_CD)
 		write(STDERR_FILENO, "cd: ", 4);
 	else if (flag == ERR_EXPORT)
-		write(STDERR_FILENO, "export: `", 8);
+		write(STDERR_FILENO, "export: `", 9);
 	else if (flag == ERR_UNSET)
 		write(STDERR_FILENO, "unset: `", 8);
 	else if (flag == ERR_EXIT)
