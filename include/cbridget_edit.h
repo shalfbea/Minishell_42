@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/30 21:43:48 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/31 19:20:40 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_command_list {
 # define ERR_CD 7
 
 # define ERR_NOCMD 127
-# define ERR_SIG 130
+# define ERR_SIG 128
 
 typedef struct s_minishell_environment {
 	char	**envp;//minishell environment. it could be a list but хз
@@ -91,10 +91,16 @@ void	save_ex_code(t_exec_env *in_exec);
 
 int	working_with_redirects(t_command_list *cmd, t_exec_env *in_exec, int num);
 int	check_files(t_command_list *cmd, t_fds *tmp_fd, int num);
+int	open_input_files(t_command_list *cmd, t_fds *tmp_fd, int j, int num);
+int	open_output_files(t_command_list *cmd, t_fds *tmp_fd, int j);
 int	put_error(char *name, char flag);
+int	put_error_02(char *name, char flag, char *str, int length);
 
 int	heredoc(t_command_list *commands, t_exec_env *in_exec);
+int	heredoc_check_pipeline(t_command_list *tmp_cmd, t_fds *tmp_fd, int num);
+int	fr_heredoc(t_command_list *tmp_cmd, int num, int j);
 int	write_heredoc(int num, char *delim);
+int	working_with_line(char *str, char *delim, int line);
 int	hd_close(char *str, char *file_n, int fd);
 int	create_file(int num, char **file_n);
 char	*create_name(int num);

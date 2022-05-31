@@ -25,7 +25,7 @@ SRC = main.c \
 	  executor/executor.c executor/ft_init.c executor/open_pipes.c executor/lib_lst.c \
 	  executor/run_commands.c executor/redirects.c executor/check_cmd.c \
       executor/get_next_line_utils.c executor/get_next_line.c executor/heredoc.c executor/heredoc02.c \
-      executor/run_commands_utils.c \
+      executor/run_commands_utils.c executor/heredoc_utils.c executor/put_error.c\
 	  builtins/builtins_utils.c builtins/builtins.c builtins/ft_export.c \
 	  builtins/ft_unset.c builtins/builtins_02.c builtins/retrieve_fd.c \
 	  builtins/export_add_functions.c builtins/export_working_with_names.c\

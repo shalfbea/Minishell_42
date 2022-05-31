@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:28:51 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/20 14:20:06 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/31 18:58:19 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	open_pipes(t_command_list *commands, t_exec_env *in_exec)
 
 int	alloc_pipes(int ***pipes, int num)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	*pipes = malloc(sizeof(int *) * (num + 1));

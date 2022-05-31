@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:44:04 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/28 22:14:15 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/05/31 18:55:19 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 int	heredoc(t_command_list *commands, t_exec_env *in_exec)
 {
-	int	j;
-	int	num;
-	int	err;
+	int				num;
 	t_command_list	*tmp_cmd;
-	t_fds	*tmp_fd;
+	t_fds			*tmp_fd;
 
 	num = 1;
 	tmp_cmd = commands;
@@ -28,36 +26,8 @@ int	heredoc(t_command_list *commands, t_exec_env *in_exec)
 		return (1);
 	while (tmp_cmd)
 	{
-		j = 0;
-		while ((tmp_cmd->redirects)[j])
-		{
-			if ((tmp_cmd->redirect_flags)[j] == REDIR_INSOURCE)
-			{
-				g_ms_env.pids[0] = fork();
-				if (g_ms_env.pids[0] < 0)
-					return (1);
-				if (g_ms_env.pids[0] == 0)
-				{
-					err = write_heredoc(num, (tmp_cmd->redirects)[j]);
-					if (err == -1)
-						exit(1);
-					else
-						exit(0);
-				}
-				waitpid(g_ms_env.pids[0], &err, 0);
-				if (WIFEXITED(err))
-					err = WEXITSTATUS(err);
-				else
-				{
-					g_ms_env.ex_code = 1;
-					return (1);
-				}
-				tmp_fd->hd_flag = j;
-				if (err)
-					return (1);
-			}
-			j++;
-		}
+		if (heredoc_check_pipeline(tmp_cmd, tmp_fd, num))
+			return (1);
 		tmp_cmd = tmp_cmd->next_command;
 		tmp_fd = tmp_fd->next_fd;
 		num++;
@@ -67,56 +37,51 @@ int	heredoc(t_command_list *commands, t_exec_env *in_exec)
 	return (0);
 }
 
-int	write_heredoc(int num, char *delim)
+int	heredoc_check_pipeline(t_command_list *tmp_cmd, t_fds *tmp_fd, int num)
 {
-	int	fd;
-	int	len;
-	int	line;
-	char *str;
-	char *file_n;
-	char tmp;
+	int	j;
+	int	err;
 
-	fd = create_file(num, &file_n);
-	if (fd == -1)
-		return (-1);
-	len = ft_strlen(delim);
-	line = 1;
-	tmp = 0;
-	while (1)
+	j = 0;
+	while ((tmp_cmd->redirects)[j])
 	{
-		write(1, "> ", 2);
-		str = get_next_line(0);
-		if (!str)
-			return (hd_close(str, file_n, fd));
-		if (str[0] == NO_FILE)
+		if ((tmp_cmd->redirect_flags)[j] == REDIR_INSOURCE)
 		{
-			put_warning(line, delim);
-			free(str);
-			break ;
+			if (fr_heredoc(tmp_cmd, num, j))
+				return (1);
+			waitpid(g_ms_env.pids[0], &err, 0);
+			if (WIFEXITED(err))
+				err = WEXITSTATUS(err);
+			else
+			{
+				g_ms_env.ex_code = 1;
+				return (1);
+			}
+			tmp_fd->hd_flag = j;
+			if (err)
+				return (1);
 		}
-		put_newline(str);
-		if (str[ft_strlen(str) - 1] == '\n')
-		{
-			str[ft_strlen(str) - 1] = '\0';
-			tmp = 1;
-		}
-		if (!ft_strncmp(str, delim, len + 1))
-		{
-			free(str);
-			break ;
-		}
-		if (tmp)
-		{
-			str[ft_strlen(str)] = '\n';
-			tmp = 0;
-		}
-		if ((size_t)write(fd, str, ft_strlen(str)) != ft_strlen(str))
-			return (hd_close(str, file_n, fd));
-		free(str);
-		line++;
+		j++;
 	}
-	free(file_n);
-	return (fd);
+	return (0);
+}
+
+int	fr_heredoc(t_command_list *tmp_cmd, int num, int j)
+{
+	int	err;
+
+	g_ms_env.pids[0] = fork();
+	if (g_ms_env.pids[0] < 0)
+		return (1);
+	if (g_ms_env.pids[0] == 0)
+	{
+		err = write_heredoc(num, (tmp_cmd->redirects)[j]);
+		if (err == -1)
+			exit(1);
+		else
+			exit(0);
+	}
+	return (0);
 }
 
 void	put_newline(char *str)
@@ -130,20 +95,6 @@ void	put_newline(char *str)
 		write(STDOUT_FILENO, "\n", 1);
 }
 
-void	put_warning(int line, char *delim)
-{
-	char *str;
-
-	str = ft_itoa(line);
-	if (!str)
-		return ;
-	write(2, "\nminishell: warning: here-document at line ", 43);
-	write(2, str, ft_strlen(str));
-	write(2, " delimited by end-of-file (wanted `", 35);
-	write(2, delim, ft_strlen(delim));
-	write(2, "')\n", 3);
-}
-
 int	hd_close(char *str, char *file_n, int fd)
 {
 	if (str)
@@ -152,32 +103,4 @@ int	hd_close(char *str, char *file_n, int fd)
 	unlink(file_n);
 	free(file_n);
 	return (-1);
-}
-
-int	create_file(int num, char **file_n)
-{
-	char	*name;
-	int		fd;
-
-	name = create_name(num);
-	if (!name)
-		return (-1);
-	*file_n = name;
-	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0600);
-	if (fd == -1)
-		free(name);
-	return (fd);
-}
-
-char	*create_name(int num)
-{
-	char	*numbr;
-	char	*name;
-
-	numbr = ft_itoa(num);
-	if (!numbr)
-		return ((void *)0);
-	name = ft_strjoin("/var/tmp/minishell", numbr);
-	free(numbr);
-	return (name);
 }

@@ -127,7 +127,7 @@ int	ft_wait(t_exec_env *in_exec)
 		if (WIFEXITED(tmp_fd->r_code))
 			tmp_fd->r_code = WEXITSTATUS(tmp_fd->r_code);
 		else if (WIFSIGNALED(tmp_fd->r_code))
-			tmp_fd->r_code = ERR_SIG;
+			tmp_fd->r_code = ERR_SIG + WTERMSIG(tmp_fd->r_code);
 		else
 			tmp_fd->r_code = 1;
 		if (tmp_fd->r_code == EXEC_ERROR)
