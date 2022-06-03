@@ -1,9 +1,22 @@
 FIX :
--> /var/tmp/minishell не удаляется
--> Редирект с echo не работает
--> Реализовать heredoc отдельным процессом
+-> /var/tmp/minishell не удаляется // done
+-> Редирект с echo не работает // done
+-> Реализовать heredoc отдельным процессом // done
 
-? Экранирование спец символов через \
+? Экранирование спец символов через \ // don't do it
+
+{ ^ | ^ }
+	@
+command: cat << $PATH ($PATH should stay the same), when heredoc $ doesn't open up!!!!!!!!!!!!
+CTRL+\ not working.
+signals don't work properly when minshell open in minishell.
+exit not working.
+case: echo "'$USER'" not working,
+case: echo $"$USER",
+case: echo $USER/$PWD,
+case: echo $PWD/Desktop.
+makefile has no depends on header.
+
 
 -> $0 $? and whatever
 Операторы перенаправления ввода/вывода (<, <<, >, >>) могут находиться в любом месте относительно команды и ее аргументов.
