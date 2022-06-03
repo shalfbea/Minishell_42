@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:46:13 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/30 21:39:16 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:18:38 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	print_sort_env(void)
 	int		err;
 
 	i = 65;
+	err = 0;
 	while (i < 123)
 	{
 		j = 0;
@@ -58,20 +59,24 @@ void	add_value(char *name, int i)
 	char	*res;
 
 	j = 0;
+	len = 0;
 	len = ft_strlen(g_ms_env.envp[i]);
-	while (name[j] != '=')
+	while (g_ms_env.envp[i][j] != '=' && g_ms_env.envp[i][j])
+		j++;
+	if (g_ms_env.envp[i][j] != '=')
+		len++;
+	j = 0;
+	while (name[j] != '=' && name[j])
 		j++;
 	j++;
 	if (!name[j])
 		return ;
-	while (name[j])
-	{
-		j++;
+	while (name[j++])
 		len++;
-	}
 	res = (char *)malloc(sizeof(char) * (len + 1));
 	if (!res)
 		return ;
+	add_value_02(name, i, res);
 }
 
 void	add_value_02(char *name, int i, char *res)
@@ -79,15 +84,18 @@ void	add_value_02(char *name, int i, char *res)
 	int	j;
 	int	len;
 
-	j = 0;
+	j = -1;
 	len = 0;
-	while (g_ms_env.envp[i][j])
-	{
+	while (g_ms_env.envp[i][++j])
 		res[j] = g_ms_env.envp[i][j];
-		j++;
-	}
+	while (g_ms_env.envp[i][len] != '=' && g_ms_env.envp[i][len])
+		len++;
+	if (g_ms_env.envp[i][len] != '=')
+		res[j++] = '=';
+	len = 0;
 	while (name[len] != '=')
 		len++;
+	len++;
 	while (name[len])
 	{
 		res[j] = name[len];

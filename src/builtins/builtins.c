@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:19:40 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/30 19:45:46 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/03 19:28:11 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,22 @@ int	ft_echo(char **argv)
 
 int	ft_cd(char **argv)
 {
-	int		i;
 	char	*path;
 	char	*str;
 
-	i = 1;
-	while (argv[i])
-		i++;
-	if (i == 1)
+	if (!argv[1])
 		return (put_error(argv[0], ERR_FEW_ARG));
-	else if (i != 2)
+	else if (argv[2])
 		return (put_error(argv[0], ERR_MANY_ARG));
 	if (chdir(argv[1]))
 		return (put_error(argv[1], ERR_CD));
 	path = getcwd(NULL, 0);
 	if (!path)
-		return (put_error(argv[0], 1));
+	{
+		printf("cd: error retrieving current directory: getcwd: \
+		cannot access parent directories: No such file or directory\n");
+		return (0);
+	}
 	str = ft_strjoin("PWD=", path);
 	free(path);
 	if (!str)

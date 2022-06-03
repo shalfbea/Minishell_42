@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 13:44:56 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/20 14:38:38by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:42:10 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,28 @@
 
 int	run_commands(t_command_list *commands, t_exec_env *in_exec)
 {
-	int	i;
-	t_command_list	*tmp_cmd;
-	t_fds	*tmp_in;
-	if (g_ms_env.number_of_commands == 1 && check_builtin(commands->argv[0]) < NUM_BULTINS)
+	if (g_ms_env.number_of_commands == 1 && \
+		check_builtin(commands->argv[0]) < NUM_BULTINS)
 		return (run_builtin(commands, in_exec, 1));
+	if (alloc_pids())
+		return (ft_free(commands, in_exec));
+	if (create_process(commands, in_exec))
+		return (1);
+	close_pipes(in_exec, g_ms_env.number_of_commands);
+	if (ft_wait(in_exec))
+		return (1);
+	return (0);
+}
+
+int	create_process(t_command_list *commands, t_exec_env *in_exec)
+{
+	int				i;
+	t_command_list	*tmp_cmd;
+	t_fds			*tmp_in;
+
 	i = 0;
 	tmp_cmd = commands;
 	tmp_in = in_exec->first_fd;
-	if (alloc_pids())
-		return (ft_free(commands, in_exec));
 	while (i < g_ms_env.number_of_commands)
 	{
 		g_ms_env.pids[i] = fork();
@@ -35,9 +47,6 @@ int	run_commands(t_command_list *commands, t_exec_env *in_exec)
 		tmp_in = tmp_in->next_fd;
 		i++;
 	}
-	close_pipes(in_exec, g_ms_env.number_of_commands);
-	if (ft_wait(in_exec))
-		return (1);
 	return (0);
 }
 
@@ -99,7 +108,8 @@ void	create_pipeline(int	**pipes, int com, int length)
 			dup2(pipes[j][1], STDOUT_FILENO);
 			close(pipes[j][1]);
 		}
-		else if ((com == length && j == length - 2) || (com > 1 && com < length && com - 2 == j))
+		else if ((com == length && j == length - 2) || \
+			(com > 1 && com < length && com - 2 == j))
 		{
 			close(pipes[j][1]);
 			dup2(pipes[j][0], STDIN_FILENO);
@@ -112,44 +122,4 @@ void	create_pipeline(int	**pipes, int com, int length)
 		}
 		j++;
 	}
-}
-
-int	ft_wait(t_exec_env *in_exec)
-{
-	t_fds	*tmp_fd;
-	int		i;
-
-	i = 0;
-	tmp_fd = in_exec->first_fd;
-	while (tmp_fd)
-	{
-		waitpid(g_ms_env.pids[i], &(tmp_fd->r_code), 0);
-		if (WIFEXITED(tmp_fd->r_code))
-			tmp_fd->r_code = WEXITSTATUS(tmp_fd->r_code);
-		else if (WIFSIGNALED(tmp_fd->r_code))
-			tmp_fd->r_code = ERR_SIG + WTERMSIG(tmp_fd->r_code);
-		else
-			tmp_fd->r_code = 1;
-		if (tmp_fd->r_code == EXEC_ERROR)
-			return (ft_kill(in_exec));
-		tmp_fd = tmp_fd->next_fd;
-		i++;
-	}
-	return (0);
-}
-
-int	ft_kill(t_exec_env *in_exec)
-{
-	t_fds	*tmp_fd;
-	int		i;
-
-	i = 0;
-	tmp_fd = in_exec->first_fd;
-	while (tmp_fd)
-	{
-		kill(g_ms_env.pids[i], 2);
-		tmp_fd = tmp_fd->next_fd;
-		i++;
-	}
-	return (1);
 }
