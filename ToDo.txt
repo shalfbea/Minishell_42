@@ -1,3 +1,4 @@
+
 FIX :
 -> /var/tmp/minishell не удаляется // done
 -> Редирект с echo не работает // done
@@ -14,7 +15,17 @@ exit not working.
 case: echo "'$USER'" not working,
 case: echo $"$USER",
 case: echo $USER/$PWD,
-case: echo $PWD/Desktop.
+case: echo $PWD/Desktop,
+case:  >> e,
+case: e"ch"o hello,
+case: ls $ HOME / Desktop,
+case: ls |,
+case: echo str1"'$str2'",
+case: echo $hfkdghldf$PWD,
+case:   'e'"x"p'o'r't' "t"$q's'$i='h'"e"'l'l$r,
+case: >fil$q'1' e$w"ho" s$i"r"ing f$r$u file1,
+case: ||,
+case: |||.
 makefile has no depends on header.
 
 

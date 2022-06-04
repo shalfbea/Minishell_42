@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 19:43:17 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/30 19:45:37 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/04 17:40:51 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,10 @@ int	echo_n(char flag)
 int	arg_is_number(char *str)
 {
 	int	i;
+	int	j;
 
 	i = 0;
+	j = 0;
 	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
 		|| str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
 		i++;
@@ -85,6 +87,9 @@ int	arg_is_number(char *str)
 		if (!ft_isdigit(str[i]))
 			return (0);
 		i++;
+		j++;
 	}
+	if (j > 18)
+		return (0);
 	return (1);
 }
