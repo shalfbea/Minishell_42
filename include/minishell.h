@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 18:27:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/28 20:00:32 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/05 13:16:55 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@
 
 typedef struct sigaction	t_sigacton;
 
-t_minishell_environment g_ms_env;
+extern t_minishell_environment g_ms_env;
 
 #endif

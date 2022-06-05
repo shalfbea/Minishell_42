@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 15:30:05 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/29 15:43:15 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/05 02:09:16 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ int	ft_free(t_command_list *commands, t_exec_env *in_exec)
 void	free_commands(t_command_list *cmd)
 {
 	t_command_list	*tmp_cmd;
-	int				i;
+	//int				i;
 
 	while (cmd)
 	{
-		i = 0;
+		//i = 0;
 		tmp_cmd = cmd;
 		cmd = cmd->next_command;
 		free_vector(tmp_cmd->argv);

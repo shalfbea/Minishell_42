@@ -6,11 +6,13 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/24 20:21:54 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/05 13:18:58 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_minishell_environment g_ms_env;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -38,6 +40,7 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		executor_result = executor(commands);
 		clear_lexer_lst(&(raw_lexer_data), commands);
+		(void) executor_result;
 		//clear_command_lst(&commands);
 	}
 	string_array_cleaner(&g_ms_env.envp);

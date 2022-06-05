@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 18:42:38 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/05 02:08:58 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 
 # define S_DEBUG 1
 
+# ifndef INT32_MAX
+#  define INT32_MAX 2147483647
+# endif
 //U can change numbers, but some are needed to go
 // together and be exact in same order (at least start and end):
 //GROUP 1

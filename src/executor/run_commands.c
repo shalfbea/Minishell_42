@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
+/*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 13:44:56 by cbridget          #+#    #+#             */
-/*   Updated: 2022/06/03 15:42:10 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/05 02:09:27 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int	create_process(t_command_list *commands, t_exec_env *in_exec)
 
 void	ft_exec(t_command_list *cmd, t_exec_env *in_exec, int i)
 {
-	int	j;
+	//int	j;
 
-	j = 1;
+	//j = 1;
 	create_pipeline(in_exec->_pipes, i, g_ms_env.number_of_commands);
 	if (check_builtin(cmd->argv[0]) < NUM_BULTINS)
 		exit(run_builtin(cmd, in_exec, i));

@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 18:58:48 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/05 02:06:55 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ char	parentheses_checker(t_list	*args)
 t_list	*prompt(char *input, char debug)
 {
 	t_list				*args;
-	t_command_list		*commands;
+	//t_command_list		*commands;
 
 	args = NULL;
-	commands = NULL;
+	//commands = NULL;
 	if (!input)
 		input = readline("MiniShell: ");
 	else

@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 18:50:16 by shalfbea          #+#    #+#             */
-/*   Updated: 2021/10/16 18:05:22 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/05 01:58:59 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 		return ((char *) haystack);
 	if (!needle[0])
 		return ((char *)haystack);
-	if (needle_len < 1 || len < 0 )
+	if (needle_len < 1)// || len < 0 )
 		return (NULL);
 	if (needle_len > len && haystack)
 		return (NULL);

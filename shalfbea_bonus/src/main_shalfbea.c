@@ -6,13 +6,15 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 20:05:35 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/05 13:22:56 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	debug_set_envp(void);
+
+t_minishell_environment g_ms_env;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -47,6 +49,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!commands)
 			break ;
 		executor_result = executor(commands);
+		(void) executor_result;
 		clear_lexer_lst(&(raw_lexer_data), NULL);
 		//clear_command_lst(&commands);
 	}
