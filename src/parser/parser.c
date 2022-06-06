@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:42:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 16:08:48 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/06 19:38:59 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ static t_command_list	*parse_start(t_parser_data *data)
 t_command_list	*parser(t_list *args)
 {
 	t_parser_data		data;
+	t_command_list		*result;
 
 	if (!args)
 		return (NULL);
@@ -111,6 +112,8 @@ t_command_list	*parser(t_list *args)
 	data.mode = 0;
 	data.redirect_flags = NULL;
 	data.redirects = NULL;
-	return (parse_start(&data));
-	//builtin_checker(res);
+	result = parse_start(&data);
+	if (!(result->argv[0]) && !(result->redirect_flags[0])) //redirects might be to check too
+		return (clear_command_lst(&result)); //THATS causes by IF_OR UNSUPPORTED CURRENTLY
+	return (result);
 }

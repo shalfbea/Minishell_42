@@ -16,10 +16,10 @@ case: echo "'$USER'" not working,
 case: echo $"$USER",
 case: echo $USER/$PWD,
 case: echo $PWD/Desktop,
-case:  >> e,
+case:  >> e, 				-> Parser correct
 case: e"ch"o hello,
 case: ls $ HOME / Desktop,
-case: ls |,
+case: ls |,					-> мы ждем heredoc? или что, bash ждет heredoc
 case: echo str1"'$str2'",
 case: echo $hfkdghldf$PWD,
 case:   'e'"x"p'o'r't' "t"$q's'$i='h'"e"'l'l$r,

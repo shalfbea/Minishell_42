@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/05 02:06:55 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/06 19:02:37 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ t_command_list	*get_command(t_list	*args_raw, char debug)
 	t_command_list	*commands;
 	t_list			*args;
 
-	args = ft_lstmap(args_raw, lex_dup, &no_delete);
+	args = ft_lstmap(args_raw, lex_dup, &no_delete); //fix no delete
 	if (lst_env_check(args))
 		return ((t_command_list *)clear_lexer_lst(&args, NULL));
 	if (debug)
