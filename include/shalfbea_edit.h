@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/05 02:08:58 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/06 20:09:35 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,13 @@ typedef struct s_parser_data
 	t_list			*redirect_flags;
 	int				mode;
 }	t_parser_data;
+
+typedef struct s_logical_tree
+{
+	t_list					*args;
+	struct s_logical_tree	*next;
+	struct s_logical_tree	*child;
+}	t_logical_tree;
 
 t_list					*prompt(char	*input, char debug);
 t_command_list			*get_command(t_list	*args, char debug);
@@ -142,4 +149,9 @@ void					debug_ms_env_printer(void);
 
 char	wildcard_handler(t_splitter_data *data);
 char	wildcards_inserter(t_list	**args);
+
+//logicals
+t_logical_tree	*lt_new(t_list *args);
+t_logical_tree	*lt_add_next(t_logical_tree **root, t_logical_tree *next_lt)
+t_logical_tree	*lt_add_child(t_logical_tree **root, t_logical_tree *child_lt)
 #endif
