@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:46:14 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 16:24:16 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/07 17:47:07 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,3 +119,34 @@ void	debug_ms_env_printer(void)
 		printf("Pids not presented.\n");
 }
 
+void	debug_lt_printer(t_logical_tree *head, char child, int indent)
+{
+	int	syms;
+	t_list	*args;
+
+	syms = 0;
+	if (child)
+	{
+		for (int i = 0; i < indent; ++i)
+			printf(" ");
+		printf("↓\n");
+		for (int i = 0; i < indent; ++i)
+			printf(" ");
+	}
+	while (head)
+	{
+		//if (head->child)
+		//	debug_lt_printer(head->child, 1, indent + syms);
+		args = head->args;
+		if (args)
+		{
+			while (args->next)
+			{
+				printf("%s,", ((t_lexer *)args->content)->str);
+				args = args->next;
+			}
+			printf("%s;", ((t_lexer *)args->content)->str);
+		}
+		head = head->next;
+	}
+}

@@ -6,28 +6,11 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/06 19:02:37 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/07 20:02:38 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	error_msg(int mode)
-{
-	if (mode == QUOTES)
-		//printf("minishell: syntax error - quotes unmatched.");
-		ft_putendl_fd("minishell: syntax error - quotes unmatched.",
-			STDERR_FILENO);
-	if (mode == P_OPEN)
-		//printf("minishell: syntax error near unexpected token `(\'\n");
-		ft_putendl_fd("minishell: syntax error near unexpected token `(\'",
-			STDERR_FILENO);
-	if (mode == P_CLOSE)
-		//printf("minishell: syntax error near unexpected token `)\'\n");
-		ft_putendl_fd("minishell: syntax error near unexpected token `)\'",
-			STDERR_FILENO);
-	return (1);
-}
 
 char	parentheses_checker(t_list	*args)
 {
@@ -52,6 +35,23 @@ char	parentheses_checker(t_list	*args)
 	if (opened > 0)
 		return (error_msg(P_OPEN));
 	return (0);
+}
+
+char	error_msg(int mode)
+{
+	if (mode == QUOTES)
+		//printf("minishell: syntax error - quotes unmatched.");
+		ft_putendl_fd("minishell: syntax error - quotes unmatched.",
+			STDERR_FILENO);
+	if (mode == P_OPEN)
+		//printf("minishell: syntax error near unexpected token `(\'\n");
+		ft_putendl_fd("minishell: syntax error near unexpected token `(\'",
+			STDERR_FILENO);
+	if (mode == P_CLOSE)
+		//printf("minishell: syntax error near unexpected token `)\'\n");
+		ft_putendl_fd("minishell: syntax error near unexpected token `)\'",
+			STDERR_FILENO);
+	return (1);
 }
 
 /*

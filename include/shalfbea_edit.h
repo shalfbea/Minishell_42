@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/06 20:09:35 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/07 20:00:47 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ typedef struct s_logical_tree
 	t_list					*args;
 	struct s_logical_tree	*next;
 	struct s_logical_tree	*child;
+	char					condition;
 }	t_logical_tree;
+
+typedef t_list t_stack;
 
 t_list					*prompt(char	*input, char debug);
 t_command_list			*get_command(t_list	*args, char debug);
@@ -108,7 +111,8 @@ t_command_list			*parser(t_list *args);
 void					command_append(t_command_list **lst,
 							t_command_list **cur);
 t_command_list			*clear_command_lst(t_command_list **lst);
-
+//lexer_parentheses.c
+char	parentheses_checker(t_list	*args);
 //env/env_check.c
 char					lst_env_check(t_list	*args);
 
@@ -140,7 +144,7 @@ void					debug_command_list_printer(t_command_list *commands);
 void					debug_lexer_printer(char *msg, t_list	*args);
 char					check_if_glue_needed(t_list *args); // DELETE AFTER PROD FROM HERE AND MAKE IT STATIC
 void					debug_ms_env_printer(void);
-
+void	debug_lt_printer(t_logical_tree *head, char child, int indent);
 //void debug_redirects_printer(char *array);
 
 //builtins_checker.c
@@ -150,8 +154,14 @@ void					debug_ms_env_printer(void);
 char	wildcard_handler(t_splitter_data *data);
 char	wildcards_inserter(t_list	**args);
 
+//logical tree operations
+t_logical_tree	*lt_new(t_list	*args, char condition);
+t_logical_tree	*lt_add_next(t_logical_tree **root, t_logical_tree *next_lt);
+t_logical_tree	*lt_add_child(t_logical_tree **root, t_logical_tree *child_lt);
 //logicals
-t_logical_tree	*lt_new(t_list *args);
-t_logical_tree	*lt_add_next(t_logical_tree **root, t_logical_tree *next_lt)
-t_logical_tree	*lt_add_child(t_logical_tree **root, t_logical_tree *child_lt)
+t_logical_tree	*logic_parser(t_list	**args);
+void	to_polish_notion(t_list **args_orignal);
+//stack_operations.c
+t_stack	*stack_push(t_stack *head, void *content);
+void	*stack_delete(t_stack **head);
 #endif

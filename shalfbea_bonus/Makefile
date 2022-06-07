@@ -28,7 +28,7 @@ SRC_MAIN = 	  other/prompt.c other/signals.c other/ms_env.c \
 	  lexer/wildcards.c
 	  #builtins/exit.c
 
-SRC_BONUS = main_shalfbea.c logical_tree_operations.c logical.c
+SRC_BONUS = main_shalfbea.c logical_tree_operations.c logical.c stack_operations.c
 
 OBJ_DIR_MAIN = ../obj/
 OBJ_DIR_BONUS = ./obj/

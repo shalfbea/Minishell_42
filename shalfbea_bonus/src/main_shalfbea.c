@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/06 19:33:49 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/07 20:17:26 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,45 @@
 void	debug_set_envp(void);
 
 t_minishell_environment g_ms_env;
+
+int logical_support(void)
+{
+	t_command_list	*commands;
+	t_list			*raw_lexer_data;
+	int				executor_result;
+
+	commands = NULL;
+	int debug = 1;
+	int	i = 1;
+	(void) i;
+	//FOR DEBUGGING ONLY
+	//string_array_cleaner(&g_ms_env.envp);
+	//debug_set_envp();
+	//
+	while (i--)
+	{
+		g_ms_env.prompt_mode = 1;
+		raw_lexer_data = prompt("((echo aaaaa) || (kek)) && lol", debug);
+		//raw_lexer_data = prompt(NULL, debug);
+		//raw_lexer_data = prompt("e\"ch\"o hello", debug);
+		g_ms_env.prompt_mode = 0;
+		//logical_tree = logic_parser(raw_copy);
+		//debug_lt_printer(logical_tree, 0, 0);
+		to_polish_notion(&raw_lexer_data);
+		debug_lexer_printer("Polish notation", raw_lexer_data);
+		pause();
+		commands = get_command(raw_lexer_data, debug);
+		if (!commands)
+			break ;
+		executor_result = executor(commands);
+		(void) executor_result;
+		clear_lexer_lst(&(raw_lexer_data), NULL);
+		//clear_command_lst(&commands);
+	}
+	string_array_cleaner(&g_ms_env.envp);
+	//sleep(5);
+	exit(0);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -30,6 +69,7 @@ int	main(int argc, char **argv, char **envp)
 	if (ms_env_initter(envp))
 		exit(1);
 	set_sig_control();
+	logical_support(); //DEBUG
 	int	i = 1;
 	(void) i;
 	//FOR DEBUGGING ONLY
