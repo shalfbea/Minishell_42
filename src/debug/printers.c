@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:46:14 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/07 17:47:07 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/21 20:27:32 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	iter_printer(void *cur)
 
 void	debug_lexer_printer(char *msg, t_list	*args)
 {
-	printf("\n%s:\n\n", msg);
+	if (msg)
+		printf("\n%s:\n\n", msg);
 	ft_lstiter(args, iter_printer);
 	printf("\n===================\n===================\n");
 }
@@ -119,34 +120,32 @@ void	debug_ms_env_printer(void)
 		printf("Pids not presented.\n");
 }
 
-void	debug_lt_printer(t_logical_tree *head, char child, int indent)
+void	debug_groups_printer(t_list	*group_lst)
 {
-	int	syms;
-	t_list	*args;
+	t_group	*cur;
+	uint	group_num;
 
-	syms = 0;
-	if (child)
+	group_num = 0;
+	while (group_lst)
 	{
-		for (int i = 0; i < indent; ++i)
-			printf(" ");
-		printf("↓\n");
-		for (int i = 0; i < indent; ++i)
-			printf(" ");
-	}
-	while (head)
-	{
-		//if (head->child)
-		//	debug_lt_printer(head->child, 1, indent + syms);
-		args = head->args;
-		if (args)
+		cur = (t_group *) group_lst->content;
+		if (cur->args)
 		{
-			while (args->next)
-			{
-				printf("%s,", ((t_lexer *)args->content)->str);
-				args = args->next;
-			}
-			printf("%s;", ((t_lexer *)args->content)->str);
+			printf("-> Group %d:\n", group_num++);
+			debug_lexer_printer(NULL, cur->args);
 		}
-		head = head->next;
+		else
+		{
+			char	*s;
+			s = NULL;
+			if (cur->status == IF_AND)
+				s = ft_strdup("&&");
+			if (cur->status == IF_OR)
+				s = ft_strdup("||");
+			printf("operator: %s\n", s);
+			if (s)
+				free(s);
+		}
+		group_lst = group_lst->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/07 20:00:47 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/21 18:32:20 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@
 # define P_CLOSE 11
 # define WILDCARD 12
 
+# define STATUS_UNDONE 0
+# define STATUS_DONE_WELL 1
+# define STATUS_DONE_BAD 2
+
 typedef struct s_lexer
 {
 	char			*str;
@@ -69,13 +73,11 @@ typedef struct s_parser_data
 	int				mode;
 }	t_parser_data;
 
-typedef struct s_logical_tree
+typedef struct s_group
 {
 	t_list					*args;
-	struct s_logical_tree	*next;
-	struct s_logical_tree	*child;
-	char					condition;
-}	t_logical_tree;
+	char					status;
+}	t_group;
 
 typedef t_list t_stack;
 
@@ -87,10 +89,10 @@ char					error_msg(int mode);
 void					add_to_lexer(t_list **lst, char *str,
 							char type, char add_to_prev);
 t_list					*lst_new_lex(char	*str, char type, char add_to_prev);
+t_lexer					*lexer_dup(t_lexer *lex);
 
 //lexer_free.c
-t_list					*clear_lexer_lst(t_list **lst,
-							t_command_list *commands);
+t_list					*clear_lexer_lst(t_list **lst);//, t_command_list *commands);
 
 //token_gluer.c
 void					token_gluer(t_list **args);
@@ -144,7 +146,8 @@ void					debug_command_list_printer(t_command_list *commands);
 void					debug_lexer_printer(char *msg, t_list	*args);
 char					check_if_glue_needed(t_list *args); // DELETE AFTER PROD FROM HERE AND MAKE IT STATIC
 void					debug_ms_env_printer(void);
-void	debug_lt_printer(t_logical_tree *head, char child, int indent);
+void					debug_groups_printer(t_list	*group_lst);
+
 //void debug_redirects_printer(char *array);
 
 //builtins_checker.c
@@ -154,14 +157,12 @@ void	debug_lt_printer(t_logical_tree *head, char child, int indent);
 char	wildcard_handler(t_splitter_data *data);
 char	wildcards_inserter(t_list	**args);
 
-//logical tree operations
-t_logical_tree	*lt_new(t_list	*args, char condition);
-t_logical_tree	*lt_add_next(t_logical_tree **root, t_logical_tree *next_lt);
-t_logical_tree	*lt_add_child(t_logical_tree **root, t_logical_tree *child_lt);
-//logicals
-t_logical_tree	*logic_parser(t_list	**args);
-void	to_polish_notion(t_list **args_orignal);
+t_list			*to_polish_notation(t_list *args);
 //stack_operations.c
 t_stack	*stack_push(t_stack *head, void *content);
 void	*stack_delete(t_stack **head);
+
+//groups.c
+t_group	*group_new(t_list	*lst, char status);
+t_group	*group_free(t_group **group);
 #endif

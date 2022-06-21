@@ -8,7 +8,7 @@ FIX :
 
 { ^ | ^ }
 	@
-command: cat << $PATH ($PATH should stay the same), when heredoc $ doesn't open up!!!!!!!!!!!!
+
 CTRL+\ not working.
 signals don't work properly when minshell open in minishell.
 exit not working.
@@ -25,7 +25,7 @@ case: echo $hfkdghldf$PWD,
 case:   'e'"x"p'o'r't' "t"$q's'$i='h'"e"'l'l$r,
 case: >fil$q'1' e$w"ho" s$i"r"ing f$r$u file1,
 case: ||,
-case: |||.
+case: |||. --  РАЗОБРАТЬСЯ
 makefile has no depends on header.
 
 
@@ -39,3 +39,9 @@ DONE:
 Исправить редиректы и договориться
 Договариваемся о глобальной структуре
 Выводить ошибки в stderror
+
+
+TO_DO2 :
+-> Поменять чистильщик памяти
+-> command: cat << $PATH ($PATH should stay the same), when heredoc $ doesn't open up!!!!!!!!!!!!
+-> Обработка exit по константе

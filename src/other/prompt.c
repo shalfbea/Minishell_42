@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/07 20:02:38 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/21 18:56:32 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ t_command_list	*get_command(t_list	*args_raw, char debug)
 
 	args = ft_lstmap(args_raw, lex_dup, &no_delete); //fix no delete
 	if (lst_env_check(args))
-		return ((t_command_list *)clear_lexer_lst(&args, NULL));
+		return ((t_command_list *)clear_lexer_lst(&args));
 	if (debug)
 		debug_lexer_printer("Lexer $ check", args);
 	if (check_if_glue_needed(args))
@@ -120,7 +120,7 @@ t_command_list	*get_command(t_list	*args_raw, char debug)
 	}
 	if (parentheses_checker(args))
 	{
-		clear_lexer_lst(&args, NULL);
+		clear_lexer_lst(&args);
 		return (NULL);
 	}
 	wildcards_inserter(&args);
@@ -130,6 +130,6 @@ t_command_list	*get_command(t_list	*args_raw, char debug)
 	commands = parser(args);
 	if (debug && commands)
 		debug_command_list_printer(commands);
-	clear_lexer_lst(&args, NULL);
+	clear_lexer_lst(&args);
 	return (commands);
 }

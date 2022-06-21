@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:14:23 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 19:30:47 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/21 18:56:41 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	special_handler(t_splitter_data *data, char specials)
 {
 	if (quotes_breaker(data))
 	{
-		clear_lexer_lst(&(data->res), NULL);
+		clear_lexer_lst(&(data->res));
 		return (1);
 	}
 	//if (wildcard_handler(data))

@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 19:41:36 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 16:23:09 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:18:01 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,21 @@ t_list	*lst_new_lex(char	*str, char type, char add_to_prev)
 	lex->type = type;
 	lex->to_prev = add_to_prev;
 	return (ft_lstnew((void *) lex));
+}
+
+t_lexer	*lexer_dup(t_lexer *lex)
+{
+	t_lexer	*res;
+
+	if (!lex)
+		return (NULL);
+	res = malloc(sizeof(t_lexer));
+	if (!res)
+		return (NULL); //RAISE ERROR or exit
+	res->str = ft_strdup(lex->str);
+	res->type = lex->type;
+	res->to_prev = lex->to_prev;
+	return (res);
 }
 
 void	add_to_lexer(t_list **lst, char *str, char type, char add_to_prev)

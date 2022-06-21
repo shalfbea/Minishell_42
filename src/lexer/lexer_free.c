@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:31:47 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/16 16:49:06 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:58:30 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ void	lexer_content_free_all(void *content)
 	return ;
 }
 
-t_list	*clear_lexer_lst(t_list **lst, t_command_list *commands)
+t_list	*clear_lexer_lst(t_list **lst) //, t_command_list *commands)
 {
-	if (commands)
-		ft_lstclear(lst, lexer_content_deleter);
-	else
-		ft_lstclear(lst, lexer_content_free_all);
+	//if (commands)
+	//	ft_lstclear(lst, lexer_content_deleter);
+	//else
+	ft_lstclear(lst, lexer_content_free_all);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 15:56:58 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 16:03:33 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/21 18:56:49 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ void	token_gluer(t_list **args)
 		lst_sticky_append(&res, &res_cur, (t_lexer *) cur_args->content);
 		cur_args = cur_args->next;
 	}
-	clear_lexer_lst(args, NULL);
+	clear_lexer_lst(args);
 	*args = res;
 }
