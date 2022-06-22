@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/22 18:02:29 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/22 20:55:29 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int logical_support(void)
 
 	commands = NULL;
 	int debug = S_DEBUG;
-	int	i = 1;
+	int	i = 10;
 	(void) i;
 	//FOR DEBUGGING ONLY
 	//string_array_cleaner(&g_ms_env.envp);
@@ -35,8 +35,8 @@ int logical_support(void)
 	{
 		g_ms_env.prompt_mode = 1;
 		//raw_lexer_data = prompt("((echo aaaaa) || (kek)) && lol", debug);
-		//raw_lexer_data = prompt("echo kek", debug);
 		raw_lexer_data = prompt(NULL, debug);
+		//raw_lexer_data = prompt(NULL, debug);
 		g_ms_env.prompt_mode = 0;
 		groups = to_polish_notation(raw_lexer_data);
 		//debug_lexer_printer("Polish notation", raw_lexer_data);
@@ -86,7 +86,7 @@ int	main(int argc, char **argv, char **envp)
 		//if (debug)
 		//	debug_ms_env_printer();
 		g_ms_env.prompt_mode = 1;
-		raw_lexer_data = prompt("||", debug);
+		raw_lexer_data = prompt("cat << $PATH", debug);
 		//raw_lexer_data = prompt(NULL, debug);
 		//raw_lexer_data = prompt("e\"ch\"o hello", debug);
 		g_ms_env.prompt_mode = 0;
