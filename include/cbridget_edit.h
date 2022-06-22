@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cbridget_edit.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/03 16:05:41 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/22 17:26:19 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_fds {
 }	t_fds;
 
 typedef struct s_exec_env {
-	int		**_pipes;
+	int		new_pipes[3][2];
 	t_fds	*first_fd;
 }	t_exec_env;
 
@@ -70,8 +70,6 @@ typedef struct s_exec_env {
 
 int		executor(t_command_list *commands);
 int		ft_init(t_command_list *commands, t_exec_env *in_exec);
-int		open_pipes(t_command_list *commands, t_exec_env *in_exec);
-int		alloc_pipes(int ***pipes, int num);
 int		ft_free(t_command_list *commands, t_exec_env *in_exec);
 void	free_commands(t_command_list *cmd);
 void	free_vector(char **vct);
@@ -85,11 +83,12 @@ void	free_lsts(t_fds *lst);
 
 int		run_commands(t_command_list *commands, t_exec_env *in_exec);
 int		create_process(t_command_list *commands, t_exec_env *in_exec);
-void	ft_exec(t_command_list *cmd, t_exec_env *in_exec, int i);
-void	create_pipeline(int	**pipes, int com, int length);
+void	ft_exec(t_command_list *cmd, t_exec_env *in_exec, int i, int p_flag);
+void	create_pipeline(t_exec_env *in_exec, int cmd_num, int p_flag);
+int		open_pipes(t_command_list *tmp_cmd, t_exec_env *in_exec, int i);
 void	swap_filedescriptors(t_exec_env *in_exec, int com, int *save);
 int		alloc_pids(void);
-void	close_pipes(t_exec_env *in_exec, int num);
+void	close_pipes(t_exec_env *in_exec, int cmd_num, int p_flag);
 int		ft_wait(t_exec_env *in_exec);
 int		ft_kill(t_exec_env *in_exec);
 void	save_ex_code(t_exec_env *in_exec);

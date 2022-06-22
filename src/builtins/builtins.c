@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:19:40 by cbridget          #+#    #+#             */
-/*   Updated: 2022/06/05 13:05:17 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:54:29 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_echo(char **argv)
 
 	i = 1;
 	flag = 1;
-	if (argv[i] && !ft_strncmp(argv[i], "-n", 3))
+	while (argv[i] && !ft_strncmp(argv[i], "-n", 3))
 	{
 		flag = 0;
 		i++;
@@ -92,10 +92,8 @@ int	ft_export(char **argv)
 int	ft_unset(char **argv)
 {
 	int	i;
-	//int	err;
 
 	i = 1;
-	//err = 0;
 	while (argv[i])
 	{
 		if (check_name(argv[i], 0))
@@ -103,7 +101,6 @@ int	ft_unset(char **argv)
 		else
 		{
 			put_error(argv[i], ERR_UNSET);
-			//err = 1;
 		}
 		i++;
 	}

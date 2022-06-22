@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 13:44:56 by cbridget          #+#    #+#             */
-/*   Updated: 2022/06/05 02:09:27 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/22 17:10:11 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	run_commands(t_command_list *commands, t_exec_env *in_exec)
 		return (ft_free(commands, in_exec));
 	if (create_process(commands, in_exec))
 		return (1);
-	close_pipes(in_exec, g_ms_env.number_of_commands);
 	if (ft_wait(in_exec))
 		return (1);
 	return (0);
@@ -30,32 +29,31 @@ int	run_commands(t_command_list *commands, t_exec_env *in_exec)
 int	create_process(t_command_list *commands, t_exec_env *in_exec)
 {
 	int				i;
+	int				p_flag;
 	t_command_list	*tmp_cmd;
-	t_fds			*tmp_in;
 
 	i = 0;
 	tmp_cmd = commands;
-	tmp_in = in_exec->first_fd;
 	while (i < g_ms_env.number_of_commands)
 	{
+		p_flag = open_pipes(tmp_cmd, in_exec, i);
+		if (p_flag == -1)
+			return (ft_free(commands, in_exec));
 		g_ms_env.pids[i] = fork();
 		if (g_ms_env.pids[i] < 0)
 			return (ft_free(commands, in_exec));
 		if (g_ms_env.pids[i] == 0)
-			ft_exec(tmp_cmd, in_exec, i + 1);
+			ft_exec(tmp_cmd, in_exec, i + 1, p_flag);
+		close_pipes(in_exec, i + 1, p_flag);
 		tmp_cmd = tmp_cmd->next_command;
-		tmp_in = tmp_in->next_fd;
 		i++;
 	}
 	return (0);
 }
 
-void	ft_exec(t_command_list *cmd, t_exec_env *in_exec, int i)
+void	ft_exec(t_command_list *cmd, t_exec_env *in_exec, int i, int p_flag)
 {
-	//int	j;
-
-	//j = 1;
-	create_pipeline(in_exec->_pipes, i, g_ms_env.number_of_commands);
+	create_pipeline(in_exec, i, p_flag);
 	if (check_builtin(cmd->argv[0]) < NUM_BULTINS)
 		exit(run_builtin(cmd, in_exec, i));
 	if (working_with_redirects(cmd, in_exec, i))
@@ -95,31 +93,31 @@ void	swap_filedescriptors(t_exec_env *in_exec, int com, int *save)
 	}
 }
 
-void	create_pipeline(int	**pipes, int com, int length)
+void	create_pipeline(t_exec_env *in_exec, int cmd_num, int p_flag)
 {
-	int	j;
-
-	j = 0;
-	while (j < length - 1)
+	if (cmd_num % 2)
 	{
-		if ((com == 1 && j == 0) || (com > 1 && com < length && com - 1 == j))
+		if (cmd_num != 1)
 		{
-			close(pipes[j][0]);
-			dup2(pipes[j][1], STDOUT_FILENO);
-			close(pipes[j][1]);
+			dup2((in_exec->new_pipes)[1][0], STDIN_FILENO);
+			close((in_exec->new_pipes)[1][0]);
 		}
-		else if ((com == length && j == length - 2) || \
-			(com > 1 && com < length && com - 2 == j))
+		if (p_flag)
 		{
-			close(pipes[j][1]);
-			dup2(pipes[j][0], STDIN_FILENO);
-			close(pipes[j][0]);
+			dup2((in_exec->new_pipes)[0][1], STDOUT_FILENO);
+			close((in_exec->new_pipes)[0][1]);
+			close((in_exec->new_pipes)[0][0]);
 		}
-		else
+	}
+	else
+	{
+		dup2((in_exec->new_pipes)[0][0], STDIN_FILENO);
+		close((in_exec->new_pipes)[0][0]);
+		if (p_flag)
 		{
-			close(pipes[j][0]);
-			close(pipes[j][1]);
+			dup2((in_exec->new_pipes)[1][1], STDOUT_FILENO);
+			close((in_exec->new_pipes)[1][1]);
+			close((in_exec->new_pipes)[1][0]);
 		}
-		j++;
 	}
 }

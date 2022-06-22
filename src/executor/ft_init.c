@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 15:30:05 by cbridget          #+#    #+#             */
-/*   Updated: 2022/06/05 02:09:16 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/22 17:24:29 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 int	ft_init(t_command_list *commands, t_exec_env *in_exec)
 {
-	if (g_ms_env.number_of_commands > 1)
-	{
-		if (open_pipes(commands, in_exec))
-			return (1);
-	}
 	if (alloc_lsts(in_exec, g_ms_env.number_of_commands))
 		return (ft_free(commands, in_exec));
 	if (heredoc(commands, in_exec))
@@ -33,11 +28,6 @@ int	ft_free(t_command_list *commands, t_exec_env *in_exec)
 {
 	free_commands(commands);
 	free_lsts(in_exec->first_fd);
-	if (in_exec->_pipes)
-	{
-		free((in_exec->_pipes)[0]);
-		free(in_exec->_pipes);
-	}
 	if (g_ms_env.pids)
 	{
 		free(g_ms_env.pids);
@@ -50,11 +40,9 @@ int	ft_free(t_command_list *commands, t_exec_env *in_exec)
 void	free_commands(t_command_list *cmd)
 {
 	t_command_list	*tmp_cmd;
-	//int				i;
 
 	while (cmd)
 	{
-		//i = 0;
 		tmp_cmd = cmd;
 		cmd = cmd->next_command;
 		free_vector(tmp_cmd->argv);

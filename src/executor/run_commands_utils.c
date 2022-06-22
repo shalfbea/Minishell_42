@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_commands_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student-21school.ru>    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 14:34:00 by cbridget          #+#    #+#             */
-/*   Updated: 2022/06/03 15:41:43 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/22 17:19:40 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

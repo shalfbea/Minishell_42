@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 14:47:39 by cbridget          #+#    #+#             */
-/*   Updated: 2022/05/28 22:15:41 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:35:27 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	alloc_lsts(t_exec_env *in_exec, int num)
 	t_fds	**tmp_fd;
 
 	i = 0;
-	tmp_fd = &in_exec->first_fd;
+	tmp_fd = &(in_exec->first_fd);
 	while (i < num)
 	{
 		if (i == 0)
