@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/21 18:32:20 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/22 18:00:27 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 //I'l put my things here
 
-# define S_DEBUG 1
+# define S_DEBUG 0
 
 # ifndef INT32_MAX
 #  define INT32_MAX 2147483647
@@ -164,5 +164,6 @@ void	*stack_delete(t_stack **head);
 
 //groups.c
 t_group	*group_new(t_list	*lst, char status);
-t_group	*group_free(t_group **group);
+void	group_free(void *group);
+int		 groups_executor(t_list *groups);
 #endif

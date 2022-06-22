@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:49:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/21 20:36:06 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/22 18:02:01 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,13 @@ void	stack_pop_to_lst(t_list **lst, t_stack **stack, t_list **to_add)
 			//clear_lexer_lst(to_add);
 			*to_add = NULL;
 		}
-		ft_lstadd_back(lst, ft_lstnew((void *) group));
+		if (group)
+		{
+			if (group->status)
+				ft_lstadd_back(lst, ft_lstnew((void *) group));
+			else
+				group_free(&group);
+		}
 	}
 }
 
@@ -41,6 +47,8 @@ t_list	*to_polish_notation(t_list *args)
 	res = NULL;
 	group = NULL;
 	operators = NULL;
+	if (!args)
+		return (NULL);
 	while (args)
 	{
 		cur = (t_lexer *) args->content;
@@ -54,9 +62,12 @@ t_list	*to_polish_notation(t_list *args)
 			operators = stack_push(operators, args->content);
 		else if (cur->type == IF_OR || cur->type == IF_AND)
 		{
-			ft_lstadd_back(&res, ft_lstnew((void *) group_new(group, STATUS_UNDONE)));
+			if (group)
+			{
+				ft_lstadd_back(&res, ft_lstnew((void *) group_new(group, STATUS_UNDONE)));
 			//clear_lexer_lst(&group);
-			group = NULL;
+				group = NULL;
+			}
 			if (!operators)
 				operators = stack_push(operators, args->content);
 			else
@@ -73,5 +84,7 @@ t_list	*to_polish_notation(t_list *args)
 	}
 	while (operators)
 		stack_pop_to_lst(&res, &operators, &group);
+	if (group)
+		ft_lstadd_back(&res, ft_lstnew((void *) group_new(group, STATUS_UNDONE)));
 	return (res);
 }

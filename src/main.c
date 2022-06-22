@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/21 16:42:44 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:26:11 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!commands) // ONLY DEBUG
 			break ;
 		executor_result = executor(commands);
-		clear_lexer_lst(&(raw_lexer_data), commands);
+		clear_lexer_lst(&(raw_lexer_data));
 		(void) executor_result;
 		//clear_command_lst(&commands);
 	}

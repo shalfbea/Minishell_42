@@ -45,3 +45,4 @@ TO_DO2 :
 -> Поменять чистильщик памяти
 -> command: cat << $PATH ($PATH should stay the same), when heredoc $ doesn't open up!!!!!!!!!!!!
 -> Обработка exit по константе
+-> &?

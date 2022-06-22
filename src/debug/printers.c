@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:46:14 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/21 20:27:32 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/22 15:59:44 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,10 @@ void	debug_groups_printer(t_list	*group_lst)
 				s = ft_strdup("&&");
 			if (cur->status == IF_OR)
 				s = ft_strdup("||");
+			if (s)
 			printf("operator: %s\n", s);
+			else
+				printf("operator: %c : %d\n", cur->status, cur->status);
 			if (s)
 				free(s);
 		}

@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/21 18:57:24 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/22 18:02:29 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int logical_support(void)
 	t_list			*groups;
 
 	commands = NULL;
-	int debug = 1;
+	int debug = S_DEBUG;
 	int	i = 1;
 	(void) i;
 	//FOR DEBUGGING ONLY
@@ -34,22 +34,29 @@ int logical_support(void)
 	while (i--)
 	{
 		g_ms_env.prompt_mode = 1;
-		raw_lexer_data = prompt("((echo aaaaa) || (kek)) && lol", debug);
+		//raw_lexer_data = prompt("((echo aaaaa) || (kek)) && lol", debug);
+		//raw_lexer_data = prompt("echo kek", debug);
+		raw_lexer_data = prompt(NULL, debug);
 		g_ms_env.prompt_mode = 0;
 		groups = to_polish_notation(raw_lexer_data);
 		//debug_lexer_printer("Polish notation", raw_lexer_data);
-		debug_groups_printer(groups);
-		pause();
-		commands = get_command(raw_lexer_data, debug);
-		if (!commands)
-			break ;
-		executor_result = executor(commands);
+		if (debug)
+			debug_groups_printer(groups);
+		//pause();
+		//commands = get_command(raw_lexer_data, debug);
+		//if (!commands)
+		//	break ;
+		//executor_result = executor(commands);
+		if (groups)
+			executor_result = groups_executor(groups);
 		(void) executor_result;
 		clear_lexer_lst(&(raw_lexer_data));
+		//ft_lstclear(&groups, group_free);
 		//clear_command_lst(&commands);
 	}
 	string_array_cleaner(&g_ms_env.envp);
 	//sleep(5);
+	//pause();
 	exit(0);
 }
 
@@ -63,7 +70,7 @@ int	main(int argc, char **argv, char **envp)
 	(void ) argv;
 	(void ) envp;
 	commands = NULL;
-	int debug = 1;
+	int debug = S_DEBUG;
 	if (ms_env_initter(envp))
 		exit(1);
 	set_sig_control();
