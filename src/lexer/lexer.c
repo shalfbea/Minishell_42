@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 15:16:38 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/06 19:31:54 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/22 19:52:44 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,18 @@ static void	start_word(t_splitter_data *data)
 
 static void	end_word(t_splitter_data *data)
 {
+	char	type;
+
+	type = 0;
 	data->is_word = 0;
+	if (data->res)
+	{
+		if (((t_lexer *)((ft_lstlast(data->res))->content))->type
+			== REDIR_INSOURCE)
+			type = QUOTES;
+	}
 	add_to_lexer(&(data->res), ft_substr(data->str, data->begin,
-			data->i - data->begin), 0, data->after_quotes);
+			data->i - data->begin), type, data->after_quotes);
 	data->after_quotes = 0;
 }
 
@@ -48,10 +57,8 @@ static t_list	*splitter(t_splitter_data *data)
 		if (ft_isspace(data->str[data->i]))
 			data->after_quotes = 0;
 	}
-	//debug_lexer_printer()
 	if (data->is_word)
-		add_to_lexer(&(data->res), ft_substr(data->str, data->begin,
-				data->i - data->begin), 0, data->after_quotes);
+		end_word(data);
 	return (data->res);
 }
 
