@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 20:39:57 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 13:42:21 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:33:00 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ int	groups_executor(t_list *groups)
 	if (!(groups->next))
 	{
 		command = get_command(((t_group *) groups->content)->args, S_DEBUG);
-		return (executor(command));
+		if (command)
+			return (executor(command));
+		else
+			return (0);
 	}
 	return (groups_execution(groups, NULL, 0));
 }
