@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:04:02 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 14:04:55 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:12:20 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_list	*ft_lstnew_from_char(char c)
 
 t_command_list	*error_and_clean(t_parser_data *data, char *error_msg)
 {
+	g_ms_env.ex_code = 2;
 	if (error_msg)
 		ft_putendl_fd(error_msg, STDERR_FILENO);
 	else

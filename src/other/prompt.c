@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 20:56:21 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:11:48 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char	parentheses_checker(t_list	*args)
 
 char	error_msg(int mode)
 {
+	g_ms_env.ex_code = 2;
 	if (mode == QUOTES)
 		ft_putendl_fd("minishell: syntax error - quotes unmatched.",
 			STDERR_FILENO);

@@ -47,3 +47,12 @@ DONE:
 TO_DO2 :
 -> Поменять чистильщик памяти
 -> Обработка exit по константе SHELL_CLOSE -55
+
+IN_TESTER:
+	OK :
+	echo (4/4)
+	cd (3/3) (фейлит тесты с ;)
+	NOT OK
+	pipes (7/8)
+	ENV (8/18)
+	export()

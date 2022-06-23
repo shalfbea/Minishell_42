@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 20:59:27 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:09:18 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argc;
 	(void) argv;
+	rl_outstream = stderr; //ONLY 4 testing
 	if (ms_env_initter(envp))
 		exit(1);
 	set_sig_control();
@@ -38,5 +39,6 @@ int	main(int argc, char **argv, char **envp)
 		clear_lexer_lst(&(raw_lexer_data));
 	}
 	string_array_cleaner(&g_ms_env.envp);
-	return (0);
+	//return (g_ms_env.ex_code);
+	return (g_ms_env.ex_code);
 }
