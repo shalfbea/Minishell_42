@@ -12,7 +12,6 @@ MINISHELL := minishell_bonus
 LIBFT := ../libft/libft.a
 
 SRC_MAIN = 	  other/prompt.c other/signals.c other/ms_env.c \
-	  debug/printers.c \
 	  lexer/lexer.c lexer/lexer_wraps_lst.c lexer/lexer_free.c \
 	  lexer/lexer_specials.c lexer/token_gluer.c \
 	  parser/parser.c parser/command_lst.c \
@@ -26,7 +25,9 @@ SRC_MAIN = 	  other/prompt.c other/signals.c other/ms_env.c \
 	  builtins/builtins_utils.c builtins/builtins.c builtins/ft_export.c \
 	  builtins/ft_unset.c builtins/builtins_02.c builtins/retrieve_fd.c \
 	  builtins/export_add_functions.c builtins/export_working_with_names.c\
-	  lexer/wildcards.c
+	  lexer/wildcards.c \
+	  debug/commands_printer.c debug/env_printer.c debug/groups_printer.c debug/lexer_printer.c
+
 	  #builtins/exit.c
 
 SRC_BONUS = main_shalfbea.c logical.c stack_operations.c groups.c groups_execution.c

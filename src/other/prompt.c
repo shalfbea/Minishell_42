@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 14:13:27 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:52:02 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,27 +62,25 @@ char	error_msg(int mode)
 ** default call:
 ** raw_lexer_data = prompt(NULL, 1);
 */
-t_list	*prompt(char *input, char debug)
+t_list	*prompt(char *input)
 {
 	t_list				*args;
-	//t_command_list		*commands;
 
 	args = NULL;
-	//commands = NULL;
 	if (!input)
 		input = readline("MiniShell: ");
 	else
 		input = ft_strdup(input);
-	if (!input) //HANDLING CTRL-D HERE
+	if (!input)
 	{
 		ft_putstr_fd("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMiniShell: exit\n", STDERR_FILENO);
 		input = ft_strdup("exit");
 	}
 	if (!ft_strncmp(input, "exit", 4)) //DELETE IT LATER
-		exit(0); // затычка
-	add_history(input);
+		exit(0);
+	add_history(input)
 	args = lexer(input);
-	if (debug)
+	if (S_DEBUG)
 		debug_lexer_printer("Lexer primary results", args);
 	free(input);
 	return (args);
@@ -99,33 +97,29 @@ void	*lex_dup(void *original)
 	return ((void *) copy);
 }
 
-t_command_list	*get_command(t_list	*args_raw, char debug)
+t_command_list	*get_command(t_list	*args_raw)
 {
 	t_command_list	*commands;
 	t_list			*args;
 
-	args = ft_lstmap(args_raw, lex_dup, &no_delete); //fix no delete
+	args = ft_lstmap(args_raw, lex_dup, &lexer_content_free_all);
 	if (lst_env_check(args))
 		return ((t_command_list *)clear_lexer_lst(&args));
-	if (debug)
+	if (S_DEBUG)
 		debug_lexer_printer("Lexer $ check", args);
-	if (check_if_glue_needed(args))
-	{
-		token_gluer(&args);
-		if (debug)
-			debug_lexer_printer("Lexer gluing results", args);
-	}
+	token_gluer(&args);
+	if (S_DEBUG)
+		debug_lexer_printer("Lexer gluing results", args);
 	if (parentheses_checker(args))
 	{
 		clear_lexer_lst(&args);
 		return (NULL);
 	}
 	wildcards_inserter(&args);
-	if (debug)
+	if (S_DEBUG)
 		debug_lexer_printer("Lexer wildcards results", args);
-	// ПРОВЕРКА ПРАВИЛЬНОГО ПОРЯДКА ТОКЕНОВ
 	commands = parser(args);
-	if (debug && commands)
+	if (S_DEBUG && commands)
 		debug_command_list_printer(commands);
 	clear_lexer_lst(&args);
 	return (commands);

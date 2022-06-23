@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 14:07:28 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 15:15:47 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ typedef struct s_group
 
 typedef t_list	t_stack;
 
-t_list					*prompt(char	*input, char debug);
-t_command_list			*get_command(t_list	*args, char debug);
+t_list					*prompt(char	*input);
+t_command_list			*get_command(t_list	*args);
 char					error_msg(int mode);
 
 //lexer_wraps_lst.c
@@ -102,7 +102,7 @@ void					set_sig_control(void);
 
 //lexer.c
 t_list					*lexer(char *str);
-
+void	lexer_content_free_all(void *content);
 //lexer_specials
 char					quotes_breaker(t_splitter_data *data);
 char					special_characters(char	*c);

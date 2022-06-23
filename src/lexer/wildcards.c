@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:14:59 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 14:23:29 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:42:07 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,21 @@ t_list	*directory_wildcard(void)
 	dirp = opendir(".");
 	while (dirp)
 	{
- 	   errno = 0;
-	    if ((dp = readdir(dirp)) != NULL)
+		errno = 0;
+		dp = readdir(dirp);
+		if (dp)
 			add_to_lexer(&result, ft_strdup(dp->d_name), 0, 0);
 		else
 		{
-	        if (errno == 0)
+			if (errno == 0)
 			{
-	            closedir(dirp);
-	            return (result);//NOT_FOUND;
-		    }
-		    closedir(dirp);
-		    return NULL;//READ_ERROR; <========================= mmargene talks about it u need think
+				closedir(dirp);
+				return (result);//NOT_FOUND;
+			}
+			closedir(dirp);
+			return (NULL);//READ_ERROR; <========================= mmargene talks about it u need think
 		}
 	}
-
 	return (result);//OPEN_ERROR;
 }
 
@@ -44,11 +44,10 @@ char	wildcards_inserter(t_list	**args_head)
 {
 	t_list	*args;
 	t_list	*tmp_next;
+
 	args = *args_head;
 	while (args)
 	{
-		t_lexer *cur = (t_lexer *)args->content;
-		(void) cur;
 		if (((t_lexer *)args->content)->type == WILDCARD)
 		{
 			tmp_next = args->next;

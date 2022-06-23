@@ -6,17 +6,14 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:14:23 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 14:14:46 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:55:08 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	quotes_breaker(t_splitter_data *data)
+char	quotes_breaker_prework(t_splitter_data *data, char quote)
 {
-	char	quote;
-
-	quote = (data->str)[data->i];
 	if (quote != '\'' && quote != '\"')
 		return (0);
 	if (data->is_word)
@@ -30,6 +27,16 @@ char	quotes_breaker(t_splitter_data *data)
 		return (0);
 	}
 	data->begin = data->i;
+	return (1);
+}
+
+char	quotes_breaker(t_splitter_data *data)
+{
+	char	quote;
+
+	quote = (data->str)[data->i];
+	if (!quotes_breaker_prework(data, quote))
+		return (0);
 	if (!((data->str)[data->i]))
 		return (error_msg(QUOTES));
 	while ((data->str)[data->i] && (data->str)[data->i] != quote)
