@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cbridget_edit.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/22 17:26:19 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:16:40 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CBRIDGET_EDIT_H
 # define CBRIDGET_EDIT_H
 
-# define LOGICAL_ALWAYS 0
-# define LOGICAL_AND 1
-# define LOGICAL_OR 2
 # define BUFFER_SIZE 1
 
 # define SHELL_CLOSE -55

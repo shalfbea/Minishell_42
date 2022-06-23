@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 15:56:58 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/21 18:56:49 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:37:09 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	lst_sticky_append(t_list **res, t_list **cur, t_lexer *lexical)
 	}
 }
 
-char	check_if_glue_needed(t_list *args)
+static char	check_if_glue_needed(t_list *args)
 {
 	while (args)
 	{

@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 16:52:02 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:13:01 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_list	*prompt(char *input)
 	}
 	if (!ft_strncmp(input, "exit", 4)) //DELETE IT LATER
 		exit(0);
-	add_history(input)
+	add_history(input);
 	args = lexer(input);
 	if (S_DEBUG)
 		debug_lexer_printer("Lexer primary results", args);

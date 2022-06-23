@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:29:33 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 16:08:02 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:32:27 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,5 @@ static void	sigint_handler(int sig)
 */
 void	set_sig_control(void)
 {
-	/*
-	ft_memset(&sigs, 0, sizeof(sigs));
-	sigs.sa_sigaction = signal_handler;
-	sigemptyset(&set);
-	sigaddset(&set, SIGINT);
-	sigaddset(&set, SIGQUIT);
-	sigaddset(&set, SIGTSTP);
-	sigs.sa_mask = set;
-	sigaction(SIGINT, &sigs, 0);
-	sigaction(SIGQUIT, &sigs, 0);
-	sigaction(SIGTSTP, &sigs, 0);
-	*/
 	signal(SIGINT, sigint_handler);
 }

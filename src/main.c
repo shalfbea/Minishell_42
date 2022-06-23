@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/22 16:26:11 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:34:04 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,15 @@ int	main(int argc, char **argv, char **envp)
 	(void ) argv;
 	(void ) envp;
 	commands = NULL;
-	int debug = 1;
 	if (ms_env_initter(envp))
 		exit(1);
 	set_sig_control();
-	while (1
-	)
+	while (1)
 	{
-		//if (debug)
-		//	debug_ms_env_printer();
 		g_ms_env.prompt_mode = 1;
-		raw_lexer_data = prompt(NULL, debug);
+		raw_lexer_data = prompt(NULL);
 		g_ms_env.prompt_mode = 0;
-		commands = get_command(raw_lexer_data, debug);
+		commands = get_command(raw_lexer_data);
 		if (!commands) // ONLY DEBUG
 			break ;
 		executor_result = executor(commands);
