@@ -6,16 +6,16 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 20:39:57 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/22 20:53:07 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 13:42:21 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_command_list *command_get_wrapper(void * group_data)
+static t_command_list	*command_get_wrapper(void *group_data)
 {
 	t_group			*group;
-	t_command_list 	*res;
+	t_command_list	*res;
 
 	group = (t_group *) group_data;
 	res = NULL;

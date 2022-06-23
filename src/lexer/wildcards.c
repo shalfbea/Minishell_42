@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:14:59 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 19:18:00 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:23:29 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 t_list	*directory_wildcard(void)
 {
-	DIR 			*dirp;
+	DIR				*dirp;
 	struct dirent	*dp;
 	t_list			*result;
 
 	result = NULL;
-	dirp = opendir("."); // NOT THIS DIRECTORY MAY BE
+	dirp = opendir(".");
 	while (dirp)
 	{
  	   errno = 0;

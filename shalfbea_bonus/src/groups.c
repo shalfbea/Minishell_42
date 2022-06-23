@@ -6,11 +6,11 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:18:22 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/22 20:40:23 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 13:41:44 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 t_group	*group_new(t_list	*lst, char status)
 {
@@ -32,11 +32,8 @@ void	group_free(void *group_src)
 
 	group = (t_group *) group_src;
 	if (!group)
-		//return (NULL);
 		return ;
 	if (group->args)
 		clear_lexer_lst(&(group->args));
 	free(group);
-	//return (NULL);
 }
-

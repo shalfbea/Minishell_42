@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 19:58:55 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/22 18:12:37 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 13:44:01 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,6 @@ static char	*find_in_env(char *str, int start_pos, int end_pos)
 	if (env)
 		return (env);
 	return (ft_strdup(""));
-	/*
-	env = malloc(sizeof(char) * 1);
-	if (!env)
-		return (NULL); //RAISE ERROR
-	env[0] = '\0';
-	return (env);
-	*/
 }
 
 static void	str_replace_with_env(char	**str, int start_pos, int end_pos)
@@ -77,7 +70,7 @@ static char	env_checker(char	**str)
 				return (1);
 			while ((*str)[k] && ft_isalnum((*str)[k]))
 				++k;
-			str_replace_with_env(str, i, k);// k - 1);
+			str_replace_with_env(str, i, k);
 			i = -1;
 		}
 	}
@@ -97,7 +90,7 @@ char	lst_env_check(t_list	*args)
 			{
 				if (((t_lexer *)args->next->content)->to_prev)
 				{
-					if(cur->str)
+					if (cur->str)
 						free(cur->str);
 					cur->str = ft_strdup("");
 				}

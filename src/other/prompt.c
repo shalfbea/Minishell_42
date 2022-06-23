@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:56:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/21 18:56:32 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:13:27 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,12 @@ char	parentheses_checker(t_list	*args)
 char	error_msg(int mode)
 {
 	if (mode == QUOTES)
-		//printf("minishell: syntax error - quotes unmatched.");
 		ft_putendl_fd("minishell: syntax error - quotes unmatched.",
 			STDERR_FILENO);
 	if (mode == P_OPEN)
-		//printf("minishell: syntax error near unexpected token `(\'\n");
 		ft_putendl_fd("minishell: syntax error near unexpected token `(\'",
 			STDERR_FILENO);
 	if (mode == P_CLOSE)
-		//printf("minishell: syntax error near unexpected token `)\'\n");
 		ft_putendl_fd("minishell: syntax error near unexpected token `)\'",
 			STDERR_FILENO);
 	return (1);

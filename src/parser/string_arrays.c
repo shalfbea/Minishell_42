@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:18:58 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/05/29 16:10:41 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:11:32 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,11 @@ char	**string_array_former(t_list	**array)
 	i = 0;
 	while (i < words)
 	{
-		//res[i] = (char *) tmp->content;
 		res[i] = ft_strdup((char *) tmp->content);
 		tmp = tmp->next;
 		++i;
 	}
 	res[i] = NULL;
-	//ft_lstclear(array, &no_delete);
 	ft_lstclear(array, &free);
 	return (res);
 }
@@ -66,7 +64,6 @@ char	**string_array_copy(char **array, uint more_size_option)
 {
 	char	**copy_of_array;
 	int		len;
-//	char 	*tmp;
 
 	len = 0;
 	while (array[len])
@@ -77,11 +74,7 @@ char	**string_array_copy(char **array, uint more_size_option)
 		return (NULL);
 	len = -1;
 	while (array[++len])
-	{
-//		tmp = ft_strdup(array[len]);
-//		copy_of_array[len] = tmp;
 		copy_of_array[len] = ft_strdup(array[len]);
-	}
 	copy_of_array[len] = NULL;
 	return (copy_of_array);
 }

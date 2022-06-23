@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:58:02 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/22 18:13:25 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 13:42:40 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ t_stack	*stack_push(t_stack *head, void *content)
 
 	new_head = malloc(sizeof(t_stack));
 	if (!new_head)
-		return (NULL); //RAISE ERROR
-	new_head->content = content; //may be not needed
+		return (NULL);
+	new_head->content = content;
 	new_head->next = head;
 	return (new_head);
 }

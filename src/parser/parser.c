@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:42:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/06 19:38:59 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:17:02 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,39 +23,27 @@ static void	form_current(t_parser_data *data, char end)
 	data->mode = 0;
 }
 
-static t_list	*ft_lstnew_from_char(char c)
+static void	parser_quotes_handle(t_parser_data *data)
 {
-	t_list	*res;
-	char	*tmp;
-
-	res = ft_lstnew(NULL);
-	tmp = (void *) malloc(sizeof(char));
-	//CHECK HERE
-	*tmp = c;
-	res->content = (void *) tmp;
-	return (res);
+	if (data->mode == 0)
+		ft_lstadd_back(&(data->argv),
+			ft_lstnew((void *) ft_strdup(data->arg->str)));
+	else if (data->mode >= REDIR_OUT && data->mode <= REDIR_INSOURCE)
+	{
+		ft_lstadd_back(&(data->redirects),
+			ft_lstnew((void *)ft_strdup(data->arg->str)));
+		data->mode = 0;
+	}
 }
 
-static t_command_list	*error_and_clean(t_parser_data *data, char *error_msg)
+static char	parser_redirs_handle(t_parser_data *data)
 {
-	/*
-	if (error_msg)
-		printf("%s\n", error_msg);
-	else
-		printf("syntax error near unexpected token `%s'\n", data->arg->str);
-	*/
-	if (error_msg)
-		ft_putendl_fd(error_msg, STDERR_FILENO);
-	else
-	{
-		ft_putstr_fd("syntax error near unexpected token `", STDERR_FILENO);
-		ft_putstr_fd(data->arg->str, 2);
-		ft_putendl_fd("'", 2);
-	}
-	ft_lstclear(&(data->argv), &no_delete);
-	ft_lstclear(&(data->redirects), &no_delete);
-	ft_lstclear(&(data->redirect_flags), &free);
-	return (clear_command_lst(&(data->res)));
+	if (data->mode >= REDIR_OUT && data->arg->type <= REDIR_INSOURCE)
+		return (1);
+	ft_lstadd_back(&(data->redirect_flags),
+		ft_lstnew_from_char(data->arg->type));
+	data->mode = data->arg->type;
+	return (0);
 }
 
 static t_command_list	*parse_start(t_parser_data *data)
@@ -65,22 +53,12 @@ static t_command_list	*parse_start(t_parser_data *data)
 	{
 		data->arg = (t_lexer *) data->args->content;
 		if (data->arg->type >= NO_QUOTE && data->arg->type <= DOUBLE_QUOTES)
+			parser_quotes_handle(data);
+		else if (data->arg->type >= REDIR_OUT
+			&& data->arg->type <= REDIR_INSOURCE)
 		{
-			if (data->mode == 0)
-				ft_lstadd_back(&(data->argv), ft_lstnew((void *) ft_strdup(data->arg->str)));
-			else if (data->mode >= REDIR_OUT && data->mode <= REDIR_INSOURCE)
-			{
-				//data->cur->outfile = arg->str;
-				ft_lstadd_back(&(data->redirects), ft_lstnew((void *)ft_strdup(data->arg->str)));
-				data->mode = 0;
-			}
-		}
-		else if (data->arg->type >= REDIR_OUT && data->arg->type <= REDIR_INSOURCE)
-		{
-			if (data->mode >= REDIR_OUT && data->arg->type <= REDIR_INSOURCE)
+			if (parser_redirs_handle(data))
 				return (error_and_clean(data, NULL));
-			ft_lstadd_back(&(data->redirect_flags), ft_lstnew_from_char(data->arg->type));
-			data->mode = data->arg->type;
 		}
 		else if (data->arg->type == PIPE)
 		{
@@ -113,7 +91,7 @@ t_command_list	*parser(t_list *args)
 	data.redirect_flags = NULL;
 	data.redirects = NULL;
 	result = parse_start(&data);
-	if (!(result->argv[0]) && !(result->redirect_flags[0])) //redirects might be to check too
-		return (clear_command_lst(&result)); //THATS causes by IF_OR UNSUPPORTED CURRENTLY
+	if (!(result->argv[0]) && !(result->redirect_flags[0]))
+		return (clear_command_lst(&result));
 	return (result);
 }

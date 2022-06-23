@@ -21,6 +21,7 @@ SRC = main.c \
 	  lexer/lexer_specials.c lexer/token_gluer.c \
 	  parser/parser.c parser/command_lst.c \
 	  parser/char_arrays.c parser/string_arrays.c \
+	  parser/parser_utils.c \
 	  env/env_check.c env/env_finder.c \
 	  executor/executor.c executor/ft_init.c executor/open_pipes.c executor/lib_lst.c \
 	  executor/run_commands.c executor/redirects.c executor/check_cmd.c \

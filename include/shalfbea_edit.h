@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/22 20:54:12 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:07:28 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_group
 	char					status;
 }	t_group;
 
-typedef t_list t_stack;
+typedef t_list	t_stack;
 
 t_list					*prompt(char	*input, char debug);
 t_command_list			*get_command(t_list	*args, char debug);
@@ -110,11 +110,13 @@ char					special_handler(t_splitter_data *data, char specials);
 
 //lexer.c
 t_command_list			*parser(t_list *args);
+t_list					*ft_lstnew_from_char(char c);
+t_command_list			*error_and_clean(t_parser_data *data, char *error_msg);
 void					command_append(t_command_list **lst,
 							t_command_list **cur);
 t_command_list			*clear_command_lst(t_command_list **lst);
 //lexer_parentheses.c
-char	parentheses_checker(t_list	*args);
+char					parentheses_checker(t_list	*args);
 //env/env_check.c
 char					lst_env_check(t_list	*args);
 

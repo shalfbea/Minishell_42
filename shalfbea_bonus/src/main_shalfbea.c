@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/22 20:55:29 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:24:32 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int logical_support(void)
 	t_list			*groups;
 
 	commands = NULL;
-	int debug = S_DEBUG;
+	int debug = 1;
 	int	i = 10;
 	(void) i;
 	//FOR DEBUGGING ONLY
@@ -35,7 +35,7 @@ int logical_support(void)
 	{
 		g_ms_env.prompt_mode = 1;
 		//raw_lexer_data = prompt("((echo aaaaa) || (kek)) && lol", debug);
-		raw_lexer_data = prompt(NULL, debug);
+		raw_lexer_data = prompt("e >", debug);
 		//raw_lexer_data = prompt(NULL, debug);
 		g_ms_env.prompt_mode = 0;
 		groups = to_polish_notation(raw_lexer_data);
