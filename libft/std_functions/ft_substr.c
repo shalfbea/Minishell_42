@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 21:10:10 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/05 02:05:43 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 13:40:38 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*copy;
 	size_t	real_len;
 
-	if (s == NULL) //len < 0
+	if (s == NULL)
 		return (NULL);
 	i = -1;
 	while (++i < start && *s)
