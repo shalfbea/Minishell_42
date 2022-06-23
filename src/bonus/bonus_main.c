@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   bonus_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/19 19:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 20:59:27 by shalfbea         ###   ########.fr       */
+/*   Created: 2022/06/23 18:17:20 by shalfbea          #+#    #+#             */
+/*   Updated: 2022/06/23 20:58:53 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@ t_minishell_environment g_ms_env;
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_command_list	*commands;
 	t_list			*raw_lexer_data;
 	int				executor_result;
+	t_list			*groups;
 
-	(void) argc;
-	(void) argv;
 	if (ms_env_initter(envp))
 		exit(1);
 	set_sig_control();
@@ -29,14 +27,15 @@ int	main(int argc, char **argv, char **envp)
 	while (executor_result != SHELL_CLOSE)
 	{
 		g_ms_env.prompt_mode = 1;
-		raw_lexer_data = prompt(NULL);
+		raw_lexer_data = prompt("e >");
 		g_ms_env.prompt_mode = 0;
-		commands = get_command(raw_lexer_data);
-		if (!commands) // ONLY DEBUG
-			break ;
-		executor_result = executor(commands);
+		groups = to_polish_notation(raw_lexer_data);
+		if (S_DEBUG)
+			debug_groups_printer(groups);
+		if (groups)
+			executor_result = groups_executor(groups);
 		clear_lexer_lst(&(raw_lexer_data));
 	}
 	string_array_cleaner(&g_ms_env.envp);
-	return (0);
+	exit(0);
 }

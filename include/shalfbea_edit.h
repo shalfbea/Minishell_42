@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 17:39:21 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/23 18:38:00 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,5 @@ void					*stack_delete(t_stack **head);
 t_group					*group_new(t_list	*lst, char status);
 void					group_free(void *group);
 int						groups_executor(t_list *groups);
+int						real_main(char **envp, char bonus);
 #endif
