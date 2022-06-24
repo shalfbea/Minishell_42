@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:58:02 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 13:42:40 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/24 17:39:11 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,28 @@ void	*stack_delete(t_stack **head)
 	*head = tmp->next;
 	free (tmp);
 	return (content);
+}
+
+void	stack_pop_to_lst(t_list **lst, t_stack **stack, t_list **to_add)
+{
+	t_lexer	*content;
+	t_group	*group;
+
+	content = (t_lexer *) stack_delete(stack);
+	group = group_new(NULL, content->type);
+	if (content)
+	{
+		if (*to_add)
+		{
+			lst_add_group(lst, *to_add, STATUS_UNDONE);
+			*to_add = NULL;
+		}
+		if (group)
+		{
+			if (group->status)
+				ft_lstadd_back(lst, ft_lstnew((void *) group));
+			else
+				group_free(&group);
+		}
+	}
 }

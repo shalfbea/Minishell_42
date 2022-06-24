@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:18:22 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 13:41:44 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/24 17:38:12 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,9 @@ void	group_free(void *group_src)
 	if (group->args)
 		clear_lexer_lst(&(group->args));
 	free(group);
+}
+
+void	lst_add_group(t_list **lst, t_list *to_add, char status)
+{
+	ft_lstadd_back(lst, ft_lstnew((void *) group_new(to_add, status)));
 }
