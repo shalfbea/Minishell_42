@@ -11,7 +11,7 @@ FLAGS := -Wall -Wextra -Werror -I./include  -I./libft/include $(TestingFlags)
 MINISHELL := minishell
 MINISHELL_BONUS := minishell_bonus
 
-LIBFT := ./libft/libft.a
+LIBFT := libft/libft.a
 
 SRC = other/prompt.c other/signals.c other/ms_env.c \
 	  lexer/lexer.c lexer/lexer_wraps_lst.c lexer/lexer_free.c \
@@ -48,10 +48,10 @@ RM := rm -rf
 all: $(OBJ_DIR) $(HEADER) $(MINISHELL)
 
 $(MINISHELL): $(HEADER) $(OBJ_STD) $(LIBFT)
-	$(CC) $(FLAGS) $(READLINE_LIB) $(LIBFT) $(OBJ_STD) -o $(MINISHELL)
+	$(CC) $(FLAGS) $(READLINE_LIB) $(OBJ_STD) -o $(MINISHELL) $(LIBFT)
 
 $(MINISHELL_BONUS): $(HEADER) $(OBJ_FILES_BONUS) $(LIBFT)
-	$(CC) $(FLAGS) $(READLINE_LIB) $(LIBFT) $(OBJ_FILES_BONUS) -o $(MINISHELL_BONUS)
+	$(CC) $(FLAGS) $(READLINE_LIB) $(OBJ_FILES_BONUS) -o $(MINISHELL_BONUS) $(LIBFT)
 
 $(LIBFT) :
 	make -C ./libft

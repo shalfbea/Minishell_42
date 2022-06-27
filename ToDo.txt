@@ -14,6 +14,9 @@ Expected exit status : 0
 => Echo -nnnnnnnnn в баше работает так же как -n
 
 
+
+shalfbea:
+* - compare with bash
 FIX :
 -> /var/tmp/minishell не удаляется // done
 -> Редирект с echo не работает // done
