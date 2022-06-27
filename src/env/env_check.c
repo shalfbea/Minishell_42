@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 19:58:55 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 13:44:01 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/27 17:47:19 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ static void	str_replace_with_env(char	**str, int start_pos, int end_pos)
 	i = 0;
 	while (env[i])
 		res[k++] = env[i++];
-	i = end_pos;
-	while ((*str)[++i])
-		res[k++] = (*str)[i];
+	//if (!(*str)[end_pos])
+	i = end_pos + 1;// - 1;
+	while ((*str)[i])
+		res[k++] = (*str)[i++];
 	res[k] = '\0';
 	free(*str);
 	free(env);
@@ -68,10 +69,20 @@ static char	env_checker(char	**str)
 			k = i + 1;
 			if (!(*str)[k])
 				return (1);
-			while ((*str)[k] && ft_isalnum((*str)[k]))
-				++k;
-			str_replace_with_env(str, i, k);
-			i = -1;
+			if ((*str)[k] == '=')
+				i++;
+			else
+			{
+				if ((*str)[k] == '?' || ft_isdigit((*str)[k]))
+				str_replace_with_env(str, i, k);
+				else
+				{
+					while ((*str)[k] && ft_isalnum((*str)[k]))
+						++k;
+					str_replace_with_env(str, i, k - 1);
+				}
+				i = -1;
+			}
 		}
 	}
 	return (0);
