@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 19:58:55 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/27 17:47:19 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/27 18:24:18 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,26 @@ static void	str_replace_with_env(char	**str, int start_pos, int end_pos)
 	i = 0;
 	while (env[i])
 		res[k++] = env[i++];
-	//if (!(*str)[end_pos])
-	i = end_pos + 1;// - 1;
+	i = end_pos + 1;
 	while ((*str)[i])
 		res[k++] = (*str)[i++];
 	res[k] = '\0';
 	free(*str);
 	free(env);
 	*str = res;
+}
+
+static void	find_place_and_replace_with_env(char **str, int *k, int *i)
+{
+	if ((*str)[*k] == '?' || ft_isdigit((*str)[*k]))
+		str_replace_with_env(str, *i, *k);
+	else
+	{
+		while ((*str)[*k] && ft_isalnum((*str)[*k]))
+			++(*k);
+		str_replace_with_env(str, *i, *k - 1);
+	}
+	*i = -1;
 }
 
 static char	env_checker(char	**str)
@@ -72,17 +84,7 @@ static char	env_checker(char	**str)
 			if ((*str)[k] == '=')
 				i++;
 			else
-			{
-				if ((*str)[k] == '?' || ft_isdigit((*str)[k]))
-				str_replace_with_env(str, i, k);
-				else
-				{
-					while ((*str)[k] && ft_isalnum((*str)[k]))
-						++k;
-					str_replace_with_env(str, i, k - 1);
-				}
-				i = -1;
-			}
+				find_place_and_replace_with_env(str, &k, &i);
 		}
 	}
 	return (0);

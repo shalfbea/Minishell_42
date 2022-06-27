@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:29:33 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 17:32:27 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/27 18:40:57 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	sigint_handler(int sig)
 
 	if (sig != SIGINT)
 		return ;
+	g_ms_env.ex_code = 1;
 	if (g_ms_env.pids) //Kill pids here
 	{
 		i = -1;

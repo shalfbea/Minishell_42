@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 15:06:55 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 15:07:05 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/27 18:27:32 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,16 @@ void	debug_ms_env_printer(void)
 	}
 	else
 		printf("Pids not presented.\n");
+}
+
+void	debug_set_envp(void)
+{
+	int	params_num;
+
+	params_num = 3;
+	g_ms_env.envp = (char **) malloc(sizeof(char *) * (params_num + 1));
+	g_ms_env.envp[0] = ft_strdup("USER=shalfbea");
+	g_ms_env.envp[1] = ft_strdup("HOME=keklol/shalfbea");
+	g_ms_env.envp[2] = ft_strdup("PWD=/Users/shalfbea/prj/Minishell_42");
+	g_ms_env.envp[3] = NULL;
 }
