@@ -59,3 +59,4 @@ shalfbea_bonus/minishell_bonus
 .vscode/c_cpp_properties.json
 .DS_Store
 minishell_bonus
+minishell_test.log

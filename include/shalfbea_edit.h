@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/24 17:39:27 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/27 19:21:22 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void					debug_command_list_printer(t_command_list *commands);
 void					debug_lexer_printer(char *msg, t_list	*args);
 void					debug_ms_env_printer(void);
 void					debug_groups_printer(t_list	*group_lst);
+void					debug_set_envp(void);
 char					wildcard_handler(t_splitter_data *data);
 char					wildcards_inserter(t_list	**args);
 t_list					*to_polish_notation(t_list *args);
@@ -123,4 +124,5 @@ void					lst_add_group(t_list **lst, t_list *to_add,
 							char status);
 void					stack_pop_to_lst(t_list **lst, t_stack **stack,
 							t_list **to_add);
+char					*find_in_env(char *str, int start_pos, int end_pos);
 #endif

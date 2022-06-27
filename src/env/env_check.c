@@ -6,13 +6,13 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 19:58:55 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/27 18:24:18 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/27 19:20:49 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*find_in_env(char *str, int start_pos, int end_pos)
+char	*find_in_env(char *str, int start_pos, int end_pos)
 {
 	char	*request;
 	char	*env;
