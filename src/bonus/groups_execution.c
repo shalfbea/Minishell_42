@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 20:39:57 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 15:17:48 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/27 20:59:06 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	execute_current(t_stack **stack, int *executor_result, t_group *cur)
 		if ((g_ms_env.ex_code == 0 && cur->status == IF_AND)
 			|| (g_ms_env.ex_code && cur->status == IF_OR))
 			*executor_result = executor(command);
+		else
+			free_commands(command);
 	}
 }
 
@@ -67,7 +69,7 @@ int	groups_execution(t_list *groups, t_stack *stack, int executor_result)
 {
 	t_group			*cur;
 
-	while (groups)
+	while (groups && executor_result != SHELL_CLOSE)
 	{
 		cur = (t_group *) groups->content;
 		if (cur->status == STATUS_UNDONE)
@@ -76,6 +78,8 @@ int	groups_execution(t_list *groups, t_stack *stack, int executor_result)
 			execute_current(&stack, &executor_result, cur);
 		groups = groups->next;
 	}
+	while (stack)
+		stack_delete(&stack);
 	return (executor_result);
 }
 
