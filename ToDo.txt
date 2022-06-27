@@ -8,6 +8,12 @@ Expected exit status : 128
 Your exit status : 255
 Expected exit status : 0
 
+=> Билтины нужно сравнивать в lowercase!
+Баш хавает eCho eCHo и тд
+
+=> Echo -nnnnnnnnn в баше работает так же как -n
+
+
 FIX :
 -> /var/tmp/minishell не удаляется // done
 -> Редирект с echo не работает // done
