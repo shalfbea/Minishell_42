@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/27 20:22:35 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/27 21:02:47 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ static void	pwd_solver(void)
 */
 char	ms_env_initter(char **envp)
 {
-
 	g_ms_env.ex_code = 0;
 	g_ms_env.number_of_commands = 0;
 	g_ms_env.pids = NULL;

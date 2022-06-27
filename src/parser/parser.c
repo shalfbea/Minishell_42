@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:42:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 14:29:25 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/27 21:05:31 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static t_command_list	*parse_start(t_parser_data *data)
 	}
 	if (data->mode != NO_QUOTE)
 		return (error_and_clean(data,
-				"syntax error near unexpected token `newline'"));
+				"minishell: syntax error near unexpected token `newline'"));
 	form_current(data, 1);
 	return (data->res);
 }
