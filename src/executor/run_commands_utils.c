@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_commands_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 14:34:00 by cbridget          #+#    #+#             */
-/*   Updated: 2022/06/28 19:10:00 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/28 19:37:56 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,19 @@ int	ft_kill(void)
 		if (g_ms_env.pids[i] > 0)
 			kill(g_ms_env.pids[i], 2);
 		i++;
+	}
+	return (1);
+}
+
+int	fork_or_pipe_problem(int p_flag)
+{
+	ft_kill();
+	if (p_flag == -1)
+		return (1);
+	else
+	{
+		g_ms_env.ex_code = 128;
+		return (put_error("fork", 126));
 	}
 	return (1);
 }

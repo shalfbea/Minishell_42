@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cbridget_edit.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/28 18:59:02 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/28 19:38:22 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	close_pipes(t_exec_env *in_exec, int cmd_num, int p_flag);
 int		ft_wait(t_exec_env *in_exec);
 int		ft_kill(void);
 void	save_ex_code(t_exec_env *in_exec);
-
+int		fork_or_pipe_problem(int p_flag);
 /*
 ** working_with_redirects
 */
