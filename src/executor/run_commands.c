@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 13:44:56 by cbridget          #+#    #+#             */
-/*   Updated: 2022/06/28 19:23:44 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/28 19:28:38 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,14 @@ int	create_process(t_command_list *commands, t_exec_env *in_exec)
 	while (i < g_ms_env.number_of_commands)
 	{
 		p_flag = open_pipes(tmp_cmd, in_exec, i);
-		if (p_flag == -1)
-		{
-			ft_kill();
-			return (ft_free(commands, in_exec));
-		}
 		g_ms_env.pids[i] = fork();
-		if (g_ms_env.pids[i] < 0)
+		if (g_ms_env.pids[i] < 0 || p_flag == -1)
 		{
 			ft_kill();
-			return (put_error("fork", 126));
+			if (p_flag == -1)
+				return (1);
+			else
+				return (put_error("fork", 126));
 		}
 		if (g_ms_env.pids[i] == 0)
 			ft_exec(tmp_cmd, in_exec, i + 1, p_flag);
