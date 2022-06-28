@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:42:44 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/27 21:05:31 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/28 17:52:58 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ t_command_list	*parser(t_list *args)
 	result = parse_start(&data);
 	if (!result)
 		return (result);
+	if (!result->argv)
+		return (clear_command_lst(&result));
 	if (!(result->argv[0]) && !(result->redirect_flags[0]))
 		return (clear_command_lst(&result));
 	return (result);

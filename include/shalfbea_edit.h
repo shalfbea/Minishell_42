@@ -6,14 +6,14 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/27 19:21:22 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/28 17:51:59 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHALFBEA_EDIT_H
 # define SHALFBEA_EDIT_H
 
-# define S_DEBUG 0
+# define S_DEBUG 1
 
 # ifndef INT32_MAX
 #  define INT32_MAX 2147483647
@@ -99,7 +99,7 @@ char					lst_env_check(t_list	*args);
 char					*ft_getenv(char	*to_find);
 char					*get_env_content(uint pos);
 char					*get_env_name(uint pos);
-void					string_array_cleaner(char	***array);
+char					**string_array_cleaner(char	***array);
 char					**string_array_former(t_list	**array);
 char					**string_array_copy(char **array,
 							uint more_size_option);

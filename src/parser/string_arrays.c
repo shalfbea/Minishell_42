@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:18:58 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 14:11:32 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/28 17:52:08 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,15 @@ char	**string_array_former(t_list	**array)
 
 	words = ft_lstsize(*array);
 	res = (char **) malloc(sizeof(char *) * (words + 1));
+	if (!res)
+		return (NULL);
 	tmp = *array;
 	i = 0;
 	while (i < words)
 	{
 		res[i] = ft_strdup((char *) tmp->content);
+		if (!res[i])
+			return (string_array_cleaner(&res));
 		tmp = tmp->next;
 		++i;
 	}
@@ -39,18 +43,19 @@ char	**string_array_former(t_list	**array)
 	return (res);
 }
 
-void	string_array_cleaner(char	***array)
+char	**string_array_cleaner(char	***array)
 {
 	int		i;
 
 	if (!(*array))
-		return ;
+		return (NULL);
 	i = 0;
 	while ((*array)[i])
 		free((*array)[i++]);
 	if (*array)
 		free(*array);
 	*array = NULL;
+	return (NULL);
 }
 
 /*
