@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 18:27:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/28 14:55:07 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/28 15:41:17 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
-# include <readline/readline.h>
-//# include </Users/shalfbea/goinfre/.brew/opt/readline/include/readline/readline.h>
-# include <readline/history.h>
-//# include </Users/shalfbea/goinfre/.brew/opt/readline/include/readline/history.h>
+# include <readline.h>
+# include <history.h>
 # include <sys/wait.h>
 # include <signal.h>
 # include <sys/stat.h>

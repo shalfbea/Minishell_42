@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 13:44:56 by cbridget          #+#    #+#             */
-/*   Updated: 2022/06/28 19:28:38 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/28 19:36:15 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,7 @@ int	create_process(t_command_list *commands, t_exec_env *in_exec)
 		p_flag = open_pipes(tmp_cmd, in_exec, i);
 		g_ms_env.pids[i] = fork();
 		if (g_ms_env.pids[i] < 0 || p_flag == -1)
-		{
-			ft_kill();
-			if (p_flag == -1)
-				return (1);
-			else
-				return (put_error("fork", 126));
-		}
+			return (fork_or_pipe_problem(p_flag));
 		if (g_ms_env.pids[i] == 0)
 			ft_exec(tmp_cmd, in_exec, i + 1, p_flag);
 		close_pipes(in_exec, i + 1, p_flag);

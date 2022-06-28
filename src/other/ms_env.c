@@ -90,11 +90,11 @@ char	ms_env_initter(char **envp)
 	g_ms_env.pids = NULL;
 	g_ms_env.envp = string_array_copy(envp, 0);
 	g_ms_env.prompt_mode = 0;
+	if (!g_ms_env.envp)
+		return (1);
 	shlvl_solver();
 	pwd_solver();
 	init_builtins();
-	if (!g_ms_env.envp)
-		return (1);
 	return (0);
 }
 

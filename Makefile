@@ -1,10 +1,12 @@
 HEADER := include/minishell.h
 
-CC := clang
+CC := cc
 
 TestingFlags := -g3 #-fsanitize=address
 
-READLINE_LIB := -lreadline
+#READLINE_LIB := -lreadline
+INCLUDE_READLINE_HEADER = -I/Users/$(USER)/goinfre/.brew/opt/readline/include/readline
+READLINE_LIB := $(INCLUDE_READLINE_HEADER) -L/Users/$(USER)/goinfre/.brew/Cellar/readline/8.1.2/lib/ -lreadline
 
 FLAGS := -Wall -Wextra -Werror -I./include  -I./libft/include $(TestingFlags)
 
@@ -28,6 +30,7 @@ SRC = other/prompt.c other/signals.c other/ms_env.c \
 	  builtins/builtins_utils.c builtins/builtins.c builtins/ft_export.c \
 	  builtins/ft_unset.c builtins/builtins_02.c builtins/retrieve_fd.c \
 	  builtins/export_add_functions.c builtins/export_working_with_names.c\
+	  builtins/new_lib.c \
 	  lexer/wildcards.c \
 	  debug/commands_printer.c debug/env_printer.c debug/groups_printer.c debug/lexer_printer.c
 
@@ -49,16 +52,16 @@ RM := rm -rf
 all: $(OBJ_DIR) $(HEADER) $(MINISHELL)
 
 $(MINISHELL): $(HEADER) $(OBJ_STD) $(LIBFT)
-	$(CC) $(FLAGS) $(READLINE_LIB) $(OBJ_STD) -o $(MINISHELL) $(LIBFT)
+	$(CC) $(FLAGS) $(READLINE_LIB) $(OBJ_STD) -o $(MINISHELL) $(LIBFT) $(READLINE_LIB)
 
 $(MINISHELL_BONUS): $(HEADER) $(OBJ_FILES_BONUS) $(LIBFT)
-	$(CC) $(FLAGS) $(READLINE_LIB) $(OBJ_FILES_BONUS) -o $(MINISHELL_BONUS) $(LIBFT)
+	$(CC) $(FLAGS) $(READLINE_LIB) $(OBJ_FILES_BONUS) -o $(MINISHELL_BONUS) $(LIBFT) $(READLINE_LIB)
 
-$(LIBFT) :
+$(LIBFT) : $(LIBFT_HEADER)
 	make -C ./libft
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) $(INCLUDE_READLINE_HEADER) -c $< -o $@
 
 $(OBJ_DIR) :
 	mkdir obj

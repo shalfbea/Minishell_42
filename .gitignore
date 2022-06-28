@@ -60,3 +60,7 @@ shalfbea_bonus/minishell_bonus
 .DS_Store
 minishell_bonus
 minishell_test.log
+long_prog.c
+long_prog
+counter.c
+1.txt

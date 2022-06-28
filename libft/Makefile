@@ -25,10 +25,10 @@ RM := rm -rf
 
 all: $(NAME) $(OBJ) $(HEADER)
 
-$(NAME) : $(OBJ_STD) $(OBJ_LST)
-	ar rcs $(NAME) $?
+$(NAME) : $(OBJ_STD) $(OBJ_LST) $(HEADER)
+	ar rcs $(NAME) $(OBJ_STD) $(OBJ_LST)
 
-%.o : %.c
+%.o : %.c $(HEADER)
 	gcc $(FLAGS) -c $< -o $@
 
 all_bonus :

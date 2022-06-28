@@ -6,13 +6,13 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/27 20:25:01 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/28 19:33:30 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_minishell_environment g_ms_env;
+t_minishell_environment	g_ms_env;
 
 static int	c_argument_support(int argc, char **argv)
 {
@@ -38,28 +38,23 @@ int	main(int argc, char **argv, char **envp)
 	t_list			*raw_lexer_data;
 	int				executor_result;
 
-	(void) argc;
-	(void) argv;
-	rl_outstream = stderr; //ONLY 4 testing
+rl_outstream = stderr;
 	if (ms_env_initter(envp))
 		exit(1);
 	set_sig_control();
-	//debug_set_envp(); // Delete
-	executor_result = c_argument_support(argc, argv);// 0;
+	executor_result = c_argument_support(argc, argv);
 	while (executor_result != SHELL_CLOSE)
 	{
 		g_ms_env.prompt_mode = 1;
 		raw_lexer_data = prompt(NULL);
 		g_ms_env.prompt_mode = 0;
 		commands = get_command(raw_lexer_data);
-		if (!commands) // ONLY DEBUG
-			break ;
-		executor_result = executor(commands);
+		if (commands)
+			executor_result = executor(commands);
 		clear_lexer_lst(&(raw_lexer_data));
 		if (S_DEBUG == 1)
 			executor_result = SHELL_CLOSE;
 	}
 	string_array_cleaner(&g_ms_env.envp);
-	//pause();
 	return (g_ms_env.ex_code);
 }
