@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 15:30:05 by cbridget          #+#    #+#             */
-/*   Updated: 2022/06/22 17:24:29 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/28 18:42:28 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	ft_init(t_command_list *commands, t_exec_env *in_exec)
 int	ft_free(t_command_list *commands, t_exec_env *in_exec)
 {
 	free_commands(commands);
-	free_lsts(in_exec->first_fd);
+	if (in_exec)
+		free_lsts(in_exec->first_fd);
 	if (g_ms_env.pids)
 	{
 		free(g_ms_env.pids);

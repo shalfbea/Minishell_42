@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 14:34:00 by cbridget          #+#    #+#             */
-/*   Updated: 2022/06/22 17:19:40 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/28 19:10:00 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 int	alloc_pids(void)
 {
+	int	i;
+
+	i = 0;
 	g_ms_env.pids = (pid_t *)malloc(sizeof(pid_t) \
 	* g_ms_env.number_of_commands);
 	if (!g_ms_env.pids)
 		return (1);
+	while (i < g_ms_env.number_of_commands)
+		g_ms_env.pids[i++] = 0;
 	return (0);
 }
 
@@ -38,24 +43,22 @@ int	ft_wait(t_exec_env *in_exec)
 		else
 			tmp_fd->r_code = 1;
 		if (tmp_fd->r_code == EXEC_ERROR)
-			return (ft_kill(in_exec));
+			return (ft_kill());
 		tmp_fd = tmp_fd->next_fd;
 		i++;
 	}
 	return (0);
 }
 
-int	ft_kill(t_exec_env *in_exec)
+int	ft_kill(void)
 {
-	t_fds	*tmp_fd;
 	int		i;
 
 	i = 0;
-	tmp_fd = in_exec->first_fd;
-	while (tmp_fd)
+	while (i < g_ms_env.number_of_commands)
 	{
-		kill(g_ms_env.pids[i], 2);
-		tmp_fd = tmp_fd->next_fd;
+		if (g_ms_env.pids[i] > 0)
+			kill(g_ms_env.pids[i], 2);
 		i++;
 	}
 	return (1);

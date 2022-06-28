@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 16:29:21 by cbridget          #+#    #+#             */
-/*   Updated: 2022/06/28 17:11:53 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/28 19:22:33 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	skip(const char *str, int *sign);
 
- long	new_atoi(const char *str)
+long	new_atoi(const char *str)
 {
 	size_t				i;
 	int					sign;
@@ -32,7 +32,8 @@ static int	skip(const char *str, int *sign);
 	{
 		result = result * 10 + (str[i] - '0');
 		i ++;
-		if (((unsigned long)result > tmp_1 && sign == 1) || (unsigned long)result > tmp_2)
+		if (((unsigned long)result > tmp_1 && sign == 1) \
+			|| (unsigned long)result > tmp_2)
 			break ;
 	}
 	if ((unsigned long)result > tmp_1 && sign == 1)
@@ -67,7 +68,7 @@ int	my_strncmp(char *s1, char *s2, size_t n)
 	while (i < n)
 	{
 		s2[i] = ft_tolower(s2[i]);
-		if ((unsigned char)s1[i] >  (unsigned char)s2[i])
+		if ((unsigned char)s1[i] > (unsigned char)s2[i])
 			return ((unsigned char)s1[i]);
 		else if ((unsigned char)s1[i] < (unsigned char)s2[i])
 			return (-1);
@@ -80,7 +81,7 @@ int	my_strncmp(char *s1, char *s2, size_t n)
 
 void	skipp_n(char *str)
 {
-	unsigned int i;
+	unsigned int	i;
 
 	i = 1;
 	if (str[0] != '-')

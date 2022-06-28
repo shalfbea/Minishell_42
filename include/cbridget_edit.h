@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/28 17:08:13 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/28 18:59:02 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	swap_filedescriptors(t_exec_env *in_exec, int com, int *save);
 int		alloc_pids(void);
 void	close_pipes(t_exec_env *in_exec, int cmd_num, int p_flag);
 int		ft_wait(t_exec_env *in_exec);
-int		ft_kill(t_exec_env *in_exec);
+int		ft_kill(void);
 void	save_ex_code(t_exec_env *in_exec);
 
 /*

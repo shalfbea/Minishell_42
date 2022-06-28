@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:19:40 by cbridget          #+#    #+#             */
-/*   Updated: 2022/06/28 17:10:30 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/28 19:20:30 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	ft_echo(char **argv)
 
 	i = 1;
 	flag = 1;
-
 	skipp_n(argv[i]);
 	while (argv[i] && !ft_strncmp(argv[i], "-n", 3))
 	{
