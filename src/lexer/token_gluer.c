@@ -6,13 +6,13 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 15:56:58 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/27 18:25:24 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/28 17:39:15 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	lst_sticky_append(t_list **res, t_list **cur, t_lexer *lexical)
+static void	lst_sticky_append_work(t_list **res, t_list **cur, t_lexer *lexical)
 {
 	char	*tmp;
 
@@ -41,17 +41,20 @@ static void	lst_sticky_append(t_list **res, t_list **cur, t_lexer *lexical)
 	}
 }
 
-static char	check_if_glue_needed(t_list *args)
+static void	lst_sticky_append(t_list *cur_args,
+	t_list **res, t_list **res_cur, char *skip)
 {
-	while (args)
+	if ((((t_lexer *) cur_args->content)->str)[0]
+		|| (((t_lexer *) cur_args->content)->type) == DOUBLE_QUOTES)
 	{
-		if (((t_lexer *) args->content)->to_prev)
-			return (1);
-		if (!(((t_lexer *) args->content)->str)[0])
-			return (1);
-		args = args->next;
+		if (*skip)
+			((t_lexer *) cur_args->content)->to_prev = 0;
+		lst_sticky_append_work(res, res_cur,
+			(t_lexer *) cur_args->content);
+			*skip = 0;
 	}
-	return (0);
+	else
+		*skip = 1;
 }
 
 void	token_gluer(t_list **args)
@@ -59,20 +62,15 @@ void	token_gluer(t_list **args)
 	t_list	*cur_args;
 	t_list	*res;
 	t_list	*res_cur;
+	char	skip;
 
+	skip = 0;
 	cur_args = *args;
 	res = NULL;
-	if (!check_if_glue_needed(*args))
-		return ;
 	while (cur_args)
 	{
 		if (cur_args->content)
-		{
-			if ((((t_lexer *) cur_args->content)->str)[0]
-				|| (((t_lexer *) cur_args->content)->type) == DOUBLE_QUOTES)
-				lst_sticky_append(&res, &res_cur,
-					(t_lexer *) cur_args->content);
-		}
+			lst_sticky_append(cur_args, &res, &res_cur, &skip);
 		cur_args = cur_args->next;
 	}
 	clear_lexer_lst(args);
