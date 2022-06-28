@@ -1,5 +1,6 @@
 HEADER := include/minishell.h
-
+SHALFBEA_HEADER := include/shalfbea_edit.h
+CBRIDGET_HEADER := include/cbridget_edit.h
 CC := cc
 
 TestingFlags := -g3 #-fsanitize=address
@@ -51,16 +52,16 @@ RM := rm -rf
 
 all: $(OBJ_DIR) $(HEADER) $(MINISHELL)
 
-$(MINISHELL): $(HEADER) $(OBJ_STD) $(LIBFT)
+$(MINISHELL): $(HEADER) $(SHALFBEA_HEADER) $(CBRIDGET_HEADER) $(OBJ_STD) $(LIBFT)
 	$(CC) $(FLAGS) $(READLINE_LIB) $(OBJ_STD) -o $(MINISHELL) $(LIBFT) $(READLINE_LIB)
 
-$(MINISHELL_BONUS): $(HEADER) $(OBJ_FILES_BONUS) $(LIBFT)
+$(MINISHELL_BONUS): $(HEADER) $(SHALFBEA_HEADER) $(CBRIDGET_HEADER) $(OBJ_FILES_BONUS) $(LIBFT)
 	$(CC) $(FLAGS) $(READLINE_LIB) $(OBJ_FILES_BONUS) -o $(MINISHELL_BONUS) $(LIBFT) $(READLINE_LIB)
 
 $(LIBFT) : $(LIBFT_HEADER)
 	make -C ./libft
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER) $(SHALFBEA_HEADER) $(CBRIDGET_HEADER)
 	$(CC) $(FLAGS) $(INCLUDE_READLINE_HEADER) -c $< -o $@
 
 $(OBJ_DIR) :
