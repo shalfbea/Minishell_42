@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 10:29:11 by shalfbea          #+#    #+#             */
-/*   Updated: 2021/10/16 18:00:28 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/28 14:01:01 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,19 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		++i;
 	if (i == n)
 		return ((int) 0);
+	return ((unsigned char)s1[i] - s2[i]);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s1 && !s2)
+		return (0);
+	if (!s1 || !s2)
+		return (1);
+	while ((s1[i] == s2[i]) && s1[i] && s2[i])
+		++i;
 	return ((unsigned char)s1[i] - s2[i]);
 }

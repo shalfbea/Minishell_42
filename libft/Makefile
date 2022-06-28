@@ -17,7 +17,7 @@ SRC_STD = $(addprefix std_functions/, ft_strlen.c ft_strchr.c ft_strlcpy.c ft_st
 
 SRC_LST = $(addprefix lst_functions/, ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c \
 				  ft_lstlast_bonus.c ft_lstadd_back_bonus.c ft_lstdelone_bonus.c \
-				  ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c)
+				  ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c lst_more_functions.c)
 
 OBJ_STD = $(patsubst %.c, %.o, $(SRC_STD))
 OBJ_LST = $(patsubst %.c, %.o, $(SRC_LST))

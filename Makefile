@@ -12,6 +12,7 @@ MINISHELL := minishell
 MINISHELL_BONUS := minishell_bonus
 
 LIBFT := libft/libft.a
+LIBFT_HEADER := ./libft/include/libft.h
 
 SRC = other/prompt.c other/signals.c other/ms_env.c \
 	  lexer/lexer.c lexer/lexer_wraps_lst.c lexer/lexer_free.c \
@@ -78,6 +79,7 @@ clean:
 
 fclean: clean
 	$(RM) $(MINISHELL)
+	make fclean -C ./libft
 
 re: fclean all
 
