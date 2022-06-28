@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:23:41 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/28 19:33:30 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/28 19:54:59 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	main(int argc, char **argv, char **envp)
 	t_list			*raw_lexer_data;
 	int				executor_result;
 
-rl_outstream = stderr;
 	if (ms_env_initter(envp))
 		exit(1);
 	set_sig_control();
