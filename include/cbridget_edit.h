@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cbridget_edit.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:57:43 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/23 17:16:40 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/28 17:08:13 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CBRIDGET_EDIT_H
 
 # define BUFFER_SIZE 1
+# define MAX_PIPES 2
 
 # define SHELL_CLOSE -55
 # define NUM_BULTINS 7
@@ -168,6 +169,9 @@ char	*get_name(int i);
 void	del_var_evp(char *variable);
 int		del_var_evp_02(char **tmp_env, char *variable);
 int		arg_is_number(char *str);
+long	new_atoi(const char *str);
+int		my_strncmp(char *s1, char *s2, size_t n);
+void	skipp_n(char *str);
 char	*delete_pluse(char *name);
 void	add_value(char *name, int i);
 void	add_value_02(char *name, int i, char *res);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:19:40 by cbridget          #+#    #+#             */
-/*   Updated: 2022/06/27 18:26:17 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/28 17:10:30 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,13 @@ int	ft_echo(char **argv)
 
 	i = 1;
 	flag = 1;
+
+	skipp_n(argv[i]);
 	while (argv[i] && !ft_strncmp(argv[i], "-n", 3))
 	{
 		flag = 0;
 		i++;
+		skipp_n(argv[i]);
 	}
 	while (argv[i])
 	{
@@ -109,17 +112,10 @@ int	ft_unset(char **argv)
 
 int	ft_exit(char **argv)
 {
-	unsigned int	err;
+	long	err;
 
 	if (!argv[1])
-	{
-		/*
-		g_ms_env.ex_code = 0;
-		Тот самый баг. Баш сохраняет код ошибки,
-		если не было вызвана ошибка самим exitом
-		*/
 		return (SHELL_CLOSE);
-	}
 	if (arg_is_number(argv[1]))
 	{
 		if (argv[2])
@@ -128,7 +124,7 @@ int	ft_exit(char **argv)
 			g_ms_env.ex_code = 1;
 			return (1);
 		}
-		err = ft_atoi(argv[1]);
+		err = new_atoi(argv[1]);
 		g_ms_env.ex_code = err % 256;
 		return (SHELL_CLOSE);
 	}

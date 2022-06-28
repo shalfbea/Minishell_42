@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 19:43:17 by cbridget          #+#    #+#             */
-/*   Updated: 2022/06/04 17:40:51 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/28 16:18:42 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int	echo_n(char flag)
 
 int	arg_is_number(char *str)
 {
-	int	i;
-	int	j;
+	long	i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -89,7 +89,8 @@ int	arg_is_number(char *str)
 		i++;
 		j++;
 	}
-	if (j > 18)
+	i = new_atoi(str);
+	if (j >= 17 && (!i || i == (long)-1))
 		return (0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:11:05 by cbridget          #+#    #+#             */
-/*   Updated: 2022/06/23 14:30:01 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/28 16:39:00 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	check_builtin(char *name)
 		return (100);
 	while (i < NUM_BULTINS)
 	{
-		if (!ft_strncmp(g_ms_env.builtin_names[i], name, \
+		if (!my_strncmp(g_ms_env.builtin_names[i], name, \
 			ft_strlen(g_ms_env.builtin_names[i]) + 1))
 			return (i);
 		i++;
