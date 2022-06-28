@@ -6,14 +6,14 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:59:03 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/28 17:51:59 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/28 18:09:20 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHALFBEA_EDIT_H
 # define SHALFBEA_EDIT_H
 
-# define S_DEBUG 1
+# define S_DEBUG 0
 
 # ifndef INT32_MAX
 #  define INT32_MAX 2147483647
