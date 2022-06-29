@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 20:39:57 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/27 20:59:06 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/06/29 16:43:59 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	execute_current(t_stack **stack, int *executor_result, t_group *cur)
 		refresh_number_of_commands(command);
 		*executor_result = executor(command);
 	}
+	if (*executor_result == SHELL_CLOSE)
+		return ;
 	command = command_get_wrapper(group_2);
 	if (command)
 	{
