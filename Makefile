@@ -83,6 +83,7 @@ clean:
 
 fclean: clean
 	$(RM) $(MINISHELL)
+	$(RM) $(MINISHELL_BONUS)
 	make fclean -C ./libft
 
 re: fclean all
