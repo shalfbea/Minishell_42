@@ -6,7 +6,7 @@
 /*   By: cbridget <cbridget@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:19:40 by cbridget          #+#    #+#             */
-/*   Updated: 2022/06/28 19:44:06 by cbridget         ###   ########.fr       */
+/*   Updated: 2022/06/29 16:55:28 by cbridget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int	ft_exit(char **argv)
 {
 	long	err;
 
+	write(STDOUT_FILENO, "exit\n", 5);
 	if (!argv[1])
 		return (SHELL_CLOSE);
 	if (arg_is_number(argv[1]))
