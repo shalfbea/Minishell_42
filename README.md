@@ -27,7 +27,7 @@ The main goal of this project is to get deep inside of text parsing, process cre
 		./minishell
 
 ## Technical task
-The full task can be found here: [Minishell-subject](https://github.com/shalfbea/Minishell_42/Minishell_subject.pdf)
+The full task can be found here: [Minishell-subject](https://github.com/shalfbea/Minishell_42/blob/main/Minishell_subject.pdf)
 ### Quick summary:
 - Only using c language is allowed
 - Code-style should respect the [The Norm](https://github.com/MagicHatJo/-42-Norm/blob/master/norme.en.pdf)
