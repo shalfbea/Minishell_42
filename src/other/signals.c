@@ -6,7 +6,7 @@
 /*   By: shalfbea <shalfbea@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:29:33 by shalfbea          #+#    #+#             */
-/*   Updated: 2022/06/28 15:59:49 by shalfbea         ###   ########.fr       */
+/*   Updated: 2022/08/22 18:09:18 by shalfbea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,5 @@ static void	sigint_handler(int sig)
 void	set_sig_control(void)
 {
 	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
