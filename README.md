@@ -16,15 +16,15 @@ The main goal of this project is to get deep inside of text parsing, process cre
 ## Installation and usage
 
 1. Download/Clone this repo
-		git clone https://github.com/shalfbea/Minishell_42
+	> git clone https://github.com/shalfbea/Minishell_42
 2. Get into the root directory of project and run make command
-		cd MINISHELL_42
-		make
+	> cd MINISHELL_42
+	> make
 3. (Optional) Run make bonus to get some additional functionality
-		make bonus
+	> make bonus
 
 3. To run program simply run ./minishell (or ./minishell_bonus)
-		./minishell
+	> ./minishell
 
 ## Technical task
 The full task can be found here: [Minishell-subject](https://github.com/shalfbea/Minishell_42/blob/main/Minishell_subject.pdf)
