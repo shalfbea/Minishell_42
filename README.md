@@ -4,7 +4,7 @@ As beautiful as shell
 
 ## About
 
-This project is part of program in School 21 (Ecole 42).
+This project is part of program in [School 21](https://21-school.ru/) ([Ecole 42](42.fr)).    
 It's an mvp fork of bash.
 The main goal of this project is to get deep inside of text parsing, process creation and syncronising using C.
 
